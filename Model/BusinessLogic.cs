@@ -5,7 +5,6 @@ using Lab6_Starter;
 
 namespace Lab6_Starter.Model;
 
-
 public class BusinessLogic : IBusinessLogic
 {
     const int BRONZE_LEVEL = 42;
@@ -19,6 +18,12 @@ public class BusinessLogic : IBusinessLogic
     public ObservableCollection<Airport> Airports
     {
         get { return GetAirports(); }
+
+    }
+
+    public ObservableCollection<Weather> Weathers
+    {
+        get { return GetWeathers(); }
 
     }
     public BusinessLogic(IDatabase? db)
@@ -159,6 +164,13 @@ public class BusinessLogic : IBusinessLogic
     public ObservableCollection<Airport> GetAirports()
     {
         return db.SelectAllAirports();
+    }
+
+    public ObservableCollection<Weather> GetWeathers()
+    {
+        ObservableCollection<Weather> weathers = new ObservableCollection<Weather>();
+        weathers.Add(new Weather("METAR KJFK 161853Z 21015G25KT 10SM -RA SCT020 BKN050", "TAF KJFK 161720Z 1618/1718 21015KT P6SM -RA BKN050"));
+        return weathers;
     }
 
 
