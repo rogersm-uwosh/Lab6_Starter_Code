@@ -1,0 +1,76 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+
+<!-- James Thao (Provided Grid Layout)
+     Jason Wang(Provided item template)
+     Alexander Johnston (Provided the image in the item template)
+-->
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:nearbyAirports="clr-namespace:Lab2_Solution.NearbyAirports"
+             x:Class="Lab2_Solution.NearbyAirports.NearbyAirportsPage"
+             Title="Nearby Airports"
+             xmlns:models="clr-namespace:Lab2_Solution.Model"
+             x:DataType="nearbyAirports:NearbyAirportsPage">
+    <ContentPage.Resources>
+        <nearbyAirports:AirportVisitedConvertor x:Key="AirportVisitedConvertor" />
+    </ContentPage.Resources>
+    <ContentPage.Content>
+        <Grid
+            ColumnDefinitions="*,*"
+            RowDefinitions="auto, auto, *">
+
+            <Label Text="Airport: "
+                   Grid.Column="0"
+                   Grid.Row="0" />
+            <Entry Placeholder="Airport"
+                   Grid.Column="1"
+                   Grid.Row="0" />
+            <Label Text="Max Distance: "
+                   Grid.Column="0"
+                   Grid.Row="1" />
+            <Entry Placeholder="Distance"
+                   Grid.Column="1"
+                   Grid.Row="1" />
+
+            <ScrollView
+                Grid.Row="2"
+                Grid.ColumnSpan="2">
+
+                <CollectionView
+                    x:Name="AirportList"
+                    ItemsSource="{Binding NearbyAirports}">
+
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate x:DataType="models:NearbyAirport">
+                            <Grid
+                                RowDefinitions="*"
+                                ColumnDefinitions="*,*,*,*"
+                                Padding="8">
+                                <Label 
+                                    VerticalOptions="Center"
+                                    Grid.Column="0"
+                                    Text="{Binding Id }" />
+                                <Label 
+                                    VerticalOptions="Center"
+                                    Grid.Column="1"
+                                    Text="{Binding City }" />
+                                <Label 
+                                    VerticalOptions="Center"
+                                    HorizontalOptions="Center"
+                                    Grid.Column="2"
+                                    Text="{Binding Miles }" />
+                                <Image 
+                                    VerticalOptions="Center"
+                                    Grid.Column="3"
+                                    MaximumHeightRequest="50"
+                                    MaximumWidthRequest="50"
+                                    Source="{Binding IsVisited, Converter={StaticResource AirportVisitedConvertor}}" />
+                            </Grid>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+
+                </CollectionView>
+            </ScrollView>
+        </Grid>
+    </ContentPage.Content>
+</ContentPage>
