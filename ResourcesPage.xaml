@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Lab2_Solution.ResourcesPage"
+             Title="ResourcesPage">
+
+    <ContentPage.Resources>
+        <x:Array x:Key="UrlList" Type="{x:Type x:String}">
+            <x:String>https://wisconsindot.gov/Pages/Home.aspx</x:String>
+            <x:String>https://wisconsindot.gov/Pages/travel/air/pilot-info/flywi.aspx</x:String>
+            <x:String>https://wiama.org/</x:String>
+            <x:String>https://wisconsindot.gov/Pages/doing-bus/aeronautics/education/aved-museums.aspx</x:String>
+            <x:String>https://forms.office.com/g/PEKhtVaTxe</x:String>
+            <x:String>https://wisconsindot.gov/Pages/travel/air/pilot-info/flywi-rules.aspx</x:String>
+        </x:Array>
+    </ContentPage.Resources>
+    <ContentPage.Content>
+        <CollectionView ItemsSource="{StaticResource UrlList}">
+            <CollectionView.Header>
+                <Label
+                    Text="Useful Resources"
+                    FontSize="24"
+                    FontAttributes="Bold"
+                    HorizontalOptions="Center"
+                    Margin="0,10" />
+            </CollectionView.Header>
+
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <Frame
+                        Margin="10"
+                        Padding="15"
+                        CornerRadius="8"
+                        BackgroundColor="White"
+                        BorderColor="#cccccc"
+                        HasShadow="True">
+                        <StackLayout>
+                            <Label
+                                Text="{Binding}"
+                                FontSize="16"
+                                TextColor="#007acc"
+                                FontAttributes="Italic" />
+                        </StackLayout>
+                    </Frame>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+    </ContentPage.Content>
+</ContentPage>
