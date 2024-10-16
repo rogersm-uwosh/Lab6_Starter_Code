@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!--!
+    Name: Carissa Engebose, Pachia Lee, and Hannah Hotchkiss
+    Date: 10/16/24
+    Description: This implements and displays the routing strategies screen for the airports lab.
+                 It displays the starting airports, max distance, number of airports visited and 
+                 suggested routes as well as a map.
+    Bugs: The back button that was on the screen isn't there right now because navigation 
+          to this page has to come from planning tools. Also, we couldn't get the map to display 
+          a location, but the map is there.
+    Reflection: Overall this lab was very useful to learn about tabs and how to get a map for an app. 
+                There were a lot of difficulties especially with the map not working how we wanted it to, 
+                but it was nice to get practice on tabbed pages and work with new people.
+-->
+<TabbedPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+            xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+            xmlns:local="clr-namespace:Lab6_Starter"
+            xmlns:maps="clr-namespace:Microsoft.Maui.Controls.Maps;assembly=Microsoft.Maui.Controls.Maps"
+            x:Class="Lab6_Starter.RoutingStrategies"
+            Title="Routing Strategies"
+            xmlns:android="clr-namespace:Microsoft.Maui.Controls.PlatformConfiguration.AndroidSpecific;assembly=Microsoft.Maui.Controls"
+            android:TabbedPage.ToolbarPlacement="Bottom">
+
+    <ContentPage Title="Airports"
+                 IconImageSource="rectangle_list_48.png"
+                 xmlns:maps="http://schemas.microsoft.com/dotnet/2021/maui/maps">
+
+        <VerticalStackLayout Padding="20">
+
+            <!-- Starting Airport (Carissa)-->
+            <HorizontalStackLayout>
+                <Label Text="Starting Airport:"
+                       VerticalOptions="Center"
+                       Margin="0,20,10,20"/>
+                <Frame BorderColor="Gray"
+                       CornerRadius="5"
+                       Padding="0"
+                       HasShadow="True">
+                    <Entry x:Name="StartingAirportPicker"
+                           Text="KATW"
+                           WidthRequest="55"
+                           HeightRequest="40"/>
+                </Frame>
+            </HorizontalStackLayout>
+
+
+            <!-- Max Distance (Pachia)-->
+            <HorizontalStackLayout Padding="0,10">
+                <Label Text="Max Distance:"
+                       VerticalOptions="Center"
+                       Margin="0,10,10,20"/>
+                <Frame BorderColor="Gray"
+                       CornerRadius="5"
+                       Padding="5"
+                       HasShadow="True">
+                    <Entry x:Name="MaxDistanceEntry"
+                           Text="60"
+                           Keyboard="Numeric"
+                           WidthRequest="30"
+                           HeightRequest="40"/>
+                </Frame>
+                <Label Text="  nm"
+                       VerticalOptions="Center"/>
+            </HorizontalStackLayout>
+
+            <!-- Unvisited Toggle (Hannah) -->
+            <HorizontalStackLayout>
+                <Label Text="Unvisited:"
+                       VerticalOptions="Center"/>
+                <Switch x:Name="UnvisitedSwitch"
+                        IsToggled="False"/>
+            </HorizontalStackLayout>
+
+            <!-- Suggested Routes with Frame (Hannah)-->
+            <Label Text="Suggested Routes"
+                   FontAttributes="Bold"
+                   FontSize="Medium"
+                   Margin="0,20,0,0"/>
+            <ListView x:Name="RoutesListView"
+                      HasUnevenRows="True"
+                      SeparatorVisibility="Default"
+                      HeightRequest="200">
+                <ListView.Header>
+                    <StackLayout Orientation="Horizontal"
+                                 Padding="00,0">
+                        <Label Text="ICAO"
+                               FontAttributes="Bold"
+                               HorizontalOptions="Start"/>
+                        <Label Text="City"
+                               FontAttributes="Bold"
+                               HorizontalOptions="Start"/>
+                        <Label Text="Dist"
+                               FontAttributes="Bold"
+                               HorizontalOptions="End"/>
+                    </StackLayout>
+                </ListView.Header>
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <StackLayout Orientation="Horizontal"
+                                         Padding="10,0">
+                                <Label Text="{Binding ICAO}"
+                                       HorizontalOptions="Start"/>
+                                <Label Text="{Binding City}"
+                                       HorizontalOptions="CenterAndExpand"/>
+                                <Label Text="{Binding Distance}"
+                                       HorizontalOptions="End"/>
+                            </StackLayout>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+
+            <!-- Map (Pachia, Hannah, Carissa)-->
+            <Label Text="Map"
+                   FontAttributes="Bold"
+                   FontSize="Medium"
+                   Margin="0,-50,0,0"/>
+            <maps:Map x:Name="map"
+                      HeightRequest="300">
+            </maps:Map>
+        </VerticalStackLayout>
+    </ContentPage>
+
+    <!-- Additional Tabs (Carissa)-->
+    <ContentPage Title="Routing"
+                 IconImageSource="map.png">
+        <Label Text="Map Content"
+               VerticalOptions="CenterAndExpand"
+               HorizontalOptions="CenterAndExpand"/>
+    </ContentPage>
+
+    <ContentPage Title="Map"
+                 IconImageSource="map.png">
+        <Label Text="Map Content"
+               VerticalOptions="CenterAndExpand"
+               HorizontalOptions="CenterAndExpand"/>
+    </ContentPage>
+
+    <ContentPage Title="Planning Tools"
+                 IconImageSource="light_bulb.png">
+        <Label Text="Planning Tools Content"
+               VerticalOptions="CenterAndExpand"
+               HorizontalOptions="CenterAndExpand"/>
+    </ContentPage>
+
+    <ContentPage Title="Resources"
+                 IconImageSource="question_mark.png">
+        <Label Text="Resources Content"
+               VerticalOptions="CenterAndExpand"
+               HorizontalOptions="CenterAndExpand"/>
+    </ContentPage>
+
+</TabbedPage>
