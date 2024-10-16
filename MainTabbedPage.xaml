@@ -13,6 +13,11 @@
                 <local:MainPage/>
             </x:Arguments>
         </NavigationPage>
+        <NavigationPage IconImageSource="cloudy.png" Title="Weather">
+            <x:Arguments>
+                <local:WeatherPage/>
+            </x:Arguments>
+        </NavigationPage>
     </TabbedPage.Children>
 </TabbedPage>
 
