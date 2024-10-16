@@ -1,11 +1,28 @@
 <?xml version="1.0" encoding="utf-8" ?>
+   <!-- 
+         * Author: Taylor Showalter
+         * Date: 10/15/2024
+         * Description: Screen for Resource links
+         * Bugs: None Known
+         * Reflection: Took time, alot of getting mad at not realizing
+         * I had to "use Lab2_Solution" at the top of app.xaml.cs to be able 
+         * to launch on my screen to be able to see it. Lots of questions to 
+         * either Alex (while his is not on my lab team, he was still willing
+         * to help me fix certain errors) or Chat GPT on how to implement things 
+         * or what a skeleton of the code should look like in order to get rid of 
+         * errors or how to implement things like shadows since it is different 
+         * from html and css which I do know.
+   --> 
+    
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="Lab2_Solution.ResourcesPage"
              Title="ResourcesPage">
-
+    <!-- Define resources that can be used within this page -->
     <ContentPage.Resources>
+        <!-- Define an array of strings (URLs) with the key 'UrlList' -->
         <x:Array x:Key="UrlList" Type="{x:Type x:String}">
+            <!-- Each x:String element represents a URL in the list -->
             <x:String>https://wisconsindot.gov/Pages/Home.aspx</x:String>
             <x:String>https://wisconsindot.gov/Pages/travel/air/pilot-info/flywi.aspx</x:String>
             <x:String>https://wiama.org/</x:String>
@@ -14,8 +31,13 @@
             <x:String>https://wisconsindot.gov/Pages/travel/air/pilot-info/flywi-rules.aspx</x:String>
         </x:Array>
     </ContentPage.Resources>
+    
+    <!-- Define the content of the page -->
     <ContentPage.Content>
+        <!-- CollectionView displays a scrollable list of items -->
+        <!-- Binds the ItemsSource to the UrlList resource -->
         <CollectionView ItemsSource="{StaticResource UrlList}">
+            <!-- Define a header for the CollectionView -->
             <CollectionView.Header>
                 <Label
                     Text="Useful Resources"
@@ -25,8 +47,11 @@
                     Margin="0,10" />
             </CollectionView.Header>
 
+            <!-- Define how each item in the CollectionView should be displayed -->
             <CollectionView.ItemTemplate>
+                <!-- DataTemplate specifies the UI structure for each item -->
                 <DataTemplate>
+                    <!-- Frame creates a container with optional border and shadow, acting like a card -->
                     <Frame
                         Margin="10"
                         Padding="15"
