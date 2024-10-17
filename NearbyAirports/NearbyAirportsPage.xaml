@@ -12,7 +12,7 @@
              xmlns:models="clr-namespace:Lab2_Solution.Model"
              x:DataType="nearbyAirports:NearbyAirportsPage">
     <ContentPage.Resources>
-        <nearbyAirports:AirportVisitedConvertor x:Key="AirportVisitedConvertor" />
+        <nearbyAirports:AirportVisitedConverter x:Key="AirportVisitedConvertor" />
     </ContentPage.Resources>
     <ContentPage.Content>
         <Grid

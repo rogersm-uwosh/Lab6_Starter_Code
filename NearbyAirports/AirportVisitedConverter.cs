@@ -7,7 +7,7 @@ namespace Lab2_Solution.NearbyAirports;
 ///
 /// Converts boolean to a red circle or green circle image source.
 /// </summary>
-public class AirportVisitedConvertor : IValueConverter
+public class AirportVisitedConverter : IValueConverter
 {
     public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
     {
