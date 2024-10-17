@@ -123,13 +123,6 @@
     </ContentPage>
 
     <!-- Additional Tabs (Carissa)-->
-    <ContentPage Title="Routing"
-                 IconImageSource="map.png">
-        <Label Text="Map Content"
-               VerticalOptions="CenterAndExpand"
-               HorizontalOptions="CenterAndExpand"/>
-    </ContentPage>
-
     <ContentPage Title="Map"
                  IconImageSource="map.png">
         <Label Text="Map Content"
