@@ -1,14 +1,25 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="Lab2_Solution.PlanningTools"
+             x:Class="Lab6_Starter.PlanningTools"
              Title="Planning Tools">
-    <VerticalStackLayout>
-        <HorizontalStackLayout>
-            
-        </HorizontalStackLayout>
-        <HorizontalStackLayout>
-            
-        </HorizontalStackLayout>
-    </VerticalStackLayout>
+    <Grid RowDefinitions="*,*,25,*,*" ColumnDefinitions="*,2*,25,2*,*">
+        <Button Grid.Row="1" Grid.Column="1"
+                Text="Nearby Airports"
+                HorizontalOptions="FillAndExpand"
+                VerticalOptions="FillAndExpand"/>
+        <Button Grid.Row="1" Grid.Column="3"
+                Text="Routing Strategies"
+                HorizontalOptions="FillAndExpand"
+                VerticalOptions="FillAndExpand"/>
+        <Button Grid.Row="3" Grid.Column="1"
+                Text="Weather"
+                HorizontalOptions="FillAndExpand"
+                VerticalOptions="FillAndExpand"/>
+        <Button Grid.Row="3" Grid.Column="3"
+                Text="T-Shirt Redemption"
+                LineBreakMode="WordWrap"
+                HorizontalOptions="FillAndExpand"
+                VerticalOptions="FillAndExpand"/>
+    </Grid>
 </ContentPage>
