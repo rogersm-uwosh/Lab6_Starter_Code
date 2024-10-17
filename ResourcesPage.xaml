@@ -16,7 +16,7 @@
     
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="Lab2_Solution.ResourcesPage"
+             x:Class="Lab6_Starter.ResourcesPage"
              Title="ResourcesPage">
     <!-- Define resources that can be used within this page -->
     <ContentPage.Resources>
