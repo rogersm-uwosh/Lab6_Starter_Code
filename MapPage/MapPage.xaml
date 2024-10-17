@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<TabbedPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:local="clr-namespace:Lab6_Starter"  
+             x:Class="Lab2_Solution.MapPage"
+             xmlns:android="clr-namespace:Microsoft.Maui.Controls.PlatformConfiguration.AndroidSpecific;assembly=Microsoft.Maui.Controls"
+             android:TabbedPage.ToolbarPlacement="Bottom"
+             Title="MapPage">
+    
+
+    <TabbedPage.Children>
+        <NavigationPage IconImageSource="rectangle_list_48.png" Title="Airports">
+            <x:Arguments>
+                <local:MapPage/>
+            </x:Arguments>
+        </NavigationPage>
+    </TabbedPage.Children>
+
+    <ContentPage>
+        <VerticalStackLayout>
+            <Frame BorderColor="Black" CornerRadius="0" >
+                <Label Text="Map" FontSize="25" Margin="2" />
+            </Frame>
+
+            <Frame BorderColor="Black" CornerRadius="0" >
+                <Image Source="wisconsin_airports_map.png" Margin="15"/>
+            </Frame>
+        </VerticalStackLayout>
+    </ContentPage>
+</TabbedPage>
