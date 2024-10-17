@@ -1,4 +1,5 @@
 ﻿using System.Globalization;
+using Lab6_Starter.Model;
 
 namespace Lab2_Solution.NearbyAirports;
 
@@ -11,19 +12,27 @@ public class AirportVisitedConverter : IValueConverter
 {
     public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
     {
-        if (value is bool isActive)
+        if (value is not Airport airport) return null;
+        bool isVisited = false;
+        switch (airport.Id)
         {
-            return isActive
-                ? "green_circle.png"
-                : "red_circle.png";
+            case "KFLD":
+                isVisited = true;
+                break;
+            case "KMTW":
+                isVisited = true;
+                break;
+            case "KUNU":
+                isVisited = true;
+                break;
         }
-
-        return null;
+        return isVisited
+            ? "green_circle.png"
+            : "red_circle.png";
     }
 
     public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
     {
         return null;
     }
-    
 }

@@ -1,5 +1,5 @@
 ﻿using System.Collections.ObjectModel;
-using Lab2_Solution.Model;
+using Lab6_Starter.Model;
 
 namespace Lab2_Solution.NearbyAirports;
 
@@ -10,16 +10,16 @@ namespace Lab2_Solution.NearbyAirports;
 /// </summary>
 public partial class NearbyAirportsPage : ContentPage
 {
-    public ObservableCollection<NearbyAirport> NearbyAirports { get; } = [];
+    public ObservableCollection<Airport> NearbyAirports { get; } = [];
 
     public NearbyAirportsPage()
     {
         InitializeComponent();
         BindingContext = this;
-        NearbyAirports.Add(new NearbyAirport("KFLD", "Fond du Lac", 10, true));
-        NearbyAirports.Add(new NearbyAirport("KMTW", "Manitowac", 15,true));
-        NearbyAirports.Add(new NearbyAirport("79C", "Brenner", 18,false));
-        NearbyAirports.Add(new NearbyAirport("KUNU", "Dodge County", 64,true));
+        NearbyAirports.Add(new Airport("KFLD", "Fond du Lac", DateTime.Now, 1));
+        NearbyAirports.Add(new Airport("KMTW", "Manitowac", DateTime.Now, 1));
+        NearbyAirports.Add(new Airport("79C", "Brenner", DateTime.Now, 5));
+        NearbyAirports.Add(new Airport("KUNU", "Dodge County", DateTime.Now, 1));
     }
     
 }
