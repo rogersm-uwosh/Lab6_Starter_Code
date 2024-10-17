@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8" ?>
-   <!-- 
+<!-- 
          * Author: Taylor Showalter
          * Date: 10/15/2024
          * Description: Screen for Resource links
@@ -12,8 +12,8 @@
          * or what a skeleton of the code should look like in order to get rid of 
          * errors or how to implement things like shadows since it is different 
          * from html and css which I do know.
-   --> 
-    
+   -->
+
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="Lab6_Starter.ResourcesPage"
@@ -21,7 +21,8 @@
     <!-- Define resources that can be used within this page -->
     <ContentPage.Resources>
         <!-- Define an array of strings (URLs) with the key 'UrlList' -->
-        <x:Array x:Key="UrlList" Type="{x:Type x:String}">
+        <x:Array x:Key="UrlList"
+                 Type="{x:Type x:String}">
             <!-- Each x:String element represents a URL in the list -->
             <x:String>https://wisconsindot.gov/Pages/Home.aspx</x:String>
             <x:String>https://wisconsindot.gov/Pages/travel/air/pilot-info/flywi.aspx</x:String>
@@ -31,7 +32,7 @@
             <x:String>https://wisconsindot.gov/Pages/travel/air/pilot-info/flywi-rules.aspx</x:String>
         </x:Array>
     </ContentPage.Resources>
-    
+
     <!-- Define the content of the page -->
     <ContentPage.Content>
         <!-- CollectionView displays a scrollable list of items -->
@@ -44,7 +45,7 @@
                     FontSize="24"
                     FontAttributes="Bold"
                     HorizontalOptions="Center"
-                    Margin="0,10" />
+                    Margin="0,10"/>
             </CollectionView.Header>
 
             <!-- Define how each item in the CollectionView should be displayed -->
@@ -64,7 +65,7 @@
                                 Text="{Binding}"
                                 FontSize="16"
                                 TextColor="#007acc"
-                                FontAttributes="Italic" />
+                                FontAttributes="Italic"/>
                         </StackLayout>
                     </Frame>
                 </DataTemplate>
