@@ -13,6 +13,7 @@
                 <local:MainPage/>
             </x:Arguments>
         </NavigationPage>
+        <local:ResourcesPage/>
     </TabbedPage.Children>
 </TabbedPage>
 
