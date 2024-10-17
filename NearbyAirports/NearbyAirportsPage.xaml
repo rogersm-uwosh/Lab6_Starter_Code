@@ -16,25 +16,26 @@
     </ContentPage.Resources>
     <ContentPage.Content>
         <Grid
-            ColumnDefinitions="*,*"
-            RowDefinitions="auto, auto, *">
+            ColumnDefinitions="*, *, *"
+            RowDefinitions="auto, auto, *"
+            Margin="16">
 
             <Label Text="Airport: "
                    Grid.Column="0"
                    Grid.Row="0" />
             <Entry Placeholder="Airport"
                    Grid.Column="1"
-                   Grid.Row="0" />
+                   Grid.Row="0"/>
             <Label Text="Max Distance: "
                    Grid.Column="0"
                    Grid.Row="1" />
             <Entry Placeholder="Distance"
                    Grid.Column="1"
-                   Grid.Row="1" />
+                   Grid.Row="1"/>
 
             <ScrollView
                 Grid.Row="2"
-                Grid.ColumnSpan="2">
+                Grid.ColumnSpan="3">
 
                 <CollectionView
                     x:Name="AirportList"
