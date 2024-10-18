@@ -1,91 +1,152 @@
+
 <toolkit:Popup xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
                xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
                xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
                xmlns:calendar="clr-namespace:Syncfusion.Maui.Calendar;assembly=Syncfusion.Maui.Calendar"
                x:Class="Lab6_Starter.SimplePopup">
 
-    <toolkit:Popup.Resources
-        />
-        
-    <Grid RowDefinitions="Auto,Auto,Auto,Auto,Auto,Auto" ColumnDefinitions="*,*"
+    <toolkit:Popup.Resources />
+
+    <Grid RowDefinitions="Auto,Auto,Auto,Auto,Auto,Auto"
+          ColumnDefinitions="*,*"
           Padding="20" BackgroundColor="#F0F0F5"
           WidthRequest="600"
           HeightRequest="550">
-
+        
         <!-- Title -->
-        <Label Grid.Row="0" Grid.ColumnSpan="2" 
+        <Label Grid.Row="0" 
+               Grid.ColumnSpan="2"
                Text="Enter Details" 
-               FontSize="24" 
+               FontSize="24" TextColor="#2C3E50"
                HorizontalOptions="Center"
-               Margin="0,10" 
-               TextColor="#2C3E50"/>
+               Margin="0,10"/>
 
         <!-- ID Input -->
-        <HorizontalStackLayout Grid.Row="1" Grid.ColumnSpan="2" Spacing="10" VerticalOptions="Center">
-            <Label Text="Id" WidthRequest="80" VerticalOptions="Center" TextColor="#34495E"/>
-            <Entry Placeholder="Enter ID" Text="{Binding Id}" 
-                   HorizontalOptions="Fill" 
-                   BackgroundColor="#ECF0F1" TextColor="#2C3E50" 
-                   MaxLength="5" WidthRequest="200"/> <!-- Fixed Width -->
+        <HorizontalStackLayout 
+            Grid.Row="1" 
+            Grid.ColumnSpan="2"
+            Spacing="10"
+            VerticalOptions="Center">
+            <Label Text="Id"
+                   WidthRequest="80"
+                   VerticalOptions="Center"
+                   TextColor="#34495E" />
+
+            <Entry Placeholder="Enter ID"
+                   Text="{Binding Id}"
+                   HorizontalOptions="Fill"
+                   BackgroundColor="#ECF0F1"
+                   TextColor="#2C3E50"
+                   MaxLength="5" 
+                   WidthRequest="200" /> <!-- Fixed Width -->
         </HorizontalStackLayout>
 
         <!-- City Input -->
-        <HorizontalStackLayout Grid.Row="2" Grid.ColumnSpan="2" Spacing="10" VerticalOptions="Center">
-            <Label Text="City" WidthRequest="80" VerticalOptions="Center" TextColor="#34495E"/>
-            <Entry Placeholder="Enter City" Text="{Binding City}" 
-                   HorizontalOptions="Fill" 
-                   BackgroundColor="#ECF0F1" TextColor="#2C3E50" 
-                   MaxLength="25" WidthRequest="200"/> <!-- Fixed Width -->
+        <HorizontalStackLayout 
+            Grid.Row="2"
+            Grid.ColumnSpan="2"
+            Spacing="10"
+            VerticalOptions="Center">
+
+            <Label Text="City"
+                   WidthRequest="80"
+                   VerticalOptions="Center"
+                   TextColor="#34495E" />
+
+            <Entry Placeholder="Enter City" 
+                   Text="{Binding City}"
+                   HorizontalOptions="Fill"
+                   BackgroundColor="#ECF0F1" 
+                   TextColor="#2C3E50"
+                   MaxLength="25" 
+                   WidthRequest="200" /> <!-- Fixed Width -->
         </HorizontalStackLayout>
 
         <!-- Date Visited Input -->
-        <HorizontalStackLayout Grid.Row="3" Grid.ColumnSpan="2" Spacing="10" VerticalOptions="Center">
-            <Label Text="Date" WidthRequest="80" VerticalOptions="Center" TextColor="#34495E"/>
-            
-            <Grid 
-                RowDefinitions="250"
-                ColumnDefinitions="250">
-                <calendar:SfCalendar  
+        <HorizontalStackLayout 
+            Grid.Row="3" 
+            Grid.ColumnSpan="2"
+            Spacing="10" 
+            VerticalOptions="Center">
+            <Label Text="Date" 
+                   WidthRequest="80" 
+                   VerticalOptions="Center" 
+                   TextColor="#34495E" />
+
+            <Grid RowDefinitions="250"
+                  ColumnDefinitions="250">
+                
+                <calendar:SfCalendar 
                     x:Name="calendar"
                     View="Decade"
                     SelectionMode="Single">
-                    
                 </calendar:SfCalendar>
             </Grid>
 
         </HorizontalStackLayout>
 
         <!-- Rating Input -->
-        <HorizontalStackLayout Grid.Row="4" Grid.ColumnSpan="2" Spacing="10" VerticalOptions="Center">
-            <Label Text="Rating" WidthRequest="80" VerticalOptions="Center" TextColor="#34495E"/>
-            <!--Commenting out this text input to replace it with a grid of tappable stars:
-            <Entry Placeholder="Enter Rating" Text="{Binding Rating}" HorizontalOptions="FillAndExpand" 
-                   BackgroundColor="#ECF0F1" TextColor="#2C3E50"/>
-            -->
+        <HorizontalStackLayout 
+            Grid.Row="4" 
+            Grid.ColumnSpan="2" 
+            Spacing="10" 
+            VerticalOptions="Center">
+            <Label Text="Rating" 
+                   WidthRequest="80" 
+                   VerticalOptions="Center" 
+                   TextColor="#34495E" />
+            
+            <!-- Star buttons-->
             <Grid ColumnDefinitions="*,*,*,*,*"
                   HorizontalOptions="FillAndExpand">
-                <ImageButton x:Name="starOne"  Clicked="StarOne_Clicked" WidthRequest="24" Grid.Column="0" Source="Resources/Images/ic_fluent_star_24_filled_grey"/>
-                <ImageButton x:Name="starTwo" Clicked="StarTwo_Clicked" WidthRequest="24" Grid.Column="1" Source="Resources/Images/ic_fluent_star_24_filled_grey"/>
-                <ImageButton x:Name="starThree" Clicked="StarThree_Clicked" WidthRequest="24" Grid.Column="2" Source="Resources/Images/ic_fluent_star_24_filled_grey"/>
-                <ImageButton x:Name="starFour" Clicked="StarFour_Clicked" WidthRequest="24" Grid.Column="3" Source="Resources/Images/ic_fluent_star_24_filled_grey"/>
-                <ImageButton x:Name="starFive" Clicked="StarFive_Clicked" WidthRequest="24" Grid.Column="4" Source="Resources/Images/ic_fluent_star_24_filled_grey"/>
+                <ImageButton x:Name="starOne" 
+                             Clicked="StarOne_Clicked"
+                             WidthRequest="24" 
+                             Grid.Column="0"
+                             Source="Resources/Images/ic_fluent_star_24_filled_grey" />
+                <ImageButton x:Name="starTwo" 
+                             Clicked="StarTwo_Clicked" 
+                             WidthRequest="24" 
+                             Grid.Column="1"
+                             Source="Resources/Images/ic_fluent_star_24_filled_grey" />
+                <ImageButton x:Name="starThree" 
+                             Clicked="StarThree_Clicked"
+                             WidthRequest="24" 
+                             Grid.Column="2"
+                             Source="Resources/Images/ic_fluent_star_24_filled_grey" />
+                <ImageButton x:Name="starFour" 
+                             Clicked="StarFour_Clicked" 
+                             WidthRequest="24" Grid.Column="3"
+                             Source="Resources/Images/ic_fluent_star_24_filled_grey" />
+                <ImageButton x:Name="starFive" 
+                             Clicked="StarFive_Clicked" 
+                             WidthRequest="24" 
+                             Grid.Column="4"
+                             Source="Resources/Images/ic_fluent_star_24_filled_grey" />
             </Grid>
-
-
         </HorizontalStackLayout>
 
-        <!-- Buttons -->
-        <HorizontalStackLayout Grid.Row="5" Grid.ColumnSpan="2" Spacing="10" HorizontalOptions="Center" Margin="0,20,0,0">
-            <Button Text="Cancel" 
-                    Clicked="CancelAirportAdd_Clicked" 
-                    BackgroundColor="#E74C3C" 
+        <!-- Cancel and Submit Buttons -->
+        <HorizontalStackLayout 
+            Grid.Row="5" 
+            Grid.ColumnSpan="2" 
+            Spacing="10" 
+            HorizontalOptions="Center"
+            Margin="0,20,0,0">
+            
+            <Button Text="Cancel"
+                    Clicked="CancelAirportAdd_Clicked"
+                    BackgroundColor="#E74C3C"
                     TextColor="White"
-                    CornerRadius="10" WidthRequest="100" />
-            <Button Text="OK" 
-                    Clicked="CancelAirportAdd_Clicked" 
-                    BackgroundColor="#2ECC71" 
-                    TextColor="White" 
-                    CornerRadius="10" WidthRequest="100"/>
+                    CornerRadius="10" 
+                    WidthRequest="100" />
+            
+            <Button Text="OK"
+                    Clicked="CancelAirportAdd_Clicked"
+                    BackgroundColor="#2ECC71"
+                    TextColor="White"
+                CornerRadius="10" 
+                WidthRequest="100" />
         </HorizontalStackLayout>
     </Grid>
 </toolkit:Popup>
