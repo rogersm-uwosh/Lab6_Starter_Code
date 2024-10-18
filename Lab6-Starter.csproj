@@ -70,4 +70,9 @@
 	  <BundleResource Include="Resources\Images\trash.png" />
 	  <BundleResource Include="Resources\Images\rectangle_list_48.png" />
 	</ItemGroup>
+	<ItemGroup>
+	  <MauiXaml Update="PlanningTools.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	</ItemGroup>
 </Project>

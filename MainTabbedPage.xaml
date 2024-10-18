@@ -13,6 +13,11 @@
                 <local:MainPage/>
             </x:Arguments>
         </NavigationPage>
+        <NavigationPage IconImageSource="idea.png" Title="Planning Tools">
+            <x:Arguments>
+                <local:PlanningTools/>
+            </x:Arguments>
+        </NavigationPage>
     </TabbedPage.Children>
 </TabbedPage>
 
