@@ -4,9 +4,9 @@
                x:Class="Lab6_Starter.SimplePopup">
 
     <toolkit:Popup.Resources
-        Size ="1000,600"
-        />
-        <Grid RowDefinitions="Auto,Auto,Auto,Auto,Auto,Auto" ColumnDefinitions="*,*"
+        Size ="1000,600" />
+        
+    <Grid RowDefinitions="Auto,Auto,Auto,Auto,Auto,Auto" ColumnDefinitions="*,*"
           Padding="20" BackgroundColor="#F0F0F5">
 
         <!-- Title -->
@@ -20,33 +20,41 @@
         <!-- ID Input -->
         <HorizontalStackLayout Grid.Row="1" Grid.ColumnSpan="2" Spacing="10" VerticalOptions="Center">
             <Label Text="Id" WidthRequest="80" VerticalOptions="Center" TextColor="#34495E"/>
-            <Entry Placeholder="Enter ID" Text="{Binding Id}" HorizontalOptions="FillAndExpand" 
-                   BackgroundColor="#ECF0F1" TextColor="#2C3E50" />
+            <Entry Placeholder="Enter ID" Text="{Binding Id}" 
+                   HorizontalOptions="Fill" 
+                   BackgroundColor="#ECF0F1" TextColor="#2C3E50" 
+                   MaxLength="5" WidthRequest="200"/> <!-- Fixed Width -->
         </HorizontalStackLayout>
 
         <!-- City Input -->
         <HorizontalStackLayout Grid.Row="2" Grid.ColumnSpan="2" Spacing="10" VerticalOptions="Center">
             <Label Text="City" WidthRequest="80" VerticalOptions="Center" TextColor="#34495E"/>
-            <Entry Placeholder="Enter City" Text="{Binding City}" HorizontalOptions="FillAndExpand" 
-                   BackgroundColor="#ECF0F1" TextColor="#2C3E50"/>
+            <Entry Placeholder="Enter City" Text="{Binding City}" 
+                   HorizontalOptions="Fill" 
+                   BackgroundColor="#ECF0F1" TextColor="#2C3E50" 
+                   MaxLength="25" WidthRequest="200"/> <!-- Fixed Width -->
         </HorizontalStackLayout>
 
         <!-- Date Visited Input -->
         <HorizontalStackLayout Grid.Row="3" Grid.ColumnSpan="2" Spacing="10" VerticalOptions="Center">
             <Label Text="Date" WidthRequest="80" VerticalOptions="Center" TextColor="#34495E"/>
-            <Entry Placeholder="Date Visited" Text="{Binding DateVisited}" HorizontalOptions="FillAndExpand" 
-                   BackgroundColor="#ECF0F1" TextColor="#2C3E50"/>
+            <Entry Placeholder="Date Visited" Text="{Binding DateVisited}" 
+                   HorizontalOptions="Fill" 
+                   BackgroundColor="#ECF0F1" TextColor="#2C3E50" 
+                   WidthRequest="200"/> <!-- Fixed Width -->
         </HorizontalStackLayout>
 
         <!-- Rating Input -->
         <HorizontalStackLayout Grid.Row="4" Grid.ColumnSpan="2" Spacing="10" VerticalOptions="Center">
             <Label Text="Rating" WidthRequest="80" VerticalOptions="Center" TextColor="#34495E"/>
-            <Entry Placeholder="Enter Rating" Text="{Binding Rating}" HorizontalOptions="FillAndExpand" 
-                   BackgroundColor="#ECF0F1" TextColor="#2C3E50"/>
+            <Entry Placeholder="Enter Rating" Text="{Binding Rating}" 
+                   HorizontalOptions="Fill" 
+                   BackgroundColor="#ECF0F1" TextColor="#2C3E50" 
+                   WidthRequest="200"/> <!-- Fixed Width -->
         </HorizontalStackLayout>
 
         <!-- Buttons -->
-        <HorizontalStackLayout Grid.Row="5" Grid.ColumnSpan="2" Spacing="10" HorizontalOptions="End" Margin="0,20,0,0">
+        <HorizontalStackLayout Grid.Row="5" Grid.ColumnSpan="2" Spacing="10" HorizontalOptions="Center" Margin="0,20,0,0">
             <Button Text="Cancel" 
                     Clicked="CancelAirportAdd_Clicked" 
                     BackgroundColor="#E74C3C" 
