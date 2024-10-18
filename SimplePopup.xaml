@@ -41,8 +41,20 @@
         <!-- Rating Input -->
         <HorizontalStackLayout Grid.Row="4" Grid.ColumnSpan="2" Spacing="10" VerticalOptions="Center">
             <Label Text="Rating" WidthRequest="80" VerticalOptions="Center" TextColor="#34495E"/>
+            <!--Commenting out this text input to replace it with a grid of tappable stars:
             <Entry Placeholder="Enter Rating" Text="{Binding Rating}" HorizontalOptions="FillAndExpand" 
                    BackgroundColor="#ECF0F1" TextColor="#2C3E50"/>
+            -->
+            <Grid ColumnDefinitions="*,*,*,*,*"
+                  HorizontalOptions="FillAndExpand">
+                <ImageButton x:Name="starOne"  Clicked="StarOne_Clicked" WidthRequest="24" Grid.Column="0" Source="Resources/Images/ic_fluent_star_24_filled_grey"/>
+                <ImageButton x:Name="starTwo" Clicked="StarTwo_Clicked" WidthRequest="24" Grid.Column="1" Source="Resources/Images/ic_fluent_star_24_filled_grey"/>
+                <ImageButton x:Name="starThree" Clicked="StarThree_Clicked" WidthRequest="24" Grid.Column="2" Source="Resources/Images/ic_fluent_star_24_filled_grey"/>
+                <ImageButton x:Name="starFour" Clicked="StarFour_Clicked" WidthRequest="24" Grid.Column="3" Source="Resources/Images/ic_fluent_star_24_filled_grey"/>
+                <ImageButton x:Name="starFive" Clicked="StarFive_Clicked" WidthRequest="24" Grid.Column="4" Source="Resources/Images/ic_fluent_star_24_filled_grey"/>
+            </Grid>
+
+
         </HorizontalStackLayout>
 
         <!-- Buttons -->
