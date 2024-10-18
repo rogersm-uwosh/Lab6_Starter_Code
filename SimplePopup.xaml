@@ -6,53 +6,57 @@
     <toolkit:Popup.Resources
         Size ="1000,600"
         />
+        <Grid RowDefinitions="Auto,Auto,Auto,Auto,Auto,Auto" ColumnDefinitions="*,*"
+          Padding="20" BackgroundColor="#F0F0F5">
 
-    <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="*"/>
-        </Grid.RowDefinitions>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="*"/>
-        </Grid.ColumnDefinitions>
-        <HorizontalStackLayout 
-            Grid.Row="0"
-            Grid.ColumnSpan="2">
-            <Label Text="Id"/>
-            <Entry/>
+        <!-- Title -->
+        <Label Grid.Row="0" Grid.ColumnSpan="2" 
+               Text="Enter Details" 
+               FontSize="24" 
+               HorizontalOptions="Center"
+               Margin="0,10" 
+               TextColor="#2C3E50"/>
+
+        <!-- ID Input -->
+        <HorizontalStackLayout Grid.Row="1" Grid.ColumnSpan="2" Spacing="10" VerticalOptions="Center">
+            <Label Text="Id" WidthRequest="80" VerticalOptions="Center" TextColor="#34495E"/>
+            <Entry Placeholder="Enter ID" Text="{Binding Id}" HorizontalOptions="FillAndExpand" 
+                   BackgroundColor="#ECF0F1" TextColor="#2C3E50" />
         </HorizontalStackLayout>
-        <HorizontalStackLayout 
-            Grid.Row="1"
-            Grid.ColumnSpan="2">
-            <Label Text="City"/>
-            <Entry/>
+
+        <!-- City Input -->
+        <HorizontalStackLayout Grid.Row="2" Grid.ColumnSpan="2" Spacing="10" VerticalOptions="Center">
+            <Label Text="City" WidthRequest="80" VerticalOptions="Center" TextColor="#34495E"/>
+            <Entry Placeholder="Enter City" Text="{Binding City}" HorizontalOptions="FillAndExpand" 
+                   BackgroundColor="#ECF0F1" TextColor="#2C3E50"/>
         </HorizontalStackLayout>
-        <HorizontalStackLayout 
-            Grid.Row="2"
-            Grid.ColumnSpan="2">
-            <Label Text="DateVisted"/>
-            <Entry/>
+
+        <!-- Date Visited Input -->
+        <HorizontalStackLayout Grid.Row="3" Grid.ColumnSpan="2" Spacing="10" VerticalOptions="Center">
+            <Label Text="Date" WidthRequest="80" VerticalOptions="Center" TextColor="#34495E"/>
+            <Entry Placeholder="Date Visited" Text="{Binding DateVisited}" HorizontalOptions="FillAndExpand" 
+                   BackgroundColor="#ECF0F1" TextColor="#2C3E50"/>
         </HorizontalStackLayout>
-        <HorizontalStackLayout 
-            Grid.Row="3"
-            Grid.ColumnSpan="2">
-            <Label Text="Rating"/>
-            <Entry/>
+
+        <!-- Rating Input -->
+        <HorizontalStackLayout Grid.Row="4" Grid.ColumnSpan="2" Spacing="10" VerticalOptions="Center">
+            <Label Text="Rating" WidthRequest="80" VerticalOptions="Center" TextColor="#34495E"/>
+            <Entry Placeholder="Enter Rating" Text="{Binding Rating}" HorizontalOptions="FillAndExpand" 
+                   BackgroundColor="#ECF0F1" TextColor="#2C3E50"/>
         </HorizontalStackLayout>
-        <HorizontalStackLayout 
-            Grid.Row="4"
-            Grid.ColumnSpan="2">
-        </HorizontalStackLayout>
-        <HorizontalStackLayout 
-            Grid.Row="5"
-            Grid.ColumnSpan="2">
-            <Button Text="Cancel"/>
-            <Button Text="OK"/>
+
+        <!-- Buttons -->
+        <HorizontalStackLayout Grid.Row="5" Grid.ColumnSpan="2" Spacing="10" HorizontalOptions="End" Margin="0,20,0,0">
+            <Button Text="Cancel" 
+                    Command="{Binding CancelCommand}" 
+                    BackgroundColor="#E74C3C" 
+                    TextColor="White"
+                    CornerRadius="10" WidthRequest="100" />
+            <Button Text="OK" 
+                    Command="{Binding OkCommand}" 
+                    BackgroundColor="#2ECC71" 
+                    TextColor="White" 
+                    CornerRadius="10" WidthRequest="100"/>
         </HorizontalStackLayout>
     </Grid>
 </toolkit:Popup>
