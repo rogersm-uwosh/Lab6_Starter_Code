@@ -3,9 +3,56 @@
                xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
                x:Class="Lab6_Starter.SimplePopup">
 
-    <VerticalStackLayout>
-        <Label Text="Add New Airport!" />
-        <Entry x:Name="IdEntry"/>
-    </VerticalStackLayout>
+    <toolkit:Popup.Resources
+        Size ="1000,600"
+        />
 
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <HorizontalStackLayout 
+            Grid.Row="0"
+            Grid.ColumnSpan="2">
+            <Label Text="Id"/>
+            <Entry/>
+        </HorizontalStackLayout>
+        <HorizontalStackLayout 
+            Grid.Row="1"
+            Grid.ColumnSpan="2">
+            <Label Text="City"/>
+            <Entry/>
+        </HorizontalStackLayout>
+        <HorizontalStackLayout 
+            Grid.Row="2"
+            Grid.ColumnSpan="2">
+            <Label Text="DateVisted"/>
+            <Entry/>
+        </HorizontalStackLayout>
+        <HorizontalStackLayout 
+            Grid.Row="3"
+            Grid.ColumnSpan="2">
+            <Label Text="Rating"/>
+            <Entry/>
+        </HorizontalStackLayout>
+        <HorizontalStackLayout 
+            Grid.Row="4"
+            Grid.ColumnSpan="2">
+        </HorizontalStackLayout>
+        <HorizontalStackLayout 
+            Grid.Row="5"
+            Grid.ColumnSpan="2">
+            <Button Text="Cancel"/>
+            <Button Text="OK"/>
+        </HorizontalStackLayout>
+    </Grid>
 </toolkit:Popup>
