@@ -10,7 +10,8 @@ public partial class SimplePopup : Popup
     public SimplePopup()
 	{
 		InitializeComponent();
-	}
+        this.calendar.MonthView.NumberOfVisibleWeeks = 6;
+    }
 
 	void CancelAirportAdd_Clicked(object sender, EventArgs e) {
 		Close();
@@ -55,5 +56,6 @@ public partial class SimplePopup : Popup
         starFour.Source = yellowStarPath;
         starFive.Source = yellowStarPath;
     }
+    
 
 }

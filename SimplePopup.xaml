@@ -1,13 +1,16 @@
 <toolkit:Popup xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
                xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
                xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+               xmlns:calendar="clr-namespace:Syncfusion.Maui.Calendar;assembly=Syncfusion.Maui.Calendar"
                x:Class="Lab6_Starter.SimplePopup">
 
     <toolkit:Popup.Resources
-        Size ="1000,600" />
+        />
         
     <Grid RowDefinitions="Auto,Auto,Auto,Auto,Auto,Auto" ColumnDefinitions="*,*"
-          Padding="20" BackgroundColor="#F0F0F5">
+          Padding="20" BackgroundColor="#F0F0F5"
+          WidthRequest="600"
+          HeightRequest="550">
 
         <!-- Title -->
         <Label Grid.Row="0" Grid.ColumnSpan="2" 
@@ -38,10 +41,18 @@
         <!-- Date Visited Input -->
         <HorizontalStackLayout Grid.Row="3" Grid.ColumnSpan="2" Spacing="10" VerticalOptions="Center">
             <Label Text="Date" WidthRequest="80" VerticalOptions="Center" TextColor="#34495E"/>
-            <Entry Placeholder="Date Visited" Text="{Binding DateVisited}" 
-                   HorizontalOptions="Fill" 
-                   BackgroundColor="#ECF0F1" TextColor="#2C3E50" 
-                   WidthRequest="200"/> <!-- Fixed Width -->
+            
+            <Grid 
+                RowDefinitions="250"
+                ColumnDefinitions="250">
+                <calendar:SfCalendar  
+                    x:Name="calendar"
+                    View="Decade"
+                    SelectionMode="Single">
+                    
+                </calendar:SfCalendar>
+            </Grid>
+
         </HorizontalStackLayout>
 
         <!-- Rating Input -->
