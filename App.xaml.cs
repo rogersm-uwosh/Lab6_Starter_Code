@@ -1,6 +1,4 @@
-﻿using Lab2_Solution;
-
-namespace Lab6_Starter;
+﻿namespace Lab6_Starter;
 
 public partial class App : Application
 {
@@ -8,7 +6,7 @@ public partial class App : Application
 	{
 		InitializeComponent();
 
-		MainPage = new MapPage();
+		MainPage = new MainTabbedPage();
 	}
 }
 

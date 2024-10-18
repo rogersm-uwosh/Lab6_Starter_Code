@@ -52,6 +52,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
+		<PackageReference Include="Mapsui.Maui" Version="4.1.7" />
 		<PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="8.0.0" />
 		<PackageReference Include="Npgsql" Version="8.0.5" />
 		<PackageReference Include="Microsoft.Extensions.Configuration" Version="8.0.0" />
@@ -60,6 +61,7 @@
 
 	<ItemGroup>
 	  <None Remove="Model\" />
+	  <None Remove="Resources\Images\map_nav_icon.png" />
 	  <None Remove="Resources\Images\trash.png" />
 	  <None Remove="Resources\Images\rectangle-list_48.png" />
 	</ItemGroup>
@@ -71,10 +73,7 @@
 	  <BundleResource Include="Resources\Images\rectangle_list_48.png" />
 	</ItemGroup>
 	<ItemGroup>
-	  <MauiXaml Update="MapPage\MapPage.xaml">
-	    <Generator>MSBuild:Compile</Generator>
-	  </MauiXaml>
-	  <MauiXaml Update="MapPage\MapTabbedPage.xaml">
+	  <MauiXaml Update="Map\MapPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	</ItemGroup>
