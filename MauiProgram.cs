@@ -14,7 +14,9 @@ public static class MauiProgram
 		var builder = MauiApp.CreateBuilder();
 		builder
 			.UseMauiApp<App>()
+			//[[ Alex Robinson - Dependency of MapsUI
 			.UseSkiaSharp(true)
+			//]]
 			.ConfigureFonts(fonts =>
 			{
 				fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
