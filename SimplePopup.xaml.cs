@@ -8,4 +8,8 @@ public partial class SimplePopup : CommunityToolkit.Maui.Views.Popup
 		InitializeComponent();
 	}
 
+	void CancelAirportAdd_Clicked(System.Object sender, System.EventArgs e) {
+		Close();
+	}
+
 }

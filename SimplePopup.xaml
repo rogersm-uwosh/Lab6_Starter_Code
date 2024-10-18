@@ -48,12 +48,12 @@
         <!-- Buttons -->
         <HorizontalStackLayout Grid.Row="5" Grid.ColumnSpan="2" Spacing="10" HorizontalOptions="End" Margin="0,20,0,0">
             <Button Text="Cancel" 
-                    Command="{Binding CancelCommand}" 
+                    Clicked="CancelAirportAdd_Clicked" 
                     BackgroundColor="#E74C3C" 
                     TextColor="White"
                     CornerRadius="10" WidthRequest="100" />
             <Button Text="OK" 
-                    Command="{Binding OkCommand}" 
+                    Clicked="CancelAirportAdd_Clicked" 
                     BackgroundColor="#2ECC71" 
                     TextColor="White" 
                     CornerRadius="10" WidthRequest="100"/>
