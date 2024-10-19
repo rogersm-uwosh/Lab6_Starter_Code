@@ -14,14 +14,17 @@
                 <local:MainPage/>
             </x:Arguments>
         </NavigationPage>
-        
+        <NavigationPage IconImageSource="idea.png" Title="Planning Tools">
+            <x:Arguments>
+                <local:PlanningTools/>
+            </x:Arguments>
+        </NavigationPage>        
         <!-- Added by Alexander Johnston -->
         <NavigationPage IconImageSource="nearby_airport_icon.png" Title="Nearby">
             <x:Arguments>
                 <nearbyAirports:NearbyAirportsPage/>
             </x:Arguments>
         </NavigationPage>
-        
     </TabbedPage.Children>
 </TabbedPage>
 
