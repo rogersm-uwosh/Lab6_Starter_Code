@@ -1,9 +1,8 @@
-
 <toolkit:Popup xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
                xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
                xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
                xmlns:calendar="clr-namespace:Syncfusion.Maui.Calendar;assembly=Syncfusion.Maui.Calendar"
-               x:Class="Lab6_Starter.SimplePopup">
+               x:Class="Lab6_Starter.EnterAirportDetailsPopup">
 
     <toolkit:Popup.Resources />
 
@@ -12,7 +11,7 @@
           Padding="20" BackgroundColor="#F0F0F5"
           WidthRequest="600"
           HeightRequest="550">
-        
+
         <!-- Title -->
         <Label Grid.Row="0" 
                Grid.ColumnSpan="2"
@@ -38,7 +37,8 @@
                    BackgroundColor="#ECF0F1"
                    TextColor="#2C3E50"
                    MaxLength="5" 
-                   WidthRequest="200" /> <!-- Fixed Width -->
+                   WidthRequest="200" />
+            <!-- Fixed Width -->
         </HorizontalStackLayout>
 
         <!-- City Input -->
@@ -59,7 +59,8 @@
                    BackgroundColor="#ECF0F1" 
                    TextColor="#2C3E50"
                    MaxLength="25" 
-                   WidthRequest="200" /> <!-- Fixed Width -->
+                   WidthRequest="200" />
+            <!-- Fixed Width -->
         </HorizontalStackLayout>
 
         <!-- Date Visited Input -->
@@ -75,7 +76,7 @@
 
             <Grid RowDefinitions="250"
                   ColumnDefinitions="250">
-                
+
                 <calendar:SfCalendar 
                     x:Name="calendar"
                     View="Decade"
@@ -95,7 +96,7 @@
                    WidthRequest="80" 
                    VerticalOptions="Center" 
                    TextColor="#34495E" />
-            
+
             <!-- Star buttons-->
             <Grid ColumnDefinitions="*,*,*,*,*"
                   HorizontalOptions="FillAndExpand">
@@ -103,7 +104,7 @@
                              Clicked="StarOne_Clicked"
                              WidthRequest="24" 
                              Grid.Column="0"
-                             Source="Resources/Images/ic_fluent_star_24_filled_grey" />
+                             Source="Resources/Images/ic_fluent_star_24_filled_yellow" />
                 <ImageButton x:Name="starTwo" 
                              Clicked="StarTwo_Clicked" 
                              WidthRequest="24" 
@@ -133,14 +134,14 @@
             Spacing="10" 
             HorizontalOptions="Center"
             Margin="0,20,0,0">
-            
+
             <Button Text="Cancel"
                     Clicked="CancelAirportAdd_Clicked"
                     BackgroundColor="#E74C3C"
                     TextColor="White"
                     CornerRadius="10" 
                     WidthRequest="100" />
-            
+
             <Button Text="OK"
                     Clicked="CancelAirportAdd_Clicked"
                     BackgroundColor="#2ECC71"
