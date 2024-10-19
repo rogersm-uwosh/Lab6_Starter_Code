@@ -1,5 +1,4 @@
 using CommunityToolkit.Maui.Views;
-using Google.Android.Material.Slider;
 using System.Formats.Tar;
 
 namespace Lab6_Starter;
