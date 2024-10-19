@@ -25,104 +25,128 @@
                  IconImageSource="rectangle_list_48.png"
                  xmlns:maps="http://schemas.microsoft.com/dotnet/2021/maui/maps">
 
-        <VerticalStackLayout Padding="20">
+        <!-- Using VerticalStackLayout for simple layout -->
+        <VerticalStackLayout Padding="20" 
+                             HorizontalOptions="FillAndExpand" 
+                             VerticalOptions="FillAndExpand">
 
-            <!-- Starting Airport (Carissa)-->
-            <HorizontalStackLayout>
-                <Label Text="Starting Airport:"
-                       VerticalOptions="Center"
-                       Margin="0,20,10,20"/>
-                <Frame BorderColor="Gray"
-                       CornerRadius="5"
-                       Padding="0"
-                       HasShadow="True">
-                    <Entry x:Name="StartingAirportPicker"
-                           Text="KATW"
-                           WidthRequest="55"
+            <!-- Starting Airport -->
+            <HorizontalStackLayout HorizontalOptions="FillAndExpand" Padding="0,20,0,0">
+                <Label Text="Starting Airport:" 
+                       VerticalOptions="Center" 
+                       WidthRequest="140"
+                       Margin="0,0,10,0"/>
+                <Frame BorderColor="Gray" 
+                       CornerRadius="5" 
+                       Padding="0" 
+                       HasShadow="True" 
+                       HorizontalOptions="FillAndExpand">
+                    <Entry x:Name="StartingAirportPicker" 
+                           Text="KATW" 
+                           HorizontalOptions="FillAndExpand" 
                            HeightRequest="40"/>
                 </Frame>
             </HorizontalStackLayout>
 
-
-            <!-- Max Distance (Pachia)-->
-            <HorizontalStackLayout Padding="0,10">
-                <Label Text="Max Distance:"
-                       VerticalOptions="Center"
-                       Margin="0,10,10,20"/>
-                <Frame BorderColor="Gray"
-                       CornerRadius="5"
-                       Padding="5"
-                       HasShadow="True">
-                    <Entry x:Name="MaxDistanceEntry"
-                           Text="60"
-                           Keyboard="Numeric"
-                           WidthRequest="30"
+            <!-- Max Distance -->
+            <HorizontalStackLayout HorizontalOptions="FillAndExpand" Padding="0,10,0,0">
+                <Label Text="Max Distance:" 
+                       VerticalOptions="Center" 
+                       WidthRequest="140"
+                       Margin="0,0,10,0"/>
+                <Frame BorderColor="Gray" 
+                       CornerRadius="5" 
+                       Padding="0" 
+                       HasShadow="True" 
+                       HorizontalOptions="FillAndExpand">
+                    <Entry x:Name="MaxDistanceEntry" 
+                           Text="60" 
+                           Keyboard="Numeric" 
+                           HorizontalOptions="FillAndExpand" 
                            HeightRequest="40"/>
                 </Frame>
-                <Label Text="  nm"
-                       VerticalOptions="Center"/>
+                <Label Text="nm" 
+                       VerticalOptions="Center" 
+                       Margin="10,0,0,0"/>
             </HorizontalStackLayout>
 
-            <!-- Unvisited Toggle (Hannah) -->
-            <HorizontalStackLayout>
-                <Label Text="Unvisited:"
-                       VerticalOptions="Center"/>
-                <Switch x:Name="UnvisitedSwitch"
-                        IsToggled="False"/>
+            <!-- Unvisited Toggle -->
+            <HorizontalStackLayout HorizontalOptions="FillAndExpand" Padding="0,20,0,0">
+                <Label Text="Unvisited:" 
+                       VerticalOptions="Center" 
+                       WidthRequest="140"/>
+                <Switch x:Name="UnvisitedSwitch" 
+                        IsToggled="False" 
+                        HorizontalOptions="Start"/>
             </HorizontalStackLayout>
 
-            <!-- Suggested Routes with Frame (Hannah)-->
-            <Label Text="Suggested Routes"
-                   FontAttributes="Bold"
-                   FontSize="Medium"
+            <!-- Suggested Routes -->
+            <Label Text="Suggested Routes" 
+                   FontAttributes="Bold" 
+                   FontSize="Medium" 
                    Margin="0,20,0,0"/>
-            <ListView x:Name="RoutesListView"
-                      HasUnevenRows="True"
-                      SeparatorVisibility="Default"
-                      HeightRequest="200">
-                <ListView.Header>
-                    <StackLayout Orientation="Horizontal"
-                                 Padding="00,0">
-                        <Label Text="ICAO"
-                               FontAttributes="Bold"
-                               HorizontalOptions="Start"/>
-                        <Label Text="City"
-                               FontAttributes="Bold"
-                               HorizontalOptions="CenterAndExpand"/>
-                        <Label Text="Dist"
-                               FontAttributes="Bold"
-                               HorizontalOptions="End"/>
-                    </StackLayout>
-                </ListView.Header>
-                <ListView.ItemTemplate>
-                    <DataTemplate>
-                        <ViewCell>
-                            <StackLayout Orientation="Horizontal"
-                                         Padding="10,0">
-                                <Label Text="{Binding ICAO}"
-                                       HorizontalOptions="Start"/>
-                                <Label Text="{Binding City}"
-                                       HorizontalOptions="CenterAndExpand"/>
-                                <Label Text="{Binding Distance}"
-                                       HorizontalOptions="End"/>
-                            </StackLayout>
-                        </ViewCell>
-                    </DataTemplate>
-                </ListView.ItemTemplate>
-            </ListView>
 
-            <!-- Map (Pachia, Hannah, Carissa)-->
-            <Label Text="Map"
-                   FontAttributes="Bold"
-                   FontSize="Medium"
-                   Margin="0,-50,0,0"/>
-            <maps:Map x:Name="map"
-                      HeightRequest="300">
-            </maps:Map>
+            <!-- CollectionView (Table) takes up the full width -->
+            <CollectionView x:Name="RoutesCollectionView" 
+                            HorizontalOptions="FillAndExpand"
+                            VerticalOptions="FillAndExpand"
+                            ItemsSource="{Binding Routes}">
+                <CollectionView.Header>
+                    <!-- Use Grid to ensure full width for columns -->
+                    <Grid ColumnDefinitions="1*, 2*, 1*" HorizontalOptions="FillAndExpand">
+                        <Label Text="ICAO" 
+                               FontAttributes="Bold" 
+                               HorizontalTextAlignment="Start"
+                               Grid.Column="0"
+                               Padding="0,0,10,0"/>
+                        <Label Text="City" 
+                               FontAttributes="Bold" 
+                               HorizontalTextAlignment="Start"
+                               Grid.Column="1"
+                               Padding="0,0,10,0"/>
+                        <Label Text="Dist" 
+                               FontAttributes="Bold" 
+                               HorizontalTextAlignment="End"
+                               Grid.Column="2"
+                               Padding="0,0,10,0"/>
+                    </Grid>
+                </CollectionView.Header>
+                
+                <!-- Data template for table rows -->
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <!-- Using Grid for row layout -->
+                        <Grid ColumnDefinitions="1*, 2*, 1*" Padding="0,10,0,0" HorizontalOptions="FillAndExpand">
+                            <Label Text="{Binding ICAO}" 
+                                   Grid.Column="0"
+                                   HorizontalTextAlignment="Start"
+                                   Padding="0,0,10,0"/>
+                            <Label Text="{Binding City}" 
+                                   Grid.Column="1"
+                                   HorizontalTextAlignment="Start"
+                                   Padding="0,0,10,0"/>
+                            <Label Text="{Binding Distance}" 
+                                   Grid.Column="2"
+                                   HorizontalTextAlignment="End"
+                                   Padding="0,0,10,0"/>
+                        </Grid>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+
+            <!-- Map takes up the rest of the space -->
+            <Label Text="Map" 
+                   FontAttributes="Bold" 
+                   FontSize="Medium" 
+                   Margin="0,20,0,10"/>
+            <maps:Map x:Name="map" 
+                      HorizontalOptions="FillAndExpand" 
+                      VerticalOptions="FillAndExpand"
+                      HeightRequest="300"/>
         </VerticalStackLayout>
     </ContentPage>
 
-    <!-- Additional Tabs (Carissa)-->
+    <!-- Additional Tabs -->
     <ContentPage Title="Map"
                  IconImageSource="map.png">
         <Label Text="Map Content"
