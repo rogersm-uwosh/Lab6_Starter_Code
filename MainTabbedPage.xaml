@@ -6,11 +6,18 @@
              xmlns:local="clr-namespace:Lab6_Starter"  
              x:Class="Lab6_Starter.MainTabbedPage"
              xmlns:android="clr-namespace:Microsoft.Maui.Controls.PlatformConfiguration.AndroidSpecific;assembly=Microsoft.Maui.Controls"
-            android:TabbedPage.ToolbarPlacement="Bottom">
+             xmlns:nearbyAirports="clr-namespace:Lab2_Solution.NearbyAirports"
+             android:TabbedPage.ToolbarPlacement="Bottom">
     <TabbedPage.Children>
         <NavigationPage IconImageSource="rectangle_list_48.png" Title="Airports">
             <x:Arguments>
                 <local:MainPage/>
+            </x:Arguments>
+        </NavigationPage>
+        <!-- Added by Alexander Johnston -->
+        <NavigationPage IconImageSource="nearby_airport_icon.png" Title="Nearby">
+            <x:Arguments>
+                <nearbyAirports:NearbyAirportsPage/>
             </x:Arguments>
         </NavigationPage>
         <NavigationPage IconImageSource="cloudy.png" Title="Weather">
@@ -20,5 +27,6 @@
         </NavigationPage>
     </TabbedPage.Children>
 </TabbedPage>
+
 
 
