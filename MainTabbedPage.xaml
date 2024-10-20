@@ -2,11 +2,12 @@
 
 <!-- Don't need to set x:DataType, because we aren't binding to anything-->
 <TabbedPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
-            xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-            xmlns:local="clr-namespace:Lab6_Starter"
-            x:Class="Lab6_Starter.MainTabbedPage"
-            xmlns:android="clr-namespace:Microsoft.Maui.Controls.PlatformConfiguration.AndroidSpecific;assembly=Microsoft.Maui.Controls"
-            android:TabbedPage.ToolbarPlacement="Bottom">
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:local="clr-namespace:Lab6_Starter"  
+             x:Class="Lab6_Starter.MainTabbedPage"
+             xmlns:android="clr-namespace:Microsoft.Maui.Controls.PlatformConfiguration.AndroidSpecific;assembly=Microsoft.Maui.Controls"
+             xmlns:nearbyAirports="clr-namespace:Lab2_Solution.NearbyAirports"
+             android:TabbedPage.ToolbarPlacement="Bottom">
     <TabbedPage.Children>
         <NavigationPage IconImageSource="rectangle_list_48.png"
                 Title="Airports">
@@ -20,7 +21,16 @@
                 <local:ResourcesPage/>
             </x:Arguments>
         </NavigationPage>
+        
+        <!-- Added by Alexander Johnston -->
+        <NavigationPage IconImageSource="nearby_airport_icon.png" Title="Nearby">
+            <x:Arguments>
+                <nearbyAirports:NearbyAirportsPage/>
+            </x:Arguments>
+        </NavigationPage>
+        
     </TabbedPage.Children>
 </TabbedPage>
+
 
 
