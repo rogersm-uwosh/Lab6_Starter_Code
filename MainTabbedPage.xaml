@@ -31,6 +31,13 @@
                 <nearbyAirports:NearbyAirportsPage/>
             </x:Arguments>
         </NavigationPage>
+        
+        <!-- Navigate to Routing Strategies (Carissa) -->
+        <NavigationPage Title="Routing Strategies" IconImageSource="routing_strategies.png">
+            <x:Arguments>
+                <local:RoutingStrategies/> 
+            </x:Arguments>
+        </NavigationPage>
     </TabbedPage.Children>
 </TabbedPage>
 
