@@ -2,6 +2,8 @@
                xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
                xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
                xmlns:calendar="clr-namespace:Syncfusion.Maui.Calendar;assembly=Syncfusion.Maui.Calendar"
+               
+
                x:Class="Lab6_Starter.EnterAirportDetailsPopup">
 
     <toolkit:Popup.Resources />
