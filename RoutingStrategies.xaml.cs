@@ -9,7 +9,7 @@ using Map = Microsoft.Maui.Controls.Maps.Map;
 
 namespace Lab6_Starter
 {
-    public partial class RoutingStrategies : TabbedPage
+    public partial class RoutingStrategies : ContentPage
     {
          public ObservableCollection<Route> Routes { get; set; }
 
