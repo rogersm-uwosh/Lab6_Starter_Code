@@ -81,6 +81,9 @@
 	  </MauiXaml>
 	</ItemGroup>
 	<ItemGroup>
+	  <Compile Update="Resources.xaml.cs">
+	    <DependentUpon>Resources.xaml</DependentUpon>
+	  </Compile>
 	  <MauiXaml Update="Map\MapPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>

@@ -11,11 +11,21 @@
              android:TabbedPage.IsSwipePagingEnabled="false">
              <!-- Above line: Alex Robinson - Fixes touch interaction problems with the MapsUI's Map control -->
     <TabbedPage.Children>
-        <NavigationPage IconImageSource="rectangle_list_48.png" Title="Airports">
+        <NavigationPage IconImageSource="rectangle_list_48.png"
+                        Title="Airports">
             <x:Arguments>
                 <local:MainPage/>
             </x:Arguments>
         </NavigationPage>
+
+        <NavigationPage IconImageSource="resources.png"
+                        Title="Resources">
+            <x:Arguments>
+                <local:Resources/>
+            </x:Arguments>
+        </NavigationPage>
+
+        
         <!--
             Brady Blocksom & Alex Robinson 
             Each modified this block's location and contents during different iterations
