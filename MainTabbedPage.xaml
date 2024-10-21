@@ -3,15 +3,34 @@
 <!-- Don't need to set x:DataType, because we aren't binding to anything-->
 <TabbedPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:local="clr-namespace:Lab6_Starter"  
+             xmlns:local="clr-namespace:Lab6_Starter"
              x:Class="Lab6_Starter.MainTabbedPage"
              xmlns:android="clr-namespace:Microsoft.Maui.Controls.PlatformConfiguration.AndroidSpecific;assembly=Microsoft.Maui.Controls"
              xmlns:nearbyAirports="clr-namespace:Lab2_Solution.NearbyAirports"
-             android:TabbedPage.ToolbarPlacement="Bottom">
+             android:TabbedPage.ToolbarPlacement="Bottom"
+             android:TabbedPage.IsSwipePagingEnabled="false">
+             <!-- Above line: Alex Robinson - Fixes touch interaction problems with the MapsUI's Map control -->
     <TabbedPage.Children>
-        <NavigationPage IconImageSource="rectangle_list_48.png" Title="Airports">
+        <NavigationPage IconImageSource="rectangle_list_48.png"
+                        Title="Airports">
             <x:Arguments>
                 <local:MainPage/>
+            </x:Arguments>
+        </NavigationPage>
+
+        <NavigationPage IconImageSource="resources.png"
+                        Title="Resources">
+            <x:Arguments>
+                <local:Resources/>
+            </x:Arguments>
+        </NavigationPage>   
+        <!--
+            Brady Blocksom & Alex Robinson 
+            Each modified this block's location and contents during different iterations
+        -->
+        <NavigationPage IconImageSource="map_nav_icon.png" Title="Map">
+            <x:Arguments>
+                <local:MapPage/>
             </x:Arguments>
         </NavigationPage>
         <!-- Added by Alexander Johnston -->
@@ -23,6 +42,10 @@
         <NavigationPage IconImageSource="cloudy.png" Title="Weather">
             <x:Arguments>
                 <local:WeatherPage/>
+        <!-- Navigate to Routing Strategies (Carissa) -->
+        <NavigationPage Title="Routing Strategies" IconImageSource="routing_strategies.png">
+            <x:Arguments>
+                <local:RoutingStrategies/> 
             </x:Arguments>
         </NavigationPage>
     </TabbedPage.Children>
