@@ -3,59 +3,61 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="Lab6_Starter.PlanningTools"
              Title="Planning Tools">
-        <Grid RowDefinitions="*,2*,25,2*,*"
-              ColumnDefinitions="*,3*,25,3*,*">
+        <Grid RowDefinitions="*,*,40,*,*"
+              ColumnDefinitions="*,5*,40,5*,*">
                 <Button Grid.Row="1"
                         Grid.Column="1"
                         Text="Nearby Airports"
-                        FontSize="Subtitle"
+                        LineBreakMode="WordWrap"
+                        FontSize="{OnPlatform iOS=14, Android=16}"
                         HorizontalOptions="FillAndExpand"
                         VerticalOptions="FillAndExpand">
                         <Button.Shadow>
                                 <Shadow Brush="Black"
-                                        Opacity="0.8"
+                                        Opacity="0.7"
                                         Radius="15"
-                                        Offset="10,10"/>
+                                        Offset="5,5"/>
                         </Button.Shadow>
                 </Button>
                 <Button Grid.Row="1"
                         Grid.Column="3"
                         Text="Routing Strategies"
-                        FontSize="Subtitle"
+                        LineBreakMode="WordWrap"
+                        FontSize="{OnPlatform iOS=14, Android=16}"
                         HorizontalOptions="FillAndExpand"
                         VerticalOptions="FillAndExpand">
                         <Button.Shadow>
                                 <Shadow Brush="Black"
-                                        Opacity="0.8"
+                                        Opacity="0.7"
                                         Radius="15"
-                                        Offset="10,10"/>
+                                        Offset="5,5"/>
                         </Button.Shadow>
                 </Button>
                 <Button Grid.Row="3"
                         Grid.Column="1"
                         Text="Weather"
-                        FontSize="Subtitle"
+                        FontSize="{OnPlatform iOS=14, Android=16}"
                         HorizontalOptions="FillAndExpand"
                         VerticalOptions="FillAndExpand">
                         <Button.Shadow>
                                 <Shadow Brush="Black"
-                                        Opacity="0.8"
+                                        Opacity="0.7"
                                         Radius="15"
-                                        Offset="10,10"/>
+                                        Offset="5,5"/>
                         </Button.Shadow>
                 </Button>
                 <Button Grid.Row="3"
                         Grid.Column="3"
                         Text="T-Shirt Redemption"
-                        FontSize="Subtitle"
+                        FontSize="{OnPlatform iOS=14, Android=16}"
                         LineBreakMode="WordWrap"
                         HorizontalOptions="FillAndExpand"
                         VerticalOptions="FillAndExpand">
                         <Button.Shadow>
                                 <Shadow Brush="Black"
-                                        Opacity="0.8"
+                                        Opacity="0.7"
                                         Radius="15"
-                                        Offset="10,10"/>
+                                        Offset="5,5"/>
                         </Button.Shadow>
                 </Button>
         </Grid>
