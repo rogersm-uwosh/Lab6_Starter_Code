@@ -9,7 +9,7 @@
             android:TabbedPage.ToolbarPlacement="Bottom">
     <TabbedPage.Children>
         <NavigationPage IconImageSource="rectangle_list_48.png"
-                Title="Airports">
+                        Title="Airports">
             <x:Arguments>
                 <local:MainPage/>
             </x:Arguments>
@@ -17,7 +17,7 @@
         <NavigationPage IconImageSource="resources.png"
                         Title="Resources">
             <x:Arguments>
-                <local:ResourcesPage/>
+                <local:Resources/>
             </x:Arguments>
         </NavigationPage>
     </TabbedPage.Children>
