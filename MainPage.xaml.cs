@@ -60,10 +60,13 @@ public partial class MainPage : ContentPage
         }
         else
         {
-            AirportEditError result = MauiProgram.BusinessLogic.EditAirport(currentAirport.Id, CityENT.Text, DateTime.Parse(DateVisitedENT.Text), int.Parse(RatingENT.Text));
-            if (result != AirportEditError.NoError)
+            if (currentAirport != null)
             {
-                DisplayAlert("Ruhroh", result.ToString(), "OK");
+                AirportEditError result = MauiProgram.BusinessLogic.EditAirport(currentAirport.Id, CityENT.Text, DateTime.Parse(DateVisitedENT.Text), int.Parse(RatingENT.Text));
+                if (result != AirportEditError.NoError)
+                {
+                    DisplayAlert("Ruhroh", result.ToString(), "OK");
+                }
             }
         }
     }
