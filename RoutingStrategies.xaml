@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!--!
+    Name: Carissa Engebose, Pachia Lee, and Hannah Hotchkiss
+    Date: 10/16/24
+    Description: This implements and displays the routing strategies screen for the airports lab.
+                 It displays the starting airports, max distance, number of airports visited and 
+                 suggested routes as well as a map.
+    Bugs: The back button that was on the screen isn't there right now because navigation 
+          to this page has to come from planning tools. Also, we couldn't get the map to display 
+          a location, but the map is there.
+    Reflection: Overall this lab was very useful to learn about tabs and how to get a map for an app. 
+                There were a lot of difficulties especially with the map not working how we wanted it to, 
+                but it was nice to get practice on tabbed pages and work with new people.
+-->
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:local="clr-namespace:Lab6_Starter"
+             xmlns:maps="clr-namespace:Microsoft.Maui.Controls.Maps;assembly=Microsoft.Maui.Controls.Maps"
+             x:Class="Lab6_Starter.RoutingStrategies"
+             Title="Routing Strategies"
+             xmlns:android="clr-namespace:Microsoft.Maui.Controls.PlatformConfiguration.AndroidSpecific;assembly=Microsoft.Maui.Controls">
+
+    <!-- Your ContentPage layout starts here -->
+    <VerticalStackLayout Padding="20" 
+                         HorizontalOptions="FillAndExpand" 
+                         VerticalOptions="FillAndExpand">
+
+        <!-- Starting Airport -->
+        <HorizontalStackLayout HorizontalOptions="FillAndExpand" Padding="0,20,0,0">
+            <Label Text="Starting Airport:" 
+                   VerticalOptions="Center" 
+                   WidthRequest="140"
+                   Margin="0,0,10,0"/>
+            <Frame BorderColor="Gray" 
+                   CornerRadius="5" 
+                   Padding="0" 
+                   HasShadow="True" 
+                   HorizontalOptions="FillAndExpand">
+                <Entry x:Name="StartingAirportPicker" 
+                       Text="KATW" 
+                       HorizontalOptions="FillAndExpand" 
+                       HeightRequest="40"/>
+            </Frame>
+        </HorizontalStackLayout>
+
+        <!-- Max Distance -->
+        <HorizontalStackLayout HorizontalOptions="FillAndExpand" Padding="0,10,0,0">
+            <Label Text="Max Distance:" 
+                   VerticalOptions="Center" 
+                   WidthRequest="140"
+                   Margin="0,0,10,0"/>
+            <Frame BorderColor="Gray" 
+                   CornerRadius="5" 
+                   Padding="0" 
+                   HasShadow="True" 
+                   HorizontalOptions="FillAndExpand">
+                <Entry x:Name="MaxDistanceEntry" 
+                       Text="60" 
+                       Keyboard="Numeric" 
+                       HorizontalOptions="FillAndExpand" 
+                       HeightRequest="40"/>
+            </Frame>
+            <Label Text="nm" 
+                   VerticalOptions="Center" 
+                   Margin="10,0,0,0"/>
+        </HorizontalStackLayout>
+
+        <!-- Unvisited Toggle -->
+        <HorizontalStackLayout HorizontalOptions="FillAndExpand" Padding="0,20,0,0">
+            <Label Text="Unvisited:" 
+                   VerticalOptions="Center" 
+                   WidthRequest="140"/>
+            <Switch x:Name="UnvisitedSwitch" 
+                    IsToggled="False" 
+                    HorizontalOptions="Start"/>
+        </HorizontalStackLayout>
+
+        <!-- Suggested Routes -->
+        <Label Text="Suggested Routes" 
+               FontAttributes="Bold" 
+               FontSize="Medium" 
+               Margin="0,20,0,0"/>
+
+        <!-- CollectionView (Table) takes up the full width -->
+        <CollectionView x:Name="RoutesCollectionView" 
+                        HorizontalOptions="FillAndExpand"
+                        VerticalOptions="FillAndExpand"
+                        ItemsSource="{Binding Routes}">
+            <CollectionView.Header>
+                <!-- Use Grid to ensure full width for columns -->
+                <Grid ColumnDefinitions="1*, 2*, 1*" HorizontalOptions="FillAndExpand">
+                    <Label Text="ICAO" 
+                           FontAttributes="Bold" 
+                           HorizontalTextAlignment="Start"
+                           Grid.Column="0"
+                           Padding="0,0,10,0"/>
+                    <Label Text="City" 
+                           FontAttributes="Bold" 
+                           HorizontalTextAlignment="Start"
+                           Grid.Column="1"
+                           Padding="0,0,10,0"/>
+                    <Label Text="Dist" 
+                           FontAttributes="Bold" 
+                           HorizontalTextAlignment="End"
+                           Grid.Column="2"
+                           Padding="0,0,10,0"/>
+                </Grid>
+            </CollectionView.Header>
+                
+            <!-- Data template for table rows -->
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <!-- Using Grid for row layout -->
+                    <Grid ColumnDefinitions="1*, 2*, 1*" Padding="0,10,0,0" HorizontalOptions="FillAndExpand">
+                        <Label Text="{Binding ICAO}" 
+                               Grid.Column="0"
+                               HorizontalTextAlignment="Start"
+                               Padding="0,0,10,0"/>
+                        <Label Text="{Binding City}" 
+                               Grid.Column="1"
+                               HorizontalTextAlignment="Start"
+                               Padding="0,0,10,0"/>
+                        <Label Text="{Binding Distance}" 
+                               Grid.Column="2"
+                               HorizontalTextAlignment="End"
+                               Padding="0,0,10,0"/>
+                    </Grid>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+
+        <!-- Map takes up the rest of the space -->
+        <Label Text="Map" 
+               FontAttributes="Bold" 
+               FontSize="Medium" 
+               Margin="0,20,0,10"/>
+        <maps:Map x:Name="map" 
+                  HorizontalOptions="FillAndExpand" 
+                  VerticalOptions="FillAndExpand"
+                  HeightRequest="300"/>
+    </VerticalStackLayout>
+
+</ContentPage>
