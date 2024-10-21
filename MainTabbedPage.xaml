@@ -42,6 +42,8 @@
         <NavigationPage IconImageSource="cloudy.png" Title="Weather">
             <x:Arguments>
                 <local:WeatherPage/>
+            </x:Arguments>
+        </NavigationPage>
         <!-- Navigate to Routing Strategies (Carissa) -->
         <NavigationPage Title="Routing Strategies" IconImageSource="routing_strategies.png">
             <x:Arguments>
