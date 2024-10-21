@@ -16,8 +16,8 @@
 
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="Lab6_Starter.ResourcesPage"
-             Title="ResourcesPage">
+             x:Class="Lab6_Starter.Resources"
+             Title="Resources">
     <!-- Define resources that can be used within this page -->
     <ContentPage.Resources>
         <!-- Define an array of strings (URLs) with the key 'UrlList' -->
@@ -38,16 +38,6 @@
         <!-- CollectionView displays a scrollable list of items -->
         <!-- Binds the ItemsSource to the UrlList resource -->
         <CollectionView ItemsSource="{StaticResource UrlList}">
-            <!-- Define a header for the CollectionView -->
-            <CollectionView.Header>
-                <Label
-                    Text="Useful Resources"
-                    FontSize="24"
-                    FontAttributes="Bold"
-                    HorizontalOptions="Center"
-                    Margin="0,10"/>
-            </CollectionView.Header>
-
             <!-- Define how each item in the CollectionView should be displayed -->
             <CollectionView.ItemTemplate>
                 <!-- DataTemplate specifies the UI structure for each item -->

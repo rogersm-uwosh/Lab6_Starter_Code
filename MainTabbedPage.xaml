@@ -10,17 +10,19 @@
              android:TabbedPage.ToolbarPlacement="Bottom">
     <TabbedPage.Children>
         <NavigationPage IconImageSource="rectangle_list_48.png"
-                Title="Airports">
+                        Title="Airports">
             <x:Arguments>
                 <local:MainPage/>
             </x:Arguments>
         </NavigationPage>
+
         <NavigationPage IconImageSource="resources.png"
                         Title="Resources">
             <x:Arguments>
-                <local:ResourcesPage/>
+                <local:Resources/>
             </x:Arguments>
         </NavigationPage>
+
         
         <!-- Added by Alexander Johnston -->
         <NavigationPage IconImageSource="nearby_airport_icon.png" Title="Nearby">

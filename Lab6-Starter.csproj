@@ -67,4 +67,9 @@
 	  <BundleResource Include="Resources\Images\trash.png" />
 	  <BundleResource Include="Resources\Images\rectangle_list_48.png" />
 	</ItemGroup>
+	<ItemGroup>
+	  <Compile Update="Resources.xaml.cs">
+	    <DependentUpon>Resources.xaml</DependentUpon>
+	  </Compile>
+	</ItemGroup>
 </Project>
