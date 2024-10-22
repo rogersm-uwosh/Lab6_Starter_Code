@@ -28,9 +28,7 @@
             <x:Arguments>
                 <local:Resources/>
             </x:Arguments>
-        </NavigationPage>
-
-        
+        </NavigationPage>   
         <!--
             Brady Blocksom & Alex Robinson 
             Each modified this block's location and contents during different iterations
@@ -47,8 +45,11 @@
                 <nearbyAirports:NearbyAirportsPage/>
             </x:Arguments>
         </NavigationPage>
-
-        
+        <NavigationPage IconImageSource="cloudy.png" Title="Weather">
+            <x:Arguments>
+                <local:WeatherPage/>
+            </x:Arguments>
+        </NavigationPage>
         <!-- Navigate to Routing Strategies (Carissa) -->
         <NavigationPage Title="Routing Strategies" IconImageSource="routing_strategies.png">
             <x:Arguments>
