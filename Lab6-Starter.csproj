@@ -78,4 +78,7 @@
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	</ItemGroup>
+	<ItemGroup>
+		<MauiXaml Update="PlanningTools.xaml"/>
+	</ItemGroup>
 </Project>
