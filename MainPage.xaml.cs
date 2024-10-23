@@ -19,21 +19,6 @@ public partial class MainPage : ContentPage
 
     void AddAirport_Clicked(System.Object sender, System.EventArgs e)
     {
-        // The UI layer talks to the BusinessLogic layer, telling it what to do
-        //DateTime dateVisited;
-
-        //if (DateTime.TryParse(DateVisitedENT.Text, out dateVisited) == false)
-        //{
-        //    DisplayAlert("Ruhroh", "Illegal date format", "OK");
-        //}
-        //else
-        //{
-        //    AirportAdditionError result = MauiProgram.BusinessLogic.AddAirport(IdENT.Text, CityENT.Text, DateTime.Parse(DateVisitedENT.Text), int.Parse(RatingENT.Text));
-        //    if (result != AirportAdditionError.NoError)
-        //    {
-        //        DisplayAlert("Ruhroh", result.ToString(), "OK");
-        //    }
-        //}
         var popup = new EnterAirportDetailsPopup(null);
 
         this.ShowPopup(popup);
@@ -54,22 +39,6 @@ public partial class MainPage : ContentPage
         Airport currentAirport = CV.SelectedItem as Airport;
         var popup = new EnterAirportDetailsPopup(currentAirport);
         this.ShowPopup(popup);
-
-        // if (DateTime.TryParse(DateVisitedENT.Text, out dateVisited) == false)
-        // {
-        //     DisplayAlert("Ruhroh", "Illegal date format", "OK");
-        // }
-        // else
-        // {
-        //     if (currentAirport != null)
-        //     {
-        //         AirportEditError result = MauiProgram.BusinessLogic.EditAirport(currentAirport.Id, CityENT.Text, DateTime.Parse(DateVisitedENT.Text), int.Parse(RatingENT.Text));
-        //         if (result != AirportEditError.NoError)
-        //         {
-        //             DisplayAlert("Ruhroh", result.ToString(), "OK");
-        //         }
-        //     }
-        // }
     }
 
     void CalculateStatistics_Clicked(System.Object sender, System.EventArgs e)
