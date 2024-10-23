@@ -27,12 +27,23 @@ public partial class MainPage : ContentPage
     void DeleteAirport_Clicked(System.Object sender, System.EventArgs e)
     {
         Airport currentAirport = CV.SelectedItem as Airport;
+        
+        // Check if an airport is selected
+        if (currentAirport == null)
+        {
+            // Show an alert if no airport is selected
+            DisplayAlert("Selection Error", "Please select an airport to delete.", "OK");
+            return; // Exit the method
+        }
+
+        // Proceed to delete the selected airport
         AirportDeletionError result = MauiProgram.BusinessLogic.DeleteAirport(currentAirport.Id);
         if (result != AirportDeletionError.NoError)
         {
             DisplayAlert("Ruhroh", result.ToString(), "OK");
         }
     }
+
 
     void EditAirport_Clicked(System.Object sender, System.EventArgs e)
     {
