@@ -28,12 +28,15 @@
             Grid.ColumnSpan="2"
             Spacing="10"
             VerticalOptions="Center">
-            <Label Text="Id"
+            <Label 
+                   Text="Id"
                    WidthRequest="80"
                    VerticalOptions="Center"
                    TextColor="#34495E" />
 
-            <Entry Placeholder="Enter ID"
+            <Entry 
+                   x:Name="IdEntry"
+                   Placeholder="Enter ID"
                    Text="{Binding Id}"
                    HorizontalOptions="Fill"
                    BackgroundColor="#ECF0F1"
@@ -50,12 +53,15 @@
             Spacing="10"
             VerticalOptions="Center">
 
-            <Label Text="City"
+            <Label 
+                   Text="City"
                    WidthRequest="80"
                    VerticalOptions="Center"
                    TextColor="#34495E" />
 
-            <Entry Placeholder="Enter City" 
+            <Entry 
+                   x:Name="CityEntry"
+                   Placeholder="Enter City" 
                    Text="{Binding City}"
                    HorizontalOptions="Fill"
                    BackgroundColor="#ECF0F1" 
@@ -82,7 +88,8 @@
                 <calendar:SfCalendar 
                     x:Name="calendar"
                     View="Decade"
-                    SelectionMode="Single">
+                    SelectionMode="Single"
+                    SelectionChanged="OnCalendarSelectionChanged">
                 </calendar:SfCalendar>
             </Grid>
 
@@ -106,7 +113,7 @@
                              Clicked="StarOne_Clicked"
                              WidthRequest="24" 
                              Grid.Column="0"
-                             Source="Resources/Images/ic_fluent_star_24_filled_yellow" />
+                             Source="ic_fluent_star_24_filled_grey" />
                 <ImageButton x:Name="starTwo" 
                              Clicked="StarTwo_Clicked" 
                              WidthRequest="24" 
@@ -145,7 +152,7 @@
                     WidthRequest="100" />
 
             <Button Text="OK"
-                    Clicked="CancelAirportAdd_Clicked"
+                    Clicked="AddAirport_Clicked"
                     BackgroundColor="#2ECC71"
                     TextColor="White"
                 CornerRadius="10" 
