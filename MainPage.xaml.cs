@@ -34,9 +34,9 @@ public partial class MainPage : ContentPage
         //        DisplayAlert("Ruhroh", result.ToString(), "OK");
         //    }
         //}
-        var popup = new EnterAirportDetailsPopup(false);
+        var popup = new EnterAirportDetailsPopup(null);
 
-        this.ShowPopup( popup );
+        this.ShowPopup(popup);
     }
 
     void DeleteAirport_Clicked(System.Object sender, System.EventArgs e)
@@ -52,23 +52,24 @@ public partial class MainPage : ContentPage
     void EditAirport_Clicked(System.Object sender, System.EventArgs e)
     {
         Airport currentAirport = CV.SelectedItem as Airport;
-        DateTime dateVisited;
+        var popup = new EnterAirportDetailsPopup(currentAirport);
+        this.ShowPopup(popup);
 
-        if (DateTime.TryParse(DateVisitedENT.Text, out dateVisited) == false)
-        {
-            DisplayAlert("Ruhroh", "Illegal date format", "OK");
-        }
-        else
-        {
-            if (currentAirport != null)
-            {
-                AirportEditError result = MauiProgram.BusinessLogic.EditAirport(currentAirport.Id, CityENT.Text, DateTime.Parse(DateVisitedENT.Text), int.Parse(RatingENT.Text));
-                if (result != AirportEditError.NoError)
-                {
-                    DisplayAlert("Ruhroh", result.ToString(), "OK");
-                }
-            }
-        }
+        // if (DateTime.TryParse(DateVisitedENT.Text, out dateVisited) == false)
+        // {
+        //     DisplayAlert("Ruhroh", "Illegal date format", "OK");
+        // }
+        // else
+        // {
+        //     if (currentAirport != null)
+        //     {
+        //         AirportEditError result = MauiProgram.BusinessLogic.EditAirport(currentAirport.Id, CityENT.Text, DateTime.Parse(DateVisitedENT.Text), int.Parse(RatingENT.Text));
+        //         if (result != AirportEditError.NoError)
+        //         {
+        //             DisplayAlert("Ruhroh", result.ToString(), "OK");
+        //         }
+        //     }
+        // }
     }
 
     void CalculateStatistics_Clicked(System.Object sender, System.EventArgs e)

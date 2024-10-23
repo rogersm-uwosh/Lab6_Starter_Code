@@ -16,17 +16,25 @@ public partial class EnterAirportDetailsPopup : Popup
     private string city = "";
     private DateTime? dateVisted;
     private int rating = 0;
-    public EnterAirportDetailsPopup (bool isEdit)
+    public EnterAirportDetailsPopup (Airport airport)
     {
         this.isEdit = isEdit;
         InitializeComponent();
-        this.calendar.MonthView.NumberOfVisibleWeeks = 6;
+        this.Calendar.MonthView.NumberOfVisibleWeeks = 6;
         Console.WriteLine("Popup Opened");
+        if (airport != null)
+        {
+            IdEntry.Text = airport.Id;
+            CityEntry.Text = airport.City;
+            Calendar.SelectedDate = airport.DateVisited;
+            FillStars(airport.Rating);
+        }
     }
+    
 
     void OnCalendarSelectionChanged(object sender, EventArgs e)
     {
-        dateVisted = calendar.SelectedDate ;
+        dateVisted = Calendar.SelectedDate ;
         Console.WriteLine(dateVisted.ToString()); //DELETE ME
     }
     
@@ -37,28 +45,20 @@ public partial class EnterAirportDetailsPopup : Popup
         {
             int starCount = Convert.ToInt32(button.CommandParameter);
             FillStars(starCount);
-            rating = starCount;
         }
     }
     
     private void FillStars (int numStars) {
         starOne.Source = starTwo.Source = starThree.Source = starFour.Source = starFive.Source = greyStarPath;
-        switch (numStars) 
+        var stars = new[] { starOne, starTwo, starThree, starFour, starFive };
+        rating = numStars;
+        for (int i = 0; i < stars.Length; i++)
         {
-            case 5: starFive.Source = yellowStarPath;
-            goto case 4;
-            case 4: starFour.Source = yellowStarPath;
-            goto case 3;
-            case 3: starThree.Source = yellowStarPath;
-            goto case 2;
-            case 2: starTwo.Source = yellowStarPath;
-            goto case 1;
-            case 1: starOne.Source = yellowStarPath;
-            break;
+            stars[i].Source = (i < numStars) ? yellowStarPath : greyStarPath;
         }
     }
 
-    async void AddAirport_Clicked(object sender, EventArgs e)
+    async void Ok_Clicked(object sender, EventArgs e)
     {
         string errorMessage;
         if (dateVisted != null)
@@ -90,7 +90,8 @@ public partial class EnterAirportDetailsPopup : Popup
                     break;
                 default:
                     errorMessage = $"Successfully Added Airport{id}";
-                    break;
+                    Close();
+                    return;
             }
         }
         else
@@ -100,7 +101,7 @@ public partial class EnterAirportDetailsPopup : Popup
         IToast errorMessageToast = Toast.Make(errorMessage);
         errorMessageToast.Show();
     }
-    void CancelAirportAdd_Clicked(object sender, EventArgs e)
+    void Cancel_Clicked(object sender, EventArgs e)
     {
         Close();
     }
