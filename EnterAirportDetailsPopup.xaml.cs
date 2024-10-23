@@ -29,6 +29,8 @@ public partial class EnterAirportDetailsPopup : Popup
         if (airport != null) // only null if it's an edit
         {
             isEdit = true; // technically we could use whether airportToEditId is null to check this, but this is more clear
+            IdLabel.IsVisible = false;
+            IdEntry.IsVisible = false;
             airportToEditId = airport.Id;
             IdEntry.Text = airport.Id;
             CityEntry.Text = airport.City;
@@ -72,7 +74,7 @@ public partial class EnterAirportDetailsPopup : Popup
         id = IdEntry.Text;
         city = CityEntry.Text;
         var action = isEdit ? (Action)editAirport : (Action)addAirport;
-        action(); // this is super necessary, but it looks kinda neat (pretty self explanatory here too)
+        action(); // this is super necessary, but it looks kinda neat (pretty self-explanatory here too)
     }
 
     async void addAirport()
