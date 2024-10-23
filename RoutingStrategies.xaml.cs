@@ -1,10 +1,10 @@
+using Mapsui.UI.Maui;
+using Mapsui.Layers;
+using Mapsui.Tiling;
+using Mapsui.Utilities;
 using Microsoft.Maui.Controls;
-using Microsoft.Maui.Controls.Maps;
-using Microsoft.Maui.Maps;
-using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using Map = Microsoft.Maui.Controls.Maps.Map;
+using Mapsui.Projections;
 
 
 namespace Lab6_Starter
@@ -21,19 +21,30 @@ namespace Lab6_Starter
             // Example data to bind
             Routes = new ObservableCollection<Route>
             {
-                new Route { ICAO = "KATL", City = "Atlanta", Distance = 100 },
-                new Route { ICAO = "KLAX", City = "Los Angeles", Distance = 200 },
-                new Route { ICAO = "KJFK", City = "New York", Distance = 300 }
+                new Route { ICAO = "KATW", City = "Appleton", Distance = 0 },
+                new Route { ICAO = "KFLD", City = "Los Angeles", Distance = 28 },
+                new Route { ICAO = "KUNN", City = "Dodge County", Distance = 23 },
+                new Route { ICAO = "KUBB", City = "Burlington", Distance = 47 },
+                new Route { ICAO = "KATW", City = "Appleton", Distance = 95 }
             };
 
             // Binding the CollectionView to the data source
             RoutesCollectionView.ItemsSource = Routes;
 
-            // Set initial map location (Pachia)
-            map.MoveToRegion(MapSpan.FromCenterAndRadius(new Location(44.2619, 88.4154), Distance.FromMiles(10)));
-            //Content = map;
+
+            // Load OpenStreetMap directly into the WebView without requiring an HTML file
+            var mapUrl = GenerateOpenStreetMapUrl(44.2619, -88.4154, 10); // Appleton Airport coordinates
+            MapView.Source = mapUrl;
         }
+
+        // Generates the OpenStreetMap URL for the given latitude, longitude, and zoom level
+        private string GenerateOpenStreetMapUrl(double latitude, double longitude, int zoom)
+        {
+            return $"https://www.openstreetmap.org/?mlat={latitude}&mlon={longitude}#map={zoom}/{latitude}/{longitude}";
+        }
+        
     }
+
 
     // Get airport data (Hannah)
     public class Route

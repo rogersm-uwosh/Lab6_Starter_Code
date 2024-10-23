@@ -14,23 +14,20 @@
 -->
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:local="clr-namespace:Lab6_Starter"
-             xmlns:maps="clr-namespace:Microsoft.Maui.Controls.Maps;assembly=Microsoft.Maui.Controls.Maps"
              x:Class="Lab6_Starter.RoutingStrategies"
-             Title="Routing Strategies"
-             xmlns:android="clr-namespace:Microsoft.Maui.Controls.PlatformConfiguration.AndroidSpecific;assembly=Microsoft.Maui.Controls">
+             Title="Routing Strategies">
 
     <!-- Your ContentPage layout starts here -->
-    <VerticalStackLayout Padding="20" 
+    <VerticalStackLayout Padding="10" 
                          HorizontalOptions="FillAndExpand" 
                          VerticalOptions="FillAndExpand">
 
         <!-- Starting Airport -->
-        <HorizontalStackLayout HorizontalOptions="FillAndExpand" Padding="0,20,0,0">
+        <HorizontalStackLayout HorizontalOptions="FillAndExpand" Padding="0,5,0,0">
             <Label Text="Starting Airport:" 
                    VerticalOptions="Center" 
                    WidthRequest="140"
-                   Margin="0,0,10,0"/>
+                   Margin="0,0,-20,0"/>
             <Frame BorderColor="Gray" 
                    CornerRadius="5" 
                    Padding="0" 
@@ -48,7 +45,7 @@
             <Label Text="Max Distance:" 
                    VerticalOptions="Center" 
                    WidthRequest="140"
-                   Margin="0,0,10,0"/>
+                   Margin="0,0,-20,0"/>
             <Frame BorderColor="Gray" 
                    CornerRadius="5" 
                    Padding="0" 
@@ -66,20 +63,20 @@
         </HorizontalStackLayout>
 
         <!-- Unvisited Toggle -->
-        <HorizontalStackLayout HorizontalOptions="FillAndExpand" Padding="0,20,0,0">
+        <HorizontalStackLayout HorizontalOptions="FillAndExpand" Padding="0,10,0,0">
             <Label Text="Unvisited:" 
-                   VerticalOptions="Center" 
+                   VerticalOptions="Center"
+                   Margin="0,0,-60,0" 
                    WidthRequest="140"/>
             <Switch x:Name="UnvisitedSwitch" 
-                    IsToggled="False" 
-                    HorizontalOptions="Start"/>
+                    IsToggled="False" />
         </HorizontalStackLayout>
 
         <!-- Suggested Routes -->
         <Label Text="Suggested Routes" 
                FontAttributes="Bold" 
                FontSize="Medium" 
-               Margin="0,20,0,0"/>
+               Margin="0,20,0,10"/>
 
         <!-- CollectionView (Table) takes up the full width -->
         <CollectionView x:Name="RoutesCollectionView" 
@@ -130,14 +127,12 @@
         </CollectionView>
 
         <!-- Map takes up the rest of the space -->
-        <Label Text="Map" 
-               FontAttributes="Bold" 
-               FontSize="Medium" 
-               Margin="0,20,0,10"/>
-        <maps:Map x:Name="map" 
-                  HorizontalOptions="FillAndExpand" 
-                  VerticalOptions="FillAndExpand"
-                  HeightRequest="300"/>
+        <!-- WebView for rendering OpenStreetMap -->
+        <Label Text="Map" FontAttributes="Bold" FontSize="Medium" Margin="0,20,0,10"/>
+        <WebView x:Name="MapView"
+                 HorizontalOptions="FillAndExpand"
+                 VerticalOptions="FillAndExpand"
+                 HeightRequest="300"/>
     </VerticalStackLayout>
 
 </ContentPage>
