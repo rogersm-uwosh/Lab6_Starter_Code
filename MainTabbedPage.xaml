@@ -17,15 +17,18 @@
                 <local:MainPage/>
             </x:Arguments>
         </NavigationPage>
+        <NavigationPage IconImageSource="idea.png" Title="Planning Tools">
+            <x:Arguments>
+                <local:PlanningTools/>
+            </x:Arguments>
+        </NavigationPage>        
 
         <NavigationPage IconImageSource="resources.png"
                         Title="Resources">
             <x:Arguments>
                 <local:Resources/>
             </x:Arguments>
-        </NavigationPage>
-
-        
+        </NavigationPage>   
         <!--
             Brady Blocksom & Alex Robinson 
             Each modified this block's location and contents during different iterations
@@ -35,13 +38,18 @@
                 <local:MapPage/>
             </x:Arguments>
         </NavigationPage>
+
         <!-- Added by Alexander Johnston -->
         <NavigationPage IconImageSource="nearby_airport_icon.png" Title="Nearby">
             <x:Arguments>
                 <nearbyAirports:NearbyAirportsPage/>
             </x:Arguments>
         </NavigationPage>
-        
+        <NavigationPage IconImageSource="cloudy.png" Title="Weather">
+            <x:Arguments>
+                <local:WeatherPage/>
+            </x:Arguments>
+        </NavigationPage>
         <!-- Navigate to Routing Strategies (Carissa) -->
         <NavigationPage Title="Routing Strategies" IconImageSource="routing_strategies.png">
             <x:Arguments>

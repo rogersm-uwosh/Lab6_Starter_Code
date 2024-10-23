@@ -76,16 +76,28 @@
 	  <BundleResource Include="Resources\Images\rectangle_list_48.png" />
 	</ItemGroup>
 	<ItemGroup>
+
 	  <MauiXaml Update="EnterAirportDetailsPopup.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	</ItemGroup>
 	<ItemGroup>
+	  <Compile Update="WeatherPage.xaml.cs">
+	    <DependentUpon>WeatherPage.xaml</DependentUpon>
+	  </Compile>
+	</ItemGroup>
+	<ItemGroup>
+		<MauiXaml Update="WeatherPage.xaml">
+			<Generator>MSBuild:Compile</Generator>
+		</MauiXaml>
 	  <Compile Update="Resources.xaml.cs">
 	    <DependentUpon>Resources.xaml</DependentUpon>
 	  </Compile>
 	  <MauiXaml Update="Map\MapPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
+	</ItemGroup>
+	<ItemGroup>
+		<MauiXaml Update="PlanningTools.xaml"/>
 	</ItemGroup>
 </Project>
