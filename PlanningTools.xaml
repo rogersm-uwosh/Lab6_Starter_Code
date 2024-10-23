@@ -9,13 +9,15 @@
                         Grid.Column="1"
                         Text="Nearby Airports"
                         LineBreakMode="WordWrap"
-                        FontSize="{OnPlatform iOS=14, Android=16}"
+                        FontSize="{OnPlatform iOS=15, Android=17}"
                         HorizontalOptions="FillAndExpand"
-                        VerticalOptions="FillAndExpand">
+                        VerticalOptions="FillAndExpand"
+                        Clicked="OnNearbyAirportsClicked"
+                        CornerRadius="20">
                         <Button.Shadow>
                                 <Shadow Brush="Black"
                                         Opacity="0.7"
-                                        Radius="15"
+                                        Radius="20"
                                         Offset="5,5"/>
                         </Button.Shadow>
                 </Button>
@@ -23,40 +25,46 @@
                         Grid.Column="3"
                         Text="Routing Strategies"
                         LineBreakMode="WordWrap"
-                        FontSize="{OnPlatform iOS=14, Android=16}"
+                        FontSize="{OnPlatform iOS=15, Android=17}"
                         HorizontalOptions="FillAndExpand"
-                        VerticalOptions="FillAndExpand">
+                        VerticalOptions="FillAndExpand"
+                        Clicked="OnRoutingStrategiesClicked"
+                        CornerRadius="20">
                         <Button.Shadow>
                                 <Shadow Brush="Black"
                                         Opacity="0.7"
-                                        Radius="15"
+                                        Radius="20"
                                         Offset="5,5"/>
                         </Button.Shadow>
                 </Button>
                 <Button Grid.Row="3"
                         Grid.Column="1"
                         Text="Weather"
-                        FontSize="{OnPlatform iOS=14, Android=16}"
+                        FontSize="{OnPlatform iOS=15, Android=17}"
                         HorizontalOptions="FillAndExpand"
-                        VerticalOptions="FillAndExpand">
+                        VerticalOptions="FillAndExpand"
+                        Clicked="OnWeatherClicked"
+                        CornerRadius="20">
                         <Button.Shadow>
                                 <Shadow Brush="Black"
                                         Opacity="0.7"
-                                        Radius="15"
+                                        Radius="20"
                                         Offset="5,5"/>
                         </Button.Shadow>
                 </Button>
                 <Button Grid.Row="3"
                         Grid.Column="3"
                         Text="T-Shirt Redemption"
-                        FontSize="{OnPlatform iOS=14, Android=16}"
+                        FontSize="{OnPlatform iOS=15, Android=17}"
                         LineBreakMode="WordWrap"
                         HorizontalOptions="FillAndExpand"
-                        VerticalOptions="FillAndExpand">
+                        VerticalOptions="FillAndExpand"
+                        Clicked="OnTShirtClicked"
+                        CornerRadius="20">
                         <Button.Shadow>
                                 <Shadow Brush="Black"
                                         Opacity="0.7"
-                                        Radius="15"
+                                        Radius="20"
                                         Offset="5,5"/>
                         </Button.Shadow>
                 </Button>
