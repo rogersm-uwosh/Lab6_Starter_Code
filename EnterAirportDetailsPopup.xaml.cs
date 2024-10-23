@@ -2,6 +2,7 @@ using CommunityToolkit.Maui.Alerts;
 using CommunityToolkit.Maui.Core;
 using CommunityToolkit.Maui.Views;
 using Lab6_Starter.Model;
+using Syncfusion.Maui.Calendar;
 using System.Formats.Tar;
 using System.Runtime.InteropServices;
 
@@ -14,7 +15,7 @@ public partial class EnterAirportDetailsPopup : Popup
     const string yellowStarPath = "Resources/Images/ic_fluent_star_24_filled_yellow.svg";
     private string id = "";
     private string city = "";
-    private DateTime? dateVisted;
+    private DateTime? dateVisited;
     private int rating = 0;
     public EnterAirportDetailsPopup (bool isEdit)
     {
@@ -26,8 +27,7 @@ public partial class EnterAirportDetailsPopup : Popup
 
     void OnCalendarSelectionChanged(object sender, EventArgs e)
     {
-        dateVisted = calendar.SelectedDate ;
-        Console.WriteLine(dateVisted.ToString()); //DELETE ME
+        dateVisited = calendar.SelectedDate ;
     }
     
     //select rating
@@ -40,65 +40,94 @@ public partial class EnterAirportDetailsPopup : Popup
             rating = starCount;
         }
     }
-    
-    private void FillStars (int numStars) {
-        starOne.Source = starTwo.Source = starThree.Source = starFour.Source = starFive.Source = greyStarPath;
-        switch (numStars) 
+
+    private void FillStars(int numStars)
+    {
+        var stars = new[] { starOne, starTwo, starThree, starFour, starFive };
+
+        for (int i = 0; i < stars.Length; i++)
         {
-            case 5: starFive.Source = yellowStarPath;
-            goto case 4;
-            case 4: starFour.Source = yellowStarPath;
-            goto case 3;
-            case 3: starThree.Source = yellowStarPath;
-            goto case 2;
-            case 2: starTwo.Source = yellowStarPath;
-            goto case 1;
-            case 1: starOne.Source = yellowStarPath;
-            break;
+            stars[i].Source = (i < numStars) ? yellowStarPath : greyStarPath;
         }
     }
-
+    /// <summary>
+    /// Based on the isEdit boolean, 
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
     async void AddAirport_Clicked(object sender, EventArgs e)
     {
         string errorMessage;
-        if (dateVisted != null)
+        if (dateVisited != null)
         {
             id = IdEntry.Text;
             city = CityEntry.Text;
-
-            AirportAdditionError error = MauiProgram.BusinessLogic.AddAirport(id, city, (DateTime) dateVisted, rating);
-            
-            switch (error.ToString())
+            if (isEdit)
             {
-                case "InvalidIdLength":
-                    errorMessage = "Id length is not between 3 and 4";
-                    break;
-                case "InvalidCityLength":
-                    errorMessage = "City length is not between 1 and 25";
-                    break;
-                case "InvalidRating":
-                    errorMessage = "Rating is not selected";
-                    break;
-                case "InvalidDate":
-                    errorMessage = "Date is invalid";
-                    break;
-                case "DuplicateAirportId":
-                    errorMessage = "Airport id is already used";
-                    break;
-                case "DBAdditionError":
-                    errorMessage = "Database error";
-                    break;
-                default:
-                    errorMessage = $"Successfully Added Airport{id}";
-                    break;
+                try
+                {
+                    AirportEditError error = MauiProgram.BusinessLogic.EditAirport(id, city, (DateTime) dateVisited,
+                    rating);
+                    switch (error.ToString())
+                    {
+                        case "AirportNotFound":
+                            errorMessage = $"There is no Airport with the id:{id}";
+                            break;
+                        case "InvalidFieldError":
+                            errorMessage = "One of the field is invalid";
+                            break;
+                        case "DBEditError":
+                            errorMessage = "Database error";
+                            break;
+                        default:
+                            errorMessage = $"Successfully Edited Airport{id}";
+                            Close();
+                            break;
+                    }
+                } catch (Exception ex)
+                {
+                    errorMessage = ex.StackTrace;
+                }
+                
+            }
+            else
+            {
+                AirportAdditionError error = MauiProgram.BusinessLogic.AddAirport(id, city, (DateTime) dateVisited, rating);
+
+                switch (error.ToString())
+                {
+                    case "InvalidIdLength":
+                        errorMessage = "Id length is not between 3 and 4";
+                        break;
+                    case "InvalidCityLength":
+                        errorMessage = "City length is not between 1 and 25";
+                        break;
+                    case "InvalidRating":
+                        errorMessage = "Rating is not selected";
+                        break;
+                    case "InvalidDate":
+                        errorMessage = "Date is invalid";
+                        break;
+                    case "DuplicateAirportId":
+                        errorMessage = "Airport id is already used";
+                        break;
+                    case "DBAdditionError":
+                        errorMessage = "Database error";
+                        break;
+                    default:
+                        errorMessage = $"Successfully Added Airport{id}";
+                        Close();
+                        break;
+                }
             }
         }
+            
         else
         {
             errorMessage = "Date is not selected";
         }
         IToast errorMessageToast = Toast.Make(errorMessage);
-        errorMessageToast.Show();
+        await errorMessageToast.Show();
     }
     void CancelAirportAdd_Clicked(object sender, EventArgs e)
     {
