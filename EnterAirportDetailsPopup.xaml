@@ -110,28 +110,33 @@
             <Grid ColumnDefinitions="*,*,*,*,*"
                   HorizontalOptions="FillAndExpand">
                 <ImageButton x:Name="starOne" 
-                             Clicked="StarOne_Clicked"
+                             Clicked="Star_Clicked"
                              WidthRequest="24" 
                              Grid.Column="0"
+                             CommandParameter="1"
                              Source="ic_fluent_star_24_filled_grey" />
                 <ImageButton x:Name="starTwo" 
-                             Clicked="StarTwo_Clicked" 
+                             Clicked="Star_Clicked" 
                              WidthRequest="24" 
                              Grid.Column="1"
+                             CommandParameter="2"
                              Source="Resources/Images/ic_fluent_star_24_filled_grey" />
                 <ImageButton x:Name="starThree" 
-                             Clicked="StarThree_Clicked"
+                             Clicked="Star_Clicked"
                              WidthRequest="24" 
                              Grid.Column="2"
+                             CommandParameter="3"
                              Source="Resources/Images/ic_fluent_star_24_filled_grey" />
                 <ImageButton x:Name="starFour" 
-                             Clicked="StarFour_Clicked" 
+                             Clicked="Star_Clicked" 
                              WidthRequest="24" Grid.Column="3"
+                             CommandParameter="4"
                              Source="Resources/Images/ic_fluent_star_24_filled_grey" />
                 <ImageButton x:Name="starFive" 
-                             Clicked="StarFive_Clicked" 
+                             Clicked="Star_Clicked" 
                              WidthRequest="24" 
                              Grid.Column="4"
+                             CommandParameter="5"
                              Source="Resources/Images/ic_fluent_star_24_filled_grey" />
             </Grid>
         </HorizontalStackLayout>

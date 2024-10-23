@@ -22,41 +22,25 @@ public partial class EnterAirportDetailsPopup : Popup
         InitializeComponent();
         this.calendar.MonthView.NumberOfVisibleWeeks = 6;
         Console.WriteLine("Popup Opened");
-        this.isEdit = isEdit;
     }
 
     void OnCalendarSelectionChanged(object sender, EventArgs e)
     {
         dateVisted = calendar.SelectedDate ;
-        Console.WriteLine(dateVisted.ToString());
+        Console.WriteLine(dateVisted.ToString()); //DELETE ME
     }
-    //Select Rating
-    private void StarOne_Clicked ( object sender , EventArgs e )
+    
+    //select rating
+    private void Star_Clicked(object sender, EventArgs e)
     {
-        FillStars(1);
-        rating = 1;
+        var button = sender as ImageButton;
+        {
+            int starCount = Convert.ToInt32(button.CommandParameter);
+            FillStars(starCount);
+            rating = starCount;
+        }
     }
-    private void StarTwo_Clicked ( object sender , EventArgs e )
-    {
-        FillStars(2);
-        rating = 2;
-    }
-    private void StarThree_Clicked ( object sender , EventArgs e )
-    {
-        FillStars(3);
-        rating = 3;
-    }
-    private void StarFour_Clicked ( object sender , EventArgs e )
-    {
-        FillStars(4);
-        rating = 4;
-    }
-    private void StarFive_Clicked ( object sender , EventArgs e )
-    {
-        FillStars(5);
-        rating = 5;
-    }
-
+    
     private void FillStars (int numStars) {
         starOne.Source = starTwo.Source = starThree.Source = starFour.Source = starFive.Source = greyStarPath;
         switch (numStars) 

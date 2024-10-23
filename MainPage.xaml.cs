@@ -34,8 +34,7 @@ public partial class MainPage : ContentPage
         //        DisplayAlert("Ruhroh", result.ToString(), "OK");
         //    }
         //}
-        var isEdit = false;
-        var popup = new EnterAirportDetailsPopup(isEdit);
+        var popup = new EnterAirportDetailsPopup(false);
 
         this.ShowPopup( popup );
     }
