@@ -37,7 +37,6 @@
             <Entry 
                    x:Name="IdEntry"
                    Placeholder="Enter ID"
-                   Text="{Binding Id}"
                    HorizontalOptions="Fill"
                    BackgroundColor="#ECF0F1"
                    TextColor="#2C3E50"
@@ -62,7 +61,6 @@
             <Entry 
                    x:Name="CityEntry"
                    Placeholder="Enter City" 
-                   Text="{Binding City}"
                    HorizontalOptions="Fill"
                    BackgroundColor="#ECF0F1" 
                    TextColor="#2C3E50"
@@ -89,6 +87,7 @@
                     x:Name="Calendar"
                     View="Decade"
                     SelectionMode="Single"
+                    CanToggleDaySelection="true"
                     SelectionChanged="OnCalendarSelectionChanged">
                 </calendar:SfCalendar>
             </Grid>

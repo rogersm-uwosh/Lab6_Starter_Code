@@ -4,6 +4,8 @@ using CommunityToolkit.Maui.Views;
 using Lab6_Starter.Model;
 using System.Formats.Tar;
 using System.Runtime.InteropServices;
+using Syncfusion.Maui.Calendar;
+
 
 namespace Lab6_Starter;
 
@@ -20,12 +22,13 @@ public partial class EnterAirportDetailsPopup : Popup
     {
         this.isEdit = isEdit;
         InitializeComponent();
-        this.Calendar.MonthView.NumberOfVisibleWeeks = 6;
         Console.WriteLine("Popup Opened");
         if (airport != null)
         {
             IdEntry.Text = airport.Id;
             CityEntry.Text = airport.City;
+            Calendar.View = CalendarView.Month;
+            Calendar.DisplayDate = airport.DateVisited;
             Calendar.SelectedDate = airport.DateVisited;
             FillStars(airport.Rating);
         }
