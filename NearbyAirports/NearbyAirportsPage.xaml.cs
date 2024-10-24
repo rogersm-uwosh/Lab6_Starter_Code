@@ -1,4 +1,5 @@
 ﻿using System.Collections.ObjectModel;
+using Lab6_Starter;
 using Lab6_Starter.Model;
 
 namespace Lab2_Solution.NearbyAirports;
@@ -10,18 +11,47 @@ namespace Lab2_Solution.NearbyAirports;
 /// </summary>
 public partial class NearbyAirportsPage : ContentPage
 {
+    IBusinessLogic BusinessLogic = MauiProgram.BusinessLogic;
     public ObservableCollection<Airport> NearbyAirports { get; } = [];
 
     public NearbyAirportsPage()
     {
         InitializeComponent();
         BindingContext = this;
-        NearbyAirports.Add(new Airport("KFLD", "Fond du Lac", DateTime.Now, 1));
-        NearbyAirports.Add(new Airport("KMTW", "Manitowac", DateTime.Now, 1));
-        NearbyAirports.Add(new Airport("79C", "Brenner", DateTime.Now, 5));
-        NearbyAirports.Add(new Airport("KUNU", "Dodge County", DateTime.Now, 1));
     }
-    
+
+    /// <summary>
+    /// Update Nearby airport when the user click on the button
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
+    private void OnSearchNearbyAirportBtn(object sender, EventArgs e)
+    {
+        string airportName = AirportEntry.Text.ToUpper();
+        string distanceMileText = DistanceEntry.Text;
+        
+        Airport airport = BusinessLogic.FindAirport(airportName);
+        bool isValidDistance = int.TryParse(distanceMileText, out int distanceMile);
+
+        if (airport == null)
+        {
+            DisplayAlert("Error", "Airport not found", "OK");
+        }
+        else if (!isValidDistance)
+        {
+            DisplayAlert("Error", "Distance is invalid", "OK");
+        }
+        else if (distanceMile < 0)
+        {
+            DisplayAlert("Error", "Distance must be greater than 0", "OK");
+        }
+        else
+        {
+            NearbyAirports.Clear();
+            foreach (var nearbyAirport in BusinessLogic.CalculateNearbyAirports(airport, distanceMile))
+            {
+                NearbyAirports.Add(nearbyAirport);
+            }
+        }
+    }
 }
-
-

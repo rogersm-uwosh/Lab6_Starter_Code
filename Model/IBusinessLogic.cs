@@ -11,4 +11,5 @@ public interface IBusinessLogic
     String CalculateStatistics();
     ObservableCollection<Airport> GetAirports();
     ObservableCollection<Weather> GetWeathers();
+    ObservableCollection<Airport> CalculateNearbyAirports(Airport sourceAirport, int maxMiles);
 }
