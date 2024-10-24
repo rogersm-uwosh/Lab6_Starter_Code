@@ -28,7 +28,43 @@ public partial class PlanningTools : ContentPage
 
     private async void OnTShirtClicked(object sender, EventArgs e)
     {
-        // Navigate to the TShirts page
-        //await Navigation.PushAsync(new WeatherPage());
+        // I do not know why this doesn't work
+
+        // if(!Email.Default.IsComposeSupported){
+        //     await DisplayAlert("Error creating email", "Composing an email is not supported", "OK");
+        //     return;
+        // }
+
+        // string subject = "";
+        // string body = "";
+        // string[] recipients = new[] {"FlyWI@dot.wi.gov"};
+
+        // EmailMessage message = new EmailMessage
+        // {
+        //     Subject = subject,
+        //     Body = body,
+        //     BodyFormat = EmailBodyFormat.PlainText,
+        //     To = new List<string>(recipients)
+        // };
+
+
+        // await Email.Default.ComposeAsync(message);
+
+        // And this does
+
+        string email = "FlyWI@dot.wi.gov";
+        string subject = "";
+        string body = "";
+
+        try
+        {
+            string mailto = $"mailto:{email}?subject={Uri.EscapeDataString(subject)}&body={Uri.EscapeDataString(body)}";
+            await Launcher.OpenAsync(mailto);
+        }
+        catch (Exception ex)
+        {
+            DisplayAlert($"An error occurred", "{ex.Message}", "OK");
+        }
+        // Email FlyWI@dot.wi.gov
     }
 }
