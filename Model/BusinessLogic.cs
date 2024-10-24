@@ -21,9 +21,9 @@ public class BusinessLogic : IBusinessLogic
 
     }
 
-    public ObservableCollection<Weather> Weathers
+    public ObservableCollection<Weather> ClosestAirportWeather
     {
-        get { return GetWeathers(); }
+        get { return GetClosestAirportWeather(); }
 
     }
     public BusinessLogic(IDatabase? db)
@@ -166,11 +166,18 @@ public class BusinessLogic : IBusinessLogic
         return db.SelectAllAirports();
     }
 
-    public ObservableCollection<Weather> GetWeathers()
+    /// <summary>
+    /// Get the weather of the closest airport
+    /// </summary>
+    /// <returns>The weather of the closest airport as an observable collection so it can be seen in the collection view</returns>
+    public ObservableCollection<Weather> GetClosestAirportWeather()
     {
-        ObservableCollection<Weather> weathers = new ObservableCollection<Weather>();
-        weathers.Add(new Weather("METAR KJFK 161853Z 21015G25KT 10SM -RA SCT020 BKN050", "TAF KJFK 161720Z 1618/1718 21015KT P6SM -RA BKN050"));
-        return weathers;
+        ObservableCollection<Weather> weather = new ObservableCollection<Weather>();
+        weather.Add(new Weather("KOSH", "METAR KOSH 241800Z 23010KT 10SM BKN040 OVC060 14/09 A2990 RMK AO2 SLP132", "TAF KOSH 241740Z 2418/2518 23010KT P6SM BKN040 OVC060 "));
+        return weather;
+        //new Weather("KGRB", "METAR KGRB 241800Z 24015KT 10SM SCT030 BKN050 13/08 A2988 RMK AO2 SLP128", "TAF KGRB 241740Z 2418/2518 24015KT P6SM SCT030 BKN050");
+        //new Weather("KATW", "METAR KATW 241800Z 24012KT 10SM FEW020 SCT050 15/10 A2992 RMK AO2 SLP134", "TAF KATW 241740Z 2418/2518 24012KT P6SM SCT030 BKN050 ");
+        //new Weather("KOSH", "METAR KOSH 241800Z 23010KT 10SM BKN040 OVC060 14/09 A2990 RMK AO2 SLP132", "TAF KOSH 241740Z 2418/2518 23010KT P6SM BKN040 OVC060 ");
     }
 
 
