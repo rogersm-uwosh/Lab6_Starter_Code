@@ -1,7 +1,7 @@
 ﻿using System.Globalization;
 using Lab6_Starter.Model;
 
-namespace Lab2_Solution.NearbyAirports;
+namespace FWAPPA.NearbyAirports;
 
 public class AirportToMilesConverter: IValueConverter
 {
