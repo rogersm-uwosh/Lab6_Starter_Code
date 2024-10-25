@@ -173,6 +173,18 @@ public class BusinessLogic : IBusinessLogic
         return weathers;
     }
 
+    public ObservableCollection<Route> GetRoutes() {
+        ObservableCollection<Route> routes = new ObservableCollection<Route>();
+        routes.Add(new Route("KATW", "Appleton", 0));
+        routes.Add(new Route("KFLD", "Los Angeles", 28));
+        routes.Add(new Route("KUNN", "Dodge County", 23));
+        routes.Add(new Route("KUBB", "Burlington", 47));
+        routes.Add(new Route("KUNN", "Dodge County", 23));
+        routes.Add(new Route("KATW", "Appleton", 95));
+
+        return routes;
+    }
+
 
 }
 
