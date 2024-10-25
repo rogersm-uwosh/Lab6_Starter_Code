@@ -1,45 +1,46 @@
+using Mapsui.UI.Maui;
+using Mapsui.Layers;
+using Mapsui.Tiling;
+using Mapsui.Utilities;
 using Microsoft.Maui.Controls;
-using Microsoft.Maui.Controls.Maps;
-using Microsoft.Maui.Maps;
-using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using Map = Microsoft.Maui.Controls.Maps.Map;
+using Mapsui.Projections;
+using Lab6_Starter.Model;
 
 
 namespace Lab6_Starter
 {
     public partial class RoutingStrategies : ContentPage
     {
-         public ObservableCollection<Route> Routes { get; set; }
+        private IBusinessLogic _businessLogic = MauiProgram.BusinessLogic;
+
+        public ObservableCollection<Route> Routes { get; set; }
+
 
         public RoutingStrategies()
         {
             InitializeComponent();
 
-            // Fill data for ListView (Hannah)
-            // Example data to bind
-            Routes = new ObservableCollection<Route>
-            {
-                new Route { ICAO = "KATL", City = "Atlanta", Distance = 100 },
-                new Route { ICAO = "KLAX", City = "Los Angeles", Distance = 200 },
-                new Route { ICAO = "KJFK", City = "New York", Distance = 300 }
-            };
+            // Get routes from the business logic
+            Routes = _businessLogic.GetRoutes();
 
             // Binding the CollectionView to the data source
             RoutesCollectionView.ItemsSource = Routes;
 
-            // Set initial map location (Pachia)
-            map.MoveToRegion(MapSpan.FromCenterAndRadius(new Location(44.2619, 88.4154), Distance.FromMiles(10)));
-            //Content = map;
+            // Load OpenStreetMap directly into the WebView without requiring an HTML file
+            var mapUrl = GenerateOpenStreetMapUrl(44.2619, -88.4154, 10); // Appleton Airport coordinates
+            MapView.Source = mapUrl;
+
         }
+
+        // Generates the OpenStreetMap URL for the given latitude, longitude, and zoom level
+        private string GenerateOpenStreetMapUrl(double latitude, double longitude, int zoom)
+        {
+            return $"https://www.openstreetmap.org/?mlat={latitude}&mlon={longitude}#map={zoom}/{latitude}/{longitude}";
+        }
+        
     }
 
-    // Get airport data (Hannah)
-    public class Route
-    {
-        public string ICAO { get; set; }
-        public string City { get; set; }
-        public int Distance { get; set; }
-    }
 }
+
+
