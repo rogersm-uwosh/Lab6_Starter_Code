@@ -53,9 +53,9 @@ public partial class PlanningTools : ContentPage
         // And this does
 
         string email = "FlyWI@dot.wi.gov";
-        string subject = "";
-        string body = "";
-
+        string subject = "Request to Redeem a T-Shirt";
+        string body = $"I have visited {MauiProgram.BusinessLogic.GetAirports().Count()} airports and would like a prize";
+       
         try
         {
             string mailto = $"mailto:{email}?subject={Uri.EscapeDataString(subject)}&body={Uri.EscapeDataString(body)}";
