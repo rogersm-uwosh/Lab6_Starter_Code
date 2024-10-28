@@ -3,8 +3,6 @@ using CommunityToolkit.Maui.Core;
 using CommunityToolkit.Maui.Views;
 using Lab6_Starter.Model;
 using Syncfusion.Maui.Calendar;
-using System.Formats.Tar;
-using System.Runtime.InteropServices;
 
 
 namespace Lab6_Starter;
@@ -14,8 +12,8 @@ public partial class EnterAirportDetailsPopup : Popup
     private bool isEdit;
     const string greyStarPath = "Resources/Images/ic_fluent_star_24_filled_grey.svg";
     const string yellowStarPath = "Resources/Images/ic_fluent_star_24_filled_yellow.svg";
-    private string id = "";
-    private string city = "";
+    private String id = "";
+    private String city = "";
     private DateTime? dateVisited = null; 
     private int rating = 0;
     private string airportToEditId;
@@ -71,10 +69,8 @@ public partial class EnterAirportDetailsPopup : Popup
     void Ok_Clicked(object sender, EventArgs e)
     {
         string errorMessage;
-        id = IdEntry.Text;
-        city = CityEntry.Text;
         var action = isEdit ? (Action)editAirport : (Action)addAirport;
-        action(); // this is super necessary, but it looks kinda neat (pretty self-explanatory here too)
+        action(); // this isn't super necessary, but it looks kinda neat (pretty self-explanatory here too)
     }
 
     async void addAirport()
@@ -82,7 +78,7 @@ public partial class EnterAirportDetailsPopup : Popup
         string errorMessage;
         id = IdEntry.Text;
         city = CityEntry.Text;
-        AirportAdditionError error = MauiProgram.BusinessLogic.AddAirport(id, city, (DateTime) dateVisited, rating);
+        AirportAdditionError error = MauiProgram.BusinessLogic.AddAirport(id, city, dateVisited, rating);
         errorMessage = error.ToString() switch
         {
             "InvalidIdLength" => "Id length is not between 3 and 4",
