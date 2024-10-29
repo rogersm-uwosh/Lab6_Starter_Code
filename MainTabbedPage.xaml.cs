@@ -1,4 +1,6 @@
-﻿namespace Lab6_Starter;
+﻿using CommunityToolkit.Maui;
+using Syncfusion.Maui.Calendar;
+namespace Lab6_Starter;
 
 public partial class MainTabbedPage : TabbedPage
 {

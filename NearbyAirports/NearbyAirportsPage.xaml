@@ -6,8 +6,8 @@
 -->
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:nearbyAirports="clr-namespace:Lab2_Solution.NearbyAirports"
-             x:Class="Lab2_Solution.NearbyAirports.NearbyAirportsPage"
+             xmlns:nearbyAirports="clr-namespace:FWAPPA.NearbyAirports"
+             x:Class="FWAPPA.NearbyAirports.NearbyAirportsPage"
              Title="Nearby Airports"
              xmlns:model="clr-namespace:Lab6_Starter.Model"
              x:DataType="nearbyAirports:NearbyAirportsPage">

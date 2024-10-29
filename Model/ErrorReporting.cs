@@ -9,6 +9,7 @@ public enum AirportAdditionError
     InvalidDate,
     DuplicateAirportId,
     DBAdditionError,
+    NoDateSelectedError,
     NoError
 }
 

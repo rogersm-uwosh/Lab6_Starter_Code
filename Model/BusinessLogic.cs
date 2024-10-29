@@ -185,15 +185,15 @@ public class BusinessLogic : IBusinessLogic
     {
         ObservableCollection<Airport> nearbyAirports = [];
         ObservableCollection<Airport> allAirports = GetAirports();
-        
-        
+
+
         // Formula for when we are able to get coordinates
         nearbyAirports.Add(new Airport("KFLD", "Fond du Lac", DateTime.Now, 1));
         nearbyAirports.Add(new Airport("KMTW", "Manitowac", DateTime.Now, 1));
         nearbyAirports.Add(new Airport("79C", "Brenner", DateTime.Now, 5));
         nearbyAirports.Add(new Airport("KUNU", "Dodge County", DateTime.Now, 1));
-        
-        
+
+
         // foreach (Airport destinationAirport in allAirports)
         // {
         //     // Haversine formula to find distance between two points
@@ -214,6 +214,20 @@ public class BusinessLogic : IBusinessLogic
         //     }
         // }
         return nearbyAirports;
+    }
+
+    public Route GetRoute()
+    {
+        var route = new Route("KATW", "KUBB");
+
+        // Add edges 
+        route.AddEdge("KATW", "Appleton", 0);
+        route.AddEdge("KFLD", "Fond du Lac", 23);
+        route.AddEdge("KUNN", "Dodge County", 28);
+        route.AddEdge("KUBB", "Burlington", 47);
+        route.AddEdge("KATW", "Appleton", 95);
+
+        return route;
     }
 
 }

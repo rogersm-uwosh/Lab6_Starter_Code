@@ -12,4 +12,5 @@ public interface IBusinessLogic
     ObservableCollection<Airport> GetAirports();
     ObservableCollection<Weather> GetWeathers();
     ObservableCollection<Airport> CalculateNearbyAirports(Airport sourceAirport, int maxMiles);
+    Route GetRoute();
 }
