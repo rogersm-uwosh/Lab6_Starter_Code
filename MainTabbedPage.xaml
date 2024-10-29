@@ -6,7 +6,7 @@
              xmlns:local="clr-namespace:Lab6_Starter"
              x:Class="Lab6_Starter.MainTabbedPage"
              xmlns:android="clr-namespace:Microsoft.Maui.Controls.PlatformConfiguration.AndroidSpecific;assembly=Microsoft.Maui.Controls"
-             xmlns:nearbyAirports="clr-namespace:Lab2_Solution.NearbyAirports"
+             xmlns:nearbyAirports="clr-namespace:FWAPPA.NearbyAirports"
              android:TabbedPage.ToolbarPlacement="Bottom"
              android:TabbedPage.IsSwipePagingEnabled="false">
              <!-- Above line: Alex Robinson - Fixes touch interaction problems with the MapsUI's Map control -->
@@ -41,5 +41,3 @@
 
     </TabbedPage.Children>
 </TabbedPage>
-
-
