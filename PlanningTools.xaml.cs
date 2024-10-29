@@ -1,4 +1,4 @@
-using Lab2_Solution.NearbyAirports;
+using FWAPPA.NearbyAirports;
 
 namespace Lab6_Starter;
 
