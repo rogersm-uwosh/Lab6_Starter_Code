@@ -3,6 +3,7 @@ using SkiaSharp.Views.Maui.Controls.Hosting;
 using Lab6_Starter.Model;
 using CommunityToolkit.Maui;
 using Syncfusion.Maui.Core.Hosting;
+using BusinessLogic = FWAPPA.Model.BusinessLogic;
 
 namespace Lab6_Starter;
 
