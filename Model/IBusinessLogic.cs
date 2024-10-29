@@ -11,4 +11,6 @@ public interface IBusinessLogic
     String CalculateStatistics();
     ObservableCollection<Airport> GetAirports();
     ObservableCollection<Weather> GetClosestAirportWeather();
+    ObservableCollection<Weather> GetWeathers();
+    Route GetRoute();
 }

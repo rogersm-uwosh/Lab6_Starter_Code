@@ -177,6 +177,19 @@ public class BusinessLogic : IBusinessLogic
         return weather;
     }
 
+    public Route GetRoute()
+    {
+        var route = new Route("KATW", "KUBB");
+
+        // Add edges 
+        route.AddEdge("KATW", "Appleton", 0);
+        route.AddEdge("KFLD", "Fond du Lac", 23);
+        route.AddEdge("KUNN", "Dodge County", 28);
+        route.AddEdge("KUBB", "Burlington", 47);
+        route.AddEdge("KATW", "Appleton", 95);
+
+        return route;
+    }
 
 }
 

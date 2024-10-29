@@ -1,7 +1,7 @@
 ﻿using System.Collections.ObjectModel;
 using Lab6_Starter.Model;
 
-namespace Lab2_Solution.NearbyAirports;
+namespace FWAPPA.NearbyAirports;
 
 /// <summary>
 /// Written by Hiba Seraj
