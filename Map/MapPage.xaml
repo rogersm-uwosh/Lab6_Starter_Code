@@ -9,4 +9,20 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="Lab6_Starter.MapPage"
              Title="Map">
+    <Grid RowDefinitions="*,11*"
+          ColumnDefinitions="*">
+        <!-- Radio Buttons -->
+        <Grid Grid.Row="0" Grid.Column="0"
+              RowDefinitions="*"
+              ColumnDefinitions="*">
+            
+        </Grid>
+        <!-- Map -->
+        <Grid Grid.Row="1" Grid.Column="0"
+              RowDefinitions="*"
+              ColumnDefinitions="*"
+              x:Name="MapGrid">
+            
+        </Grid>
+    </Grid>
 </ContentPage>

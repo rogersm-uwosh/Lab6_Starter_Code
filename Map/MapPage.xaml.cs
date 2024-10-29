@@ -1,5 +1,11 @@
+using Mapsui;
+using Mapsui.Extensions;
+using Mapsui.Layers;
+using Mapsui.Projections;
 using Mapsui.Tiling;
 using Mapsui.UI.Maui;
+using Mapsui.UI.Maui.Extensions;
+using Map = Mapsui.Map;
 
 namespace Lab6_Starter;
 
@@ -41,10 +47,20 @@ public partial class MapPage : ContentPage
 	public MapPage()
 	{
 		InitializeComponent();
-
+        
         MapControl mapControl = new();
+        Map map = mapControl.Map;
+        MyLocationLayer locationLayer = new(map) { IsCentered = false };
+
         // Initialize the map with OpenStreetMap's API and add it to MapPage's content
-        mapControl.Map?.Layers.Add(OpenStreetMap.CreateTileLayer());
-        Content = mapControl;
+        map.Layers.Add(OpenStreetMap.CreateTileLayer());
+        map.Layers.Add(locationLayer);
+        
+        MPoint mpoint = new(-88.4154, 44.2619);
+        MPoint npoint = SphericalMercator.FromLonLat(mpoint.X, mpoint.Y).ToMPoint();
+        map.Navigator.CenterOnAndZoomTo(npoint, map.Navigator.Resolutions[9]);
+
+        MapGrid.Add(mapControl);
+        locationLayer.UpdateMyLocation(npoint, true);
     }
 }
