@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 using Lab6_Starter;
 
 namespace Lab6_Starter.Model;
@@ -39,13 +40,14 @@ public class BusinessLogic : IBusinessLogic
         return db.SelectAirport(id);
     }
 
-    private AirportAdditionError CheckAirportFields(String id, String city, DateTime dateVisited, int rating)
+    private AirportAdditionError CheckAirportFields(String? id, String? city, DateTime? dateVisited, int rating)
     {
-        if (id.Length < 3 || id.Length > 4)
+        
+        if (id == null || id.Length < 3 || id.Length > 4)
         {
             return AirportAdditionError.InvalidIdLength;
         }
-        if (city.Length < 3)
+        if (city == null || city.Length < 3)
         {
             return AirportAdditionError.InvalidCityLength;
         }
@@ -54,11 +56,16 @@ public class BusinessLogic : IBusinessLogic
             return AirportAdditionError.InvalidRating;
         }
 
+        if (dateVisited == null)
+        {
+            return AirportAdditionError.InvalidDate;
+        }
+
         return AirportAdditionError.NoError;
     }
 
 
-    public AirportAdditionError AddAirport(String id, String city, DateTime dateVisited, int rating)
+    public AirportAdditionError AddAirport(String id, String city, DateTime? dateVisited, int rating)
     {
 
         var result = CheckAirportFields(id, city, dateVisited, rating);
@@ -71,11 +78,14 @@ public class BusinessLogic : IBusinessLogic
         {
             return AirportAdditionError.DuplicateAirportId;
         }
-        Airport airport = new Airport(id, city, dateVisited, rating);
+        
+        Airport airport = new Airport(id, city, (DateTime)dateVisited, rating); // this will never be null, we check in checkAirportFields
         db.InsertAirport(airport);
 
         return AirportAdditionError.NoError;
     }
+    
+    
 
     public AirportDeletionError DeleteAirport(String id)
     {
