@@ -4,7 +4,10 @@ namespace Lab6_Starter;
 
 public partial class PlanningTools : ContentPage
 {
-	public PlanningTools()
+    public const string FLY_WI_EMAIL_ADDRESS = "FlyWI@dot.wi.gov";
+
+
+    public PlanningTools()
 	{
 		InitializeComponent();
 	}
@@ -28,43 +31,25 @@ public partial class PlanningTools : ContentPage
 
     private async void OnTShirtClicked(object sender, EventArgs e)
     {
-        // I do not know why this doesn't work
+        // use the email API to send an email with the number of airports visited
+        if (!Email.Default.IsComposeSupported)
+        {
+            await DisplayAlert("Error creating email", "Composing an email is not supported", "OK");
+            return;
+        }
 
-        // if(!Email.Default.IsComposeSupported){
-        //     await DisplayAlert("Error creating email", "Composing an email is not supported", "OK");
-        //     return;
-        // }
-
-        // string subject = "";
-        // string body = "";
-        // string[] recipients = new[] {"FlyWI@dot.wi.gov"};
-
-        // EmailMessage message = new EmailMessage
-        // {
-        //     Subject = subject,
-        //     Body = body,
-        //     BodyFormat = EmailBodyFormat.PlainText,
-        //     To = new List<string>(recipients)
-        // };
-
-
-        // await Email.Default.ComposeAsync(message);
-
-        // And this does
-
-        string email = "FlyWI@dot.wi.gov";
         string subject = "Request to Redeem a T-Shirt";
-        string body = $"I have visited {MauiProgram.BusinessLogic.GetAirports().Count()} airports and would like a prize";
-       
-        try
+        string body = $"I have visited {MauiProgram.BusinessLogic.GetAirports().Count} airports and would like a prize";
+        string[] recipients = [ FLY_WI_EMAIL_ADDRESS ];
+
+        EmailMessage message = new()
         {
-            string mailto = $"mailto:{email}?subject={Uri.EscapeDataString(subject)}&body={Uri.EscapeDataString(body)}";
-            await Launcher.OpenAsync(mailto);
-        }
-        catch (Exception ex)
-        {
-            DisplayAlert($"An error occurred", "{ex.Message}", "OK");
-        }
-        // Email FlyWI@dot.wi.gov
+            Subject = subject,
+            Body = body,
+            BodyFormat = EmailBodyFormat.PlainText,
+            To = new List<string>(recipients)
+        };
+
+        await Email.Default.ComposeAsync(message);
     }
 }
