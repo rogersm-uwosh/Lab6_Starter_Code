@@ -12,11 +12,25 @@
     <Grid RowDefinitions="*,11*"
           ColumnDefinitions="*">
         <!-- Radio Buttons -->
-        <Grid Grid.Row="0" Grid.Column="0"
-              RowDefinitions="*"
-              ColumnDefinitions="*">
-            
-        </Grid>
+        <Frame Grid.Row="0" Grid.Column="0"
+               CornerRadius="0">
+            <Grid RowDefinitions="*"
+                  ColumnDefinitions="*,*,*">
+                <!-- Show Visited radio button -->
+                <RadioButton Grid.Row="0" Grid.Column="0"
+                             CheckedChanged="OnVisitedRadio_Clicked"
+                             Content="Show Visited"
+                             IsChecked="True"/>
+                <!-- Show Unvisited radio button -->
+                <RadioButton Grid.Row="0" Grid.Column="1"
+                             CheckedChanged="OnUnvisitedRadio_Clicked"
+                             Content="Show Unvisited"/>
+                <!-- Show Both radio button -->
+                <RadioButton Grid.Row="0" Grid.Column="2"
+                             CheckedChanged="OnBothRadio_Clicked"
+                             Content="Show Both"/>
+            </Grid>
+        </Frame>
         <!-- Map -->
         <Grid Grid.Row="1" Grid.Column="0"
               RowDefinitions="*"

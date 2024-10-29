@@ -4,7 +4,6 @@ using Mapsui.Layers;
 using Mapsui.Projections;
 using Mapsui.Tiling;
 using Mapsui.UI.Maui;
-using Mapsui.UI.Maui.Extensions;
 using Map = Mapsui.Map;
 
 namespace Lab6_Starter;
@@ -50,17 +49,35 @@ public partial class MapPage : ContentPage
         
         MapControl mapControl = new();
         Map map = mapControl.Map;
-        MyLocationLayer locationLayer = new(map) { IsCentered = false };
-
+        WritableLayer pointLayer = new();
+        
         // Initialize the map with OpenStreetMap's API and add it to MapPage's content
         map.Layers.Add(OpenStreetMap.CreateTileLayer());
-        map.Layers.Add(locationLayer);
+        map.Layers.Add(pointLayer);
         
         MPoint mpoint = new(-88.4154, 44.2619);
         MPoint npoint = SphericalMercator.FromLonLat(mpoint.X, mpoint.Y).ToMPoint();
         map.Navigator.CenterOnAndZoomTo(npoint, map.Navigator.Resolutions[9]);
-
+        pointLayer.Add(new PointFeature(npoint));
+        
         MapGrid.Add(mapControl);
-        locationLayer.UpdateMyLocation(npoint, true);
+    }
+
+    private void OnVisitedRadio_Clicked(object sender, CheckedChangedEventArgs e)
+    {
+        if (!e.Value)
+            return;
+    }
+
+    private void OnUnvisitedRadio_Clicked(object sender, CheckedChangedEventArgs e)
+    {
+        if (!e.Value)
+            return;
+    }
+
+    private void OnBothRadio_Clicked(object sender, CheckedChangedEventArgs e)
+    {
+        if (!e.Value)
+            return;
     }
 }
