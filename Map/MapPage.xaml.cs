@@ -47,19 +47,37 @@ public partial class MapPage : ContentPage
 	{
 		InitializeComponent();
         
+        // A .net MAUI control that contains a MapsUI map
         MapControl mapControl = new();
+        // The MapsUI map from the new control
         Map map = mapControl.Map;
+        // A WritableLayer is essentially an overlay for the map that renders special features
+        // that you add to it
         WritableLayer pointLayer = new();
         
-        // Initialize the map with OpenStreetMap's API and add it to MapPage's content
+        // Add a layer to show the map from OpenStreetMap's API
         map.Layers.Add(OpenStreetMap.CreateTileLayer());
+        // Place the layer for the points on top of 
         map.Layers.Add(pointLayer);
         
+        // A point to be placed on the map, with a given longitude and latitude as parameters
         MPoint mpoint = new(-88.4154, 44.2619);
+        // The map doesn't use longitude/latitude for placement, so project it onto a new point
+        // that can be placed onto the map in the correct location
         MPoint npoint = SphericalMercator.FromLonLat(mpoint.X, mpoint.Y).ToMPoint();
+        // Currently not functional, this *should* zoom to a point on the map but it doesn't (???)
         map.Navigator.CenterOnAndZoomTo(npoint, map.Navigator.Resolutions[9]);
-        pointLayer.Add(new PointFeature(npoint));
         
+        // Add a point feature into the WritableLayer from earlier, using the projected MPoint
+        // This point will now render on the map which is exactly what we need!
+        pointLayer.Add(new PointFeature(npoint));
+        // To clear all existing features from the layer, you can use:
+        // pointLayer.Clear();
+
+        // You may be able to use PointFeature's Styles property or something similar
+        // to change the appearance of the points (default is a white circle)
+        
+        // Place the map control into MapPage under a grid prepared to contain it
         MapGrid.Add(mapControl);
     }
 
@@ -67,17 +85,23 @@ public partial class MapPage : ContentPage
     {
         if (!e.Value)
             return;
+
+        // TODO: clear existing points and draw a point for each visited airport
     }
 
     private void OnUnvisitedRadio_Clicked(object sender, CheckedChangedEventArgs e)
     {
         if (!e.Value)
             return;
+
+        // TODO: clear existing points and draw a point for each unvisited airport
     }
 
     private void OnBothRadio_Clicked(object sender, CheckedChangedEventArgs e)
     {
         if (!e.Value)
             return;
+
+        // TODO: clear existing points and draw a point for each airport
     }
 }
