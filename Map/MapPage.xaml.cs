@@ -65,8 +65,10 @@ public partial class MapPage : ContentPage
         // The map doesn't use longitude/latitude for placement, so project it onto a new point
         // that can be placed onto the map in the correct location
         MPoint npoint = SphericalMercator.FromLonLat(mpoint.X, mpoint.Y).ToMPoint();
-        // Currently not functional, this *should* zoom to a point on the map but it doesn't (???)
-        map.Navigator.CenterOnAndZoomTo(npoint, map.Navigator.Resolutions[9]);
+        // Instantly zooms to a given point on the map, with a given resolution for how far to zoom
+        // Can optionally give it a duration and easing style for a smoother transition
+        map.Home = (n) => n.CenterOnAndZoomTo(npoint, map.Navigator.Resolutions[9]);
+        // To zoom to a point after the map is loaded, use map.CenterOnAndZoomTo(); without lambda
         
         // Add a point feature into the WritableLayer from earlier, using the projected MPoint
         // This point will now render on the map which is exactly what we need!
