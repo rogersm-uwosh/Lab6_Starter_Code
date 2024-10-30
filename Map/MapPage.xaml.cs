@@ -57,7 +57,7 @@ public partial class MapPage : ContentPage
         
         // Add a layer to show the map from OpenStreetMap's API
         map.Layers.Add(OpenStreetMap.CreateTileLayer());
-        // Place the layer for the points on top of 
+        // Place the layer for the points on top of the previous map layer
         map.Layers.Add(pointLayer);
         
         // A point to be placed on the map, with a given longitude and latitude as parameters
