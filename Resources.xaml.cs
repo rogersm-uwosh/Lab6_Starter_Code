@@ -1,5 +1,12 @@
 namespace Lab6_Starter;
 
+/*
+ * This class is the background functionality/methods for the resources page.
+ * This class references an object created in Link.cs in order to allow the hyperlinks to function.
+ * Author: Krystal Schneider & Taylor Showalter
+ * Date: October 30, 2024
+ */
+
 public partial class Resources : ContentPage
 {
     public Resources()

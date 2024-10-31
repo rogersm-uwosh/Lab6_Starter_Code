@@ -1,7 +1,11 @@
 namespace Lab6_Starter
 {
-	// This class represents a link with a description and URL
-	public class Link
+    /*
+    * This class represents a link with a description and URL.
+    * Author: Krystal Schneider & Taylor Showalter
+    * Date: October 30, 2024
+    */
+    public class Link
 	{
 		// Property to hold the description of the link
 		public string Description { get; set; }
