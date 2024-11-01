@@ -95,6 +95,7 @@ public partial class MapPage : ContentPage
             return;
         }
 
+        // clear all current points on the map
         pointLayer.Clear();
 
         // this gets the airports that have been visited, as well as all airports
@@ -113,19 +114,17 @@ public partial class MapPage : ContentPage
                 if(airportVisited.Id == airportWithCords.Id)
                 {
                     MPoint mpoint = new(airportWithCords.Latitude, airportWithCords.Longitude);
-                    MPoint convertedMPoint = SphericalMercator.FromLonLat(mpoint.X, mpoint.Y).ToMPoint();
+                    MPoint convertedMPoint = SphericalMercator.FromLonLat(mpoint.Y, mpoint.X).ToMPoint();
                     pointsToAdd.Add(convertedMPoint);
                 }
             }
         }
 
+        // add every point to the point layer
         foreach (MPoint mPoint in pointsToAdd)
         {
             pointLayer.Add(new PointFeature(mPoint));
         }
-
-        
-        // TODO: clear existing points and draw a point for each visited airport
     }
 
     private void OnUnvisitedRadio_Clicked(object sender, CheckedChangedEventArgs e)
@@ -135,11 +134,10 @@ public partial class MapPage : ContentPage
             return;
         }
 
+        // clear all the points from the point layer
         pointLayer.Clear();
 
-        //if (!e.Value)
-        //    return;
-
+        // get the airports visited and the airports with cordinates
         ObservableCollection<Airport> visitedAirports = MauiProgram.BusinessLogic.GetAirports();
         ObservableCollection<Airport> allAirports = MauiProgram.BusinessLogic.GetWisconsinAirports();
 
@@ -154,18 +152,17 @@ public partial class MapPage : ContentPage
                 if (airportVisited.Id != airportWithCords.Id)
                 {
                     MPoint mpoint = new(airportWithCords.Latitude, airportWithCords.Longitude);
-                    MPoint convertedMPoint = SphericalMercator.FromLonLat(mpoint.X, mpoint.Y).ToMPoint();
+                    MPoint convertedMPoint = SphericalMercator.FromLonLat(mpoint.Y, mpoint.X).ToMPoint();
                     pointsToAdd.Add(convertedMPoint);
                 }
             }
         }
 
+        // add each point to the point layer
         foreach (MPoint mPoint in pointsToAdd)
         {
             pointLayer.Add(new PointFeature(mPoint));
         }
-
-        // TODO: clear existing points and draw a point for each unvisited airport
     }
 
     private void OnBothRadio_Clicked(object sender, CheckedChangedEventArgs e)
@@ -175,27 +172,27 @@ public partial class MapPage : ContentPage
             return;
         }
 
+        // clear the current points on the map
         pointLayer.Clear();
 
-        //if (!e.Value)
-        //    return;
-
+        // get all airports in the database
         ObservableCollection<Airport> allAirports = MauiProgram.BusinessLogic.GetWisconsinAirports();
 
+        // setup a list of points to be added
         List<MPoint> pointsToAdd = new();
 
+        // get a point from each airports cordinates
         foreach (Airport airport in allAirports)
         {
             MPoint mpoint = new(airport.Latitude, airport.Longitude);
-            MPoint convertedMPoint = SphericalMercator.FromLonLat(mpoint.X, mpoint.Y).ToMPoint();
+            MPoint convertedMPoint = SphericalMercator.FromLonLat(mpoint.Y, mpoint.X).ToMPoint();
             pointsToAdd.Add(convertedMPoint);
         }
 
+        // add each point to the point layer
         foreach (MPoint mPoint in pointsToAdd)
         {
             pointLayer.Add(new PointFeature(mPoint));
         }
-
-        // TODO: clear existing points and draw a point for each airport
     }
 }
