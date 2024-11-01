@@ -1,9 +1,11 @@
+using Lab6_Starter.Model;
 using Mapsui;
 using Mapsui.Extensions;
 using Mapsui.Layers;
 using Mapsui.Projections;
 using Mapsui.Tiling;
 using Mapsui.UI.Maui;
+using System.Collections.ObjectModel;
 using Map = Mapsui.Map;
 
 namespace Lab6_Starter;

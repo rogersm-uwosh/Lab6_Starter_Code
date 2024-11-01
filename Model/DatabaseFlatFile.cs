@@ -141,5 +141,10 @@ public class DatabaseFlatFile : IDatabase
         return AirportEditError.NoError;
     }
 
+    public ObservableCollection<Airport> SelectAllWisconsinAirports()
+    {
+        return new ();
+    }
+
 
 }
