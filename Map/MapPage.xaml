@@ -13,7 +13,8 @@
           ColumnDefinitions="*">
         <!-- Radio Buttons -->
         <Frame Grid.Row="0" Grid.Column="0"
-               CornerRadius="0">
+               CornerRadius="0"
+               Margin="0">
             <Grid RowDefinitions="*"
                   ColumnDefinitions="*,*,*">
                 <!-- Show Visited radio button -->
