@@ -12,4 +12,7 @@ public interface IBusinessLogic
     ObservableCollection<Airport> GetAirports();
     ObservableCollection<Weather> GetWeathers();
     Route GetRoute();
+    ObservableCollection<Airport> GetAllWisconsinAirports();
+    ObservableCollection<Airport> GetWisconsinAirportsWithinDistance(double userLatitude, double userLongitude, double maxDistanceKm);
+    Airport SelectAirportByCode(string airportCode);
 }

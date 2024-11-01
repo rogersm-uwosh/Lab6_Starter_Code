@@ -22,6 +22,21 @@ public class BusinessLogic : IBusinessLogic
 
     }
 
+    public ObservableCollection<Airport> GetAllWisconsinAirports()
+    {
+        return db.GetAllWisconsinAirports();
+    }
+
+    public ObservableCollection<Airport> GetWisconsinAirportsWithinDistance(double userLatitude, double userLongitude, double maxDistanceKm)
+    {
+        return db.GetWisconsinAirportsWithinDistance(userLatitude, userLongitude, maxDistanceKm);
+    }
+
+    public Airport SelectAirportByCode(string airportCode)
+    {
+        return db.SelectAirportByCode(airportCode);
+    }
+
     public ObservableCollection<Weather> Weathers
     {
         get { return GetWeathers(); }
@@ -40,7 +55,7 @@ public class BusinessLogic : IBusinessLogic
 
     private AirportAdditionError CheckAirportFields(String? id, String? city, DateTime? dateVisited, int rating)
     {
-        
+
         if (id == null || id.Length < 3 || id.Length > 4)
         {
             return AirportAdditionError.InvalidIdLength;
@@ -76,14 +91,14 @@ public class BusinessLogic : IBusinessLogic
         {
             return AirportAdditionError.DuplicateAirportId;
         }
-        
+
         Airport airport = new Airport(id, city, (DateTime)dateVisited, rating); // this will never be null, we check in checkAirportFields
         db.InsertAirport(airport);
 
         return AirportAdditionError.NoError;
     }
-    
-    
+
+
 
     public AirportDeletionError DeleteAirport(String id)
     {
@@ -149,19 +164,22 @@ public class BusinessLogic : IBusinessLogic
         int numAirportsUntilNextLevel;
 
         int numAirportsVisited = db.SelectAllAirports().Count;
-        if(numAirportsVisited < BRONZE_LEVEL)
+        if (numAirportsVisited < BRONZE_LEVEL)
         {
             nextLevel = FlyWisconsinLevel.Bronze;
             numAirportsUntilNextLevel = BRONZE_LEVEL - numAirportsVisited;
-        } else if(numAirportsVisited < SILVER_LEVEL)
+        }
+        else if (numAirportsVisited < SILVER_LEVEL)
         {
             nextLevel = FlyWisconsinLevel.Silver;
             numAirportsUntilNextLevel = SILVER_LEVEL - numAirportsVisited;
-        } else if(numAirportsVisited < GOLD_LEVEL)
+        }
+        else if (numAirportsVisited < GOLD_LEVEL)
         {
             nextLevel = FlyWisconsinLevel.Gold;
             numAirportsUntilNextLevel = GOLD_LEVEL - numAirportsVisited;
-        } else
+        }
+        else
         {
             nextLevel = FlyWisconsinLevel.None;
             numAirportsUntilNextLevel = 0;
