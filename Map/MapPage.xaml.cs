@@ -90,6 +90,11 @@ public partial class MapPage : ContentPage
 
     private void OnVisitedRadio_Clicked(object sender, CheckedChangedEventArgs e)
     {
+        if(!e.Value)
+        {
+            return;
+        }
+
         pointLayer.Clear();
 
         // this gets the airports that have been visited, as well as all airports
@@ -125,6 +130,11 @@ public partial class MapPage : ContentPage
 
     private void OnUnvisitedRadio_Clicked(object sender, CheckedChangedEventArgs e)
     {
+        if (!e.Value)
+        {
+            return;
+        }
+
         pointLayer.Clear();
 
         //if (!e.Value)
@@ -160,6 +170,11 @@ public partial class MapPage : ContentPage
 
     private void OnBothRadio_Clicked(object sender, CheckedChangedEventArgs e)
     {
+        if (!e.Value)
+        {
+            return;
+        }
+
         pointLayer.Clear();
 
         //if (!e.Value)
