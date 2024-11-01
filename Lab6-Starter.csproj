@@ -50,9 +50,6 @@
 		<!-- Raw Assets (also remove the "Resources\Raw" prefix) -->
 		<MauiAsset Include="Resources\Raw\**" LogicalName="%(RecursiveDir)%(Filename)%(Extension)" />
 	</ItemGroup>
-	<ItemGroup>
-	  <MauiImage Remove="Resources\Images\map_point.png" />
-	</ItemGroup>
 
 	<ItemGroup>
 		<PackageReference Include="CommunityToolkit.Maui" Version="9.1.0" />
@@ -77,9 +74,6 @@
 	<ItemGroup>
 	  <BundleResource Include="Resources\Images\trash.png" />
 	  <BundleResource Include="Resources\Images\rectangle_list_48.png" />
-	</ItemGroup>
-	<ItemGroup>
-	  <EmbeddedResource Include="Resources\Images\map_point.png" />
 	</ItemGroup>
 	<ItemGroup>
 

@@ -47,22 +47,6 @@ namespace Lab6_Starter;
  */
 public partial class MapPage : ContentPage
 {
-    // Holds a SymbolStyle that can be used during the lifetime of the app
-    private static readonly SymbolStyle style;
-
-    static MapPage()
-    {
-        // Load the map_point.png embedded resource into a stream
-        Stream stream = EmbeddedResourceLoader.Load("Images.map_point.png", typeof(Resources));
-        // Initialize the style with a new bitmap, offset, and scale for the map
-        style = new()
-        {
-            BitmapId = BitmapRegistry.Instance.Register(stream),
-            SymbolOffset = new() { Y = 256 },
-            SymbolScale = 0.1
-        };
-    }
-
     // A WritableLayer is essentially an overlay for the map that renders special features
     // that you add to it
     private WritableLayer pointLayer = new();
@@ -104,20 +88,10 @@ public partial class MapPage : ContentPage
         MapGrid.Add(mapControl);
     }
 
-    private static PointFeature GetFeatureFromPoint(MPoint point)
-    {
-        PointFeature feature = new(point);
-        feature.Styles.Add(style);
-
-        return feature;
-    }
-
     private void OnVisitedRadio_Clicked(object sender, CheckedChangedEventArgs e)
     {
         pointLayer.Clear();
 
-        if (!e.Value)
-            return;
         // this gets the airports that have been visited, as well as all airports
         // that have cordinates connected to them
         ObservableCollection<Airport> visitedAirports = MauiProgram.BusinessLogic.GetAirports();
@@ -142,7 +116,7 @@ public partial class MapPage : ContentPage
 
         foreach (MPoint mPoint in pointsToAdd)
         {
-            // call the method here with mPoint
+            pointLayer.Add(new PointFeature(mPoint));
         }
 
         
@@ -153,8 +127,33 @@ public partial class MapPage : ContentPage
     {
         pointLayer.Clear();
 
-        if (!e.Value)
-            return;
+        //if (!e.Value)
+        //    return;
+
+        ObservableCollection<Airport> visitedAirports = MauiProgram.BusinessLogic.GetAirports();
+        ObservableCollection<Airport> allAirports = MauiProgram.BusinessLogic.GetWisconsinAirports();
+
+        // create a list of MPoints which will be added to the map
+        List<MPoint> pointsToAdd = new();
+
+        // find which airports have been visited, and add their cordinates to the list
+        foreach (Airport airportVisited in visitedAirports)
+        {
+            foreach (Airport airportWithCords in allAirports)
+            {
+                if (airportVisited.Id != airportWithCords.Id)
+                {
+                    MPoint mpoint = new(airportWithCords.Latitude, airportWithCords.Longitude);
+                    MPoint convertedMPoint = SphericalMercator.FromLonLat(mpoint.X, mpoint.Y).ToMPoint();
+                    pointsToAdd.Add(convertedMPoint);
+                }
+            }
+        }
+
+        foreach (MPoint mPoint in pointsToAdd)
+        {
+            pointLayer.Add(new PointFeature(mPoint));
+        }
 
         // TODO: clear existing points and draw a point for each unvisited airport
     }
@@ -163,8 +162,24 @@ public partial class MapPage : ContentPage
     {
         pointLayer.Clear();
 
-        if (!e.Value)
-            return;
+        //if (!e.Value)
+        //    return;
+
+        ObservableCollection<Airport> allAirports = MauiProgram.BusinessLogic.GetWisconsinAirports();
+
+        List<MPoint> pointsToAdd = new();
+
+        foreach (Airport airport in allAirports)
+        {
+            MPoint mpoint = new(airport.Latitude, airport.Longitude);
+            MPoint convertedMPoint = SphericalMercator.FromLonLat(mpoint.X, mpoint.Y).ToMPoint();
+            pointsToAdd.Add(convertedMPoint);
+        }
+
+        foreach (MPoint mPoint in pointsToAdd)
+        {
+            pointLayer.Add(new PointFeature(mPoint));
+        }
 
         // TODO: clear existing points and draw a point for each airport
     }
