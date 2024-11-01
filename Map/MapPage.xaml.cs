@@ -2,10 +2,11 @@ using Lab6_Starter.Model;
 using Mapsui;
 using Mapsui.Extensions;
 using Mapsui.Layers;
-using Mapsui.Layers.AnimatedLayers;
 using Mapsui.Projections;
+using Mapsui.Styles;
 using Mapsui.Tiling;
 using Mapsui.UI.Maui;
+using Mapsui.Utilities;
 using System.Collections.ObjectModel;
 using Map = Mapsui.Map;
 
@@ -46,13 +47,30 @@ namespace Lab6_Starter;
  */
 public partial class MapPage : ContentPage
 {
+    // Holds a SymbolStyle that can be used during the lifetime of the app
+    private static readonly SymbolStyle style;
+
+    static MapPage()
+    {
+        // Load the map_point.png embedded resource into a stream
+        Stream stream = EmbeddedResourceLoader.Load("Images.map_point.png", typeof(Resources));
+        // Initialize the style with a new bitmap, offset, and scale for the map
+        style = new()
+        {
+            BitmapId = BitmapRegistry.Instance.Register(stream),
+            SymbolOffset = new() { Y = 256 },
+            SymbolScale = 0.1
+        };
+    }
+
     // A WritableLayer is essentially an overlay for the map that renders special features
     // that you add to it
     private WritableLayer pointLayer = new();
+
     public MapPage()
 	{
 		InitializeComponent();
-        
+
         // A .net MAUI control that contains a MapsUI map
         MapControl mapControl = new();
         // The MapsUI map from the new control
@@ -84,6 +102,14 @@ public partial class MapPage : ContentPage
         
         // Place the map control into MapPage under a grid prepared to contain it
         MapGrid.Add(mapControl);
+    }
+
+    private static PointFeature GetFeatureFromPoint(MPoint point)
+    {
+        PointFeature feature = new(point);
+        feature.Styles.Add(style);
+
+        return feature;
     }
 
     private void OnVisitedRadio_Clicked(object sender, CheckedChangedEventArgs e)
