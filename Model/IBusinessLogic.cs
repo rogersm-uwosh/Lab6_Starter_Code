@@ -10,6 +10,6 @@ public interface IBusinessLogic
     Airport FindAirport(String id);
     String CalculateStatistics();
     ObservableCollection<Airport> GetAirports();
-    ObservableCollection<Weather> GetClosestAirportWeather();
+    Weather GetClosestAirportWeather();
     Route GetRoute();
 }

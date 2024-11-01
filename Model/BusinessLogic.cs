@@ -21,7 +21,7 @@ public class BusinessLogic : IBusinessLogic
 
     }
 
-    public ObservableCollection<Weather> ClosestAirportWeather
+    public Weather ClosestAirportWeather
     {
         get { return GetClosestAirportWeather(); }
 
@@ -170,11 +170,12 @@ public class BusinessLogic : IBusinessLogic
     /// Get the weather of the closest airport
     /// </summary>
     /// <returns>The weather of the closest airport as an observable collection so it can be seen in the collection view</returns>
-    public ObservableCollection<Weather> GetClosestAirportWeather()
+    public Weather GetClosestAirportWeather()
     {
-        ObservableCollection<Weather> weather = new ObservableCollection<Weather>();
-        weather.Add(new Weather("KOSH", "METAR KOSH 241800Z 23010KT 10SM BKN040 OVC060 14/09 A2990 RMK AO2 SLP132", "TAF KOSH 241740Z 2418/2518 23010KT P6SM BKN040 OVC060 "));
-        return weather;
+        //ObservableCollection<Weather> weather = new ObservableCollection<Weather>();
+        //weather.Add(new Weather("KOSH", "METAR KOSH 241800Z 23010KT 10SM BKN040 OVC060 14/09 A2990 RMK AO2 SLP132", "TAF KOSH 241740Z 2418/2518 23010KT P6SM BKN040 OVC060 "));
+        //return weather;
+        return new Weather("KOSH", "METAR KOSH 241800Z 23010KT 10SM BKN040 OVC060 14/09 A2990 RMK AO2 SLP132", "TAF KOSH 241740Z 2418/2518 23010KT P6SM BKN040 OVC060 ");
     }
 
     public Route GetRoute()

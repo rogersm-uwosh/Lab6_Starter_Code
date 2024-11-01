@@ -16,6 +16,11 @@ public partial class WeatherPage : ContentPage
 
     // Various event handlers for the buttons on the main page
 
+    void Fetch_Clicked(object sender, EventArgs e)
+    {
+        //Do something 
+    }
+
 }
 
 
