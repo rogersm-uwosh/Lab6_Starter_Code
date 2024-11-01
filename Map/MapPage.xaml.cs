@@ -6,9 +6,9 @@ using Mapsui.Projections;
 using Mapsui.Styles;
 using Mapsui.Tiling;
 using Mapsui.UI.Maui;
-using Mapsui.Utilities;
 using System.Collections.ObjectModel;
 using Map = Mapsui.Map;
+using Color = Mapsui.Styles.Color;
 
 namespace Lab6_Starter;
 
@@ -47,6 +47,17 @@ namespace Lab6_Starter;
  */
 public partial class MapPage : ContentPage
 {
+    // A style to paint a point green when this is applied
+    private static readonly VectorStyle visitedStyle = new()
+    {
+        Fill = new(Color.Green)
+    };
+    // A style to paint a point orange when this is applied
+    private static readonly VectorStyle unvisitedStyle = new()
+    {
+        Fill = new(Color.Orange)
+    };
+
     // A WritableLayer is essentially an overlay for the map that renders special features
     // that you add to it
     private WritableLayer pointLayer = new();
@@ -65,7 +76,7 @@ public partial class MapPage : ContentPage
         // Place the layer for the points on top of the previous map layer
         map.Layers.Add(pointLayer);
         
-        // A point to be placed on the map, with a given longitude and latitude as parameters
+        // A point to zoom to on the map, with a given longitude and latitude as parameters
         MPoint mpoint = new(-88.4154, 44.2619);
         // The map doesn't use longitude/latitude for placement, so project it onto a new point
         // that can be placed onto the map in the correct location
@@ -75,25 +86,14 @@ public partial class MapPage : ContentPage
         map.Home = (n) => n.CenterOnAndZoomTo(npoint, map.Navigator.Resolutions[9]);
         // To zoom to a point after the map is loaded, use map.CenterOnAndZoomTo(); without lambda
         
-        // Add a point feature into the WritableLayer from earlier, using the projected MPoint
-        // This point will now render on the map which is exactly what we need!
-        pointLayer.Add(new PointFeature(npoint));
-        // To clear all existing features from the layer, you can use:
-        // pointLayer.Clear();
-
-        // You may be able to use PointFeature's Styles property or something similar
-        // to change the appearance of the points (default is a white circle)
-        
         // Place the map control into MapPage under a grid prepared to contain it
         MapGrid.Add(mapControl);
     }
 
     private void OnVisitedRadio_Clicked(object sender, CheckedChangedEventArgs e)
     {
-        if(!e.Value)
-        {
+        if (!e.Value)
             return;
-        }
 
         // clear all current points on the map
         pointLayer.Clear();
@@ -103,96 +103,90 @@ public partial class MapPage : ContentPage
         ObservableCollection<Airport> visitedAirports = MauiProgram.BusinessLogic.GetAirports();
         ObservableCollection<Airport> allAirports = MauiProgram.BusinessLogic.GetWisconsinAirports();
 
-        // create a list of MPoints which will be added to the map
-        List<MPoint> pointsToAdd = new();
-
-        // find which airports have been visited, and add their cordinates to the list
+        // find which airports have been visited, and add a point with their coordinates to the map
         foreach (Airport airportVisited in visitedAirports)
         {
-            foreach (Airport airportWithCords in allAirports)
+            foreach (Airport airportWithCoords in allAirports)
             {
-                if(airportVisited.Id == airportWithCords.Id)
+                if(airportVisited.Id == airportWithCoords.Id)
                 {
-                    MPoint mpoint = new(airportWithCords.Latitude, airportWithCords.Longitude);
-                    MPoint convertedMPoint = SphericalMercator.FromLonLat(mpoint.Y, mpoint.X).ToMPoint();
-                    pointsToAdd.Add(convertedMPoint);
+                    // add a new point with these coords to the map
+                    pointLayer.Add(GetPointFromLonLat(airportWithCoords.Longitude, airportWithCoords.Latitude, true));
                 }
             }
-        }
-
-        // add every point to the point layer
-        foreach (MPoint mPoint in pointsToAdd)
-        {
-            pointLayer.Add(new PointFeature(mPoint));
         }
     }
 
     private void OnUnvisitedRadio_Clicked(object sender, CheckedChangedEventArgs e)
     {
         if (!e.Value)
-        {
             return;
-        }
 
         // clear all the points from the point layer
         pointLayer.Clear();
 
-        // get the airports visited and the airports with cordinates
+        // get the airports visited and the airports with coordinates
         ObservableCollection<Airport> visitedAirports = MauiProgram.BusinessLogic.GetAirports();
         ObservableCollection<Airport> allAirports = MauiProgram.BusinessLogic.GetWisconsinAirports();
 
-        // create a list of MPoints which will be added to the map
-        List<MPoint> pointsToAdd = new();
-
-        // find which airports have been visited, and add their cordinates to the list
-        foreach (Airport airportVisited in visitedAirports)
+        // find which airports have not been visited, and add a point with their coordinates to the map
+        foreach (Airport airportWithCoords in allAirports)
         {
-            foreach (Airport airportWithCords in allAirports)
+            bool visited = false;
+
+            foreach (Airport airportVisited in visitedAirports)
             {
-                if (airportVisited.Id != airportWithCords.Id)
-                {
-                    MPoint mpoint = new(airportWithCords.Latitude, airportWithCords.Longitude);
-                    MPoint convertedMPoint = SphericalMercator.FromLonLat(mpoint.Y, mpoint.X).ToMPoint();
-                    pointsToAdd.Add(convertedMPoint);
-                }
+                if (airportVisited.Id == airportWithCoords.Id)
+                    visited = true;
             }
-        }
 
-        // add each point to the point layer
-        foreach (MPoint mPoint in pointsToAdd)
-        {
-            pointLayer.Add(new PointFeature(mPoint));
+            if (!visited)
+            {
+                // add a new point with these coords to the map
+                pointLayer.Add(GetPointFromLonLat(airportWithCoords.Longitude, airportWithCoords.Latitude, false));
+            }
         }
     }
 
     private void OnBothRadio_Clicked(object sender, CheckedChangedEventArgs e)
     {
         if (!e.Value)
-        {
             return;
-        }
 
         // clear the current points on the map
         pointLayer.Clear();
 
-        // get all airports in the database
+        // get the airports visited and the airports with coordinates
+        ObservableCollection<Airport> visitedAirports = MauiProgram.BusinessLogic.GetAirports();
         ObservableCollection<Airport> allAirports = MauiProgram.BusinessLogic.GetWisconsinAirports();
 
-        // setup a list of points to be added
-        List<MPoint> pointsToAdd = new();
-
-        // get a point from each airports cordinates
-        foreach (Airport airport in allAirports)
+        // get a point from each airport's coordinates and place it on the map
+        foreach (Airport airportWithCoords in allAirports)
         {
-            MPoint mpoint = new(airport.Latitude, airport.Longitude);
-            MPoint convertedMPoint = SphericalMercator.FromLonLat(mpoint.Y, mpoint.X).ToMPoint();
-            pointsToAdd.Add(convertedMPoint);
-        }
+            bool visited = false;
 
-        // add each point to the point layer
-        foreach (MPoint mPoint in pointsToAdd)
-        {
-            pointLayer.Add(new PointFeature(mPoint));
+            foreach (Airport airportVisited in visitedAirports)
+            {
+                if (airportVisited.Id == airportWithCoords.Id)
+                    visited = true;
+            }
+
+            // add a new point with these coords to the map
+            pointLayer.Add(GetPointFromLonLat(airportWithCoords.Longitude, airportWithCoords.Latitude, visited));
         }
+    }
+
+    private static PointFeature GetPointFromLonLat(double longitude, double latitude, bool visited)
+    {
+        MPoint point = new(longitude, latitude);
+        // Convert lon/lat to coordinates the map understands
+        point = SphericalMercator.FromLonLat(point.X, point.Y).ToMPoint();
+
+        // Create a new PointFeature that a color style can be applied to using this point
+        PointFeature feature = new(point);
+        // Apply the visited/unvisited style depending on visited parameter
+        feature.Styles.Add(visited ? visitedStyle : unvisitedStyle);
+
+        return feature;
     }
 }
