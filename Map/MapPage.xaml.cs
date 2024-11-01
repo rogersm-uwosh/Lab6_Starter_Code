@@ -2,6 +2,7 @@ using Lab6_Starter.Model;
 using Mapsui;
 using Mapsui.Extensions;
 using Mapsui.Layers;
+using Mapsui.Layers.AnimatedLayers;
 using Mapsui.Projections;
 using Mapsui.Tiling;
 using Mapsui.UI.Maui;
@@ -45,7 +46,10 @@ namespace Lab6_Starter;
  */
 public partial class MapPage : ContentPage
 {
-	public MapPage()
+    // A WritableLayer is essentially an overlay for the map that renders special features
+    // that you add to it
+    private WritableLayer pointLayer = new();
+    public MapPage()
 	{
 		InitializeComponent();
         
@@ -53,9 +57,6 @@ public partial class MapPage : ContentPage
         MapControl mapControl = new();
         // The MapsUI map from the new control
         Map map = mapControl.Map;
-        // A WritableLayer is essentially an overlay for the map that renders special features
-        // that you add to it
-        WritableLayer pointLayer = new();
         
         // Add a layer to show the map from OpenStreetMap's API
         map.Layers.Add(OpenStreetMap.CreateTileLayer());
@@ -87,14 +88,45 @@ public partial class MapPage : ContentPage
 
     private void OnVisitedRadio_Clicked(object sender, CheckedChangedEventArgs e)
     {
+        pointLayer.Clear();
+
         if (!e.Value)
             return;
+        // this gets the airports that have been visited, as well as all airports
+        // that have cordinates connected to them
+        ObservableCollection<Airport> visitedAirports = MauiProgram.BusinessLogic.GetAirports();
+        ObservableCollection<Airport> allAirports = MauiProgram.BusinessLogic.GetWisconsinAirports();
 
+        // create a list of MPoints which will be added to the map
+        List<MPoint> pointsToAdd = new();
+
+        // find which airports have been visited, and add their cordinates to the list
+        foreach (Airport airportVisited in visitedAirports)
+        {
+            foreach (Airport airportWithCords in allAirports)
+            {
+                if(airportVisited.Id == airportWithCords.Id)
+                {
+                    MPoint mpoint = new(airportWithCords.Latitude, airportWithCords.Longitude);
+                    MPoint convertedMPoint = SphericalMercator.FromLonLat(mpoint.X, mpoint.Y).ToMPoint();
+                    pointsToAdd.Add(convertedMPoint);
+                }
+            }
+        }
+
+        foreach (MPoint mPoint in pointsToAdd)
+        {
+            // call the method here with mPoint
+        }
+
+        
         // TODO: clear existing points and draw a point for each visited airport
     }
 
     private void OnUnvisitedRadio_Clicked(object sender, CheckedChangedEventArgs e)
     {
+        pointLayer.Clear();
+
         if (!e.Value)
             return;
 
@@ -103,6 +135,8 @@ public partial class MapPage : ContentPage
 
     private void OnBothRadio_Clicked(object sender, CheckedChangedEventArgs e)
     {
+        pointLayer.Clear();
+
         if (!e.Value)
             return;
 
