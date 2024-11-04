@@ -1,18 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Diagnostics;
-using Lab6_Starter;
+﻿using System.Collections.ObjectModel;
+using Lab6_Starter.Model;
 
-namespace Lab6_Starter.Model;
+namespace FWAPPA.Model;
 
-public class BusinessLogic : IBusinessLogic
+public partial class BusinessLogic : IBusinessLogic
 {
+    
     const int BRONZE_LEVEL = 42;
     const int SILVER_LEVEL = 84;
     const int GOLD_LEVEL = 128;
-
-
+    
     IDatabase db;
     private readonly int MAX_RATING = 5;
 
