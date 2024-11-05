@@ -2,8 +2,6 @@ using CommunityToolkit.Maui.Alerts;
 using CommunityToolkit.Maui.Core;
 using CommunityToolkit.Maui.Views;
 using Lab6_Starter.Model;
-using System.Formats.Tar;
-using System.Runtime.InteropServices;
 using Syncfusion.Maui.Calendar;
 
 
@@ -45,7 +43,6 @@ public partial class EnterAirportDetailsPopup : Popup
     void OnCalendarSelectionChanged(object sender, EventArgs e)
     {
         dateVisited = Calendar.SelectedDate ;
-        Console.WriteLine(dateVisited.ToString()); //DELETE ME
     }
     
     //select rating
@@ -68,13 +65,11 @@ public partial class EnterAirportDetailsPopup : Popup
         }
     }
 
-    async void Ok_Clicked(object sender, EventArgs e)
+    void Ok_Clicked(object sender, EventArgs e)
     {
         string errorMessage;
-        id = IdEntry.Text;
-        city = CityEntry.Text;
         var action = isEdit ? (Action)editAirport : (Action)addAirport;
-        action(); // this is super necessary, but it looks kinda neat (pretty self-explanatory here too)
+        action(); // this isn't super necessary, but it looks kinda neat (pretty self-explanatory here too)
     }
 
     async void addAirport()
@@ -82,7 +77,7 @@ public partial class EnterAirportDetailsPopup : Popup
         string errorMessage;
         id = IdEntry.Text;
         city = CityEntry.Text;
-        AirportAdditionError error = MauiProgram.BusinessLogic.AddAirport(id, city, (DateTime) dateVisited, rating);
+        AirportAdditionError error = MauiProgram.BusinessLogic.AddAirport(id, city, dateVisited, rating);
         errorMessage = error.ToString() switch
         {
             "InvalidIdLength" => "Id length is not between 3 and 4",
@@ -94,7 +89,7 @@ public partial class EnterAirportDetailsPopup : Popup
             _ => error.ToString()
         };
         IToast errorMessageToast = Toast.Make(errorMessage);
-        errorMessageToast.Show();
+        await errorMessageToast.Show();
         if (error.ToString() == "NoError") // switch is prettier, but we pay for it here I suppose
         {
             Close();

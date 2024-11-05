@@ -19,6 +19,7 @@ public partial class MainPage : ContentPage
 
     void AddAirport_Clicked(System.Object sender, System.EventArgs e)
     {
+        //Changed to a popup insert [Popup Team]
         var popup = new EnterAirportDetailsPopup(null);
 
         this.ShowPopup(popup);
@@ -47,6 +48,7 @@ public partial class MainPage : ContentPage
 
     void EditAirport_Clicked(System.Object sender, System.EventArgs e)
     {
+        //Changed to a popup insert [Popup Team]
         Airport currentAirport = CV.SelectedItem as Airport;
         var popup = new EnterAirportDetailsPopup(currentAirport);
         this.ShowPopup(popup);
