@@ -1,9 +1,8 @@
-﻿using System.Collections.Generic;
-using System.Collections.ObjectModel;
+﻿using System.Collections.ObjectModel;
 
 namespace Lab6_Starter.Model
 {
-    public interface IDatabase
+    public partial interface IDatabase
     {
         ObservableCollection<Airport> SelectAllAirports();
         Airport SelectAirport(String id);

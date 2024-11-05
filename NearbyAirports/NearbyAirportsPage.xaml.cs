@@ -27,31 +27,40 @@ public partial class NearbyAirportsPage : ContentPage
     /// <param name="e"></param>
     private void OnSearchNearbyAirportBtn(object sender, EventArgs e)
     {
-        string airportName = AirportEntry.Text.ToUpper();
+        string airportName = AirportEntry.Text;
         string distanceMileText = DistanceEntry.Text;
-        
-        Airport airport = BusinessLogic.FindAirport(airportName);
-        bool isValidDistance = int.TryParse(distanceMileText, out int distanceMile);
 
+        if (airportName == null)
+        {
+            DisplayAlert("", "Please enter a valid airport name", "OK");
+            return;
+        }
+
+        Airport airport = BusinessLogic.FindAirport(airportName.ToUpper());
+        bool isValidDistance = int.TryParse(distanceMileText, out int distanceMile);
         if (airport == null)
         {
             DisplayAlert("Error", "Airport not found", "OK");
+            return;
         }
-        else if (!isValidDistance)
+
+        if (!isValidDistance)
         {
             DisplayAlert("Error", "Distance is invalid", "OK");
+            return;
         }
-        else if (distanceMile < 0)
+
+        if (distanceMile < 0)
         {
             DisplayAlert("Error", "Distance must be greater than 0", "OK");
+            return;
         }
-        else
+
+        NearbyAirports.Clear();
+        foreach (var nearbyAirport in BusinessLogic.CalculateNearbyAirports(airport, distanceMile))
         {
-            NearbyAirports.Clear();
-            foreach (var nearbyAirport in BusinessLogic.CalculateNearbyAirports(airport, distanceMile))
-            {
-                NearbyAirports.Add(nearbyAirport);
-            }
+            NearbyAirports.Add(nearbyAirport);
         }
+        
     }
 }
