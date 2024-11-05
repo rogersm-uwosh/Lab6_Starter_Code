@@ -6,16 +6,16 @@
 		<!-- Uncomment to also build the tizen app. You will need to install tizen by following this: https://github.com/Samsung/Tizen.NET -->
 		<!-- <TargetFrameworks>$(TargetFrameworks);net7.0-tizen</TargetFrameworks> -->
 		<OutputType>Exe</OutputType>
-		<RootNamespace>Lab2_Solution</RootNamespace>
+		<RootNamespace>FWAPPA</RootNamespace>
 		<UseMaui>true</UseMaui>
 		<SingleProject>true</SingleProject>
 		<ImplicitUsings>enable</ImplicitUsings>
 
 		<!-- Display name -->
-		<ApplicationTitle>Lab2-Solution</ApplicationTitle>
+		<ApplicationTitle>FWAPPA!</ApplicationTitle>
 
 		<!-- App Identifier -->
-		<ApplicationId>com.companyname.lab2_solution</ApplicationId>
+		<ApplicationId>com.companyname.FWAPPA</ApplicationId>
 		<ApplicationIdGuid>61e8c86d-af96-458f-aadd-f4362c4aeae7</ApplicationIdGuid>
 
 		<!-- Versions -->
@@ -52,27 +52,52 @@
 	</ItemGroup>
 
 	<ItemGroup>
+		<PackageReference Include="CommunityToolkit.Maui" Version="9.1.0" />
+		<PackageReference Include="Mapsui.Maui" Version="4.1.7" />
 		<PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="8.0.0" />
+		<PackageReference Include="Microsoft.Maui.Controls.Maps" Version="8.0.92" />
 		<PackageReference Include="Npgsql" Version="8.0.5" />
 		<PackageReference Include="Microsoft.Extensions.Configuration" Version="8.0.0" />
 		<PackageReference Include="Microsoft.Extensions.Configuration.UserSecrets" Version="8.0.0" />
+		<PackageReference Include="Syncfusion.Licensing" Version="27.1.53" />
+		<PackageReference Include="Syncfusion.Maui.Calendar" Version="27.1.53" />
 	</ItemGroup>
 
 	<ItemGroup>
 	  <None Remove="Model\" />
+	  <None Remove="Resources\Images\map_nav_icon.png" />
+	  <None Remove="Resources\Images\ic_fluent_star_24_filled_grey.svg" />
+	  <None Remove="Resources\Images\ic_fluent_star_24_filled_yellow.svg" />
 	  <None Remove="Resources\Images\trash.png" />
 	  <None Remove="Resources\Images\rectangle-list_48.png" />
-	</ItemGroup>
-	<ItemGroup>
-	  <Folder Include="Model\" />
 	</ItemGroup>
 	<ItemGroup>
 	  <BundleResource Include="Resources\Images\trash.png" />
 	  <BundleResource Include="Resources\Images\rectangle_list_48.png" />
 	</ItemGroup>
 	<ItemGroup>
-	  <MauiXaml Update="PlanningTools.xaml">
+
+	  <MauiXaml Update="EnterAirportDetailsPopup.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
+	</ItemGroup>
+	<ItemGroup>
+	  <Compile Update="WeatherPage.xaml.cs">
+	    <DependentUpon>WeatherPage.xaml</DependentUpon>
+	  </Compile>
+	</ItemGroup>
+	<ItemGroup>
+		<MauiXaml Update="WeatherPage.xaml">
+			<Generator>MSBuild:Compile</Generator>
+		</MauiXaml>
+	  <Compile Update="Resources.xaml.cs">
+	    <DependentUpon>Resources.xaml</DependentUpon>
+	  </Compile>
+	  <MauiXaml Update="Map\MapPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	</ItemGroup>
+	<ItemGroup>
+		<MauiXaml Update="PlanningTools.xaml"/>
 	</ItemGroup>
 </Project>

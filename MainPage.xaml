@@ -2,7 +2,8 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:model="clr-namespace:Lab6_Starter.Model"
-             x:DataType="model:BusinessLogic" 
+             xmlns:model1="using:FWAPPA.Model"
+             x:DataType="model1:BusinessLogic" 
              x:Class="Lab6_Starter.MainPage"
              Title="Airports">
 
@@ -35,14 +36,6 @@
                 </CollectionView.ItemTemplate>
 
             </CollectionView>
-            <Grid RowDefinitions="*" ColumnDefinitions="*,3*,2*,*">
-                <Entry Grid.Column="0" Text="KATW" Placeholder="Id" x:Name="IdENT"/>
-                <Entry Grid.Column="1" Text="Appleton" Placeholder="City" x:Name="CityENT"/>
-                <Entry Grid.Column="2" Text="03/03/2023" Placeholder="Date Visited" x:Name="DateVisitedENT"/>
-                <Entry Grid.Column="3" Text="3" Placeholder="Rating" x:Name="RatingENT"/>
-            </Grid>
-
-
         </VerticalStackLayout>
     </ScrollView>
     </ScrollView>

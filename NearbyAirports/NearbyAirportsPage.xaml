@@ -1,0 +1,87 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+
+<!-- James Thao (Provided Grid Layout)
+     Jason Wang(Provided item template)
+     Alexander Johnston (Provided the image in the item template)
+-->
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:nearbyAirports="clr-namespace:FWAPPA.NearbyAirports"
+             x:Class="FWAPPA.NearbyAirports.NearbyAirportsPage"
+             Title="Nearby Airports"
+             xmlns:model="clr-namespace:Lab6_Starter.Model"
+             x:DataType="nearbyAirports:NearbyAirportsPage">
+    <ContentPage.Resources>
+        <nearbyAirports:AirportVisitedConverter x:Key="AirportVisitedConvertor" />
+        <nearbyAirports:AirportToMilesConverter x:Key="AirportToMilesConverter" />
+    </ContentPage.Resources>
+    <ContentPage.Content>
+        <Grid
+            ColumnDefinitions="*, *, *"
+            RowDefinitions="auto, auto, *"
+            Margin="16">
+
+            <Label Text="Airport: "
+                   Grid.Column="0"
+                   Grid.Row="0" />
+            <Entry Placeholder="Airport"
+                   x:Name="AirportEntry"
+                   Grid.Column="1"
+                   Grid.Row="0" />
+            <Label Text="Max Distance: "
+                   Grid.Column="0"
+                   Grid.Row="1" />
+            <Entry Placeholder="Distance"
+                   x:Name="DistanceEntry"
+                   Keyboard="Numeric"
+                   Grid.Column="1"
+                   Grid.Row="1" />
+            <Button Text="Submit" 
+                    Clicked="OnSearchNearbyAirportBtn" 
+                    Grid.Column="2" 
+                    Grid.Row="0" 
+                    Grid.RowSpan="2" 
+                    VerticalOptions="Center"
+                    Margin="16,0,0,0"/>
+            <ScrollView
+                Grid.Row="2"
+                Grid.ColumnSpan="3">
+
+                <CollectionView
+                    x:Name="AirportList"
+                    ItemsSource="{Binding NearbyAirports}">
+
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate x:DataType="model:Airport">
+                            <Grid
+                                RowDefinitions="*"
+                                ColumnDefinitions="*,*,*,*"
+                                Padding="8">
+                                <Label
+                                    VerticalOptions="Center"
+                                    Grid.Column="0"
+                                    Text="{Binding Id }" />
+                                <Label
+                                    VerticalOptions="Center"
+                                    Grid.Column="1"
+                                    Text="{Binding City }" />
+                                <Label
+                                    VerticalOptions="Center"
+                                    HorizontalOptions="Center"
+                                    Grid.Column="2"
+                                    Text="{Binding ., Converter={StaticResource AirportToMilesConverter}}" />
+                                <Image
+                                    VerticalOptions="Center"
+                                    Grid.Column="3"
+                                    MaximumHeightRequest="50"
+                                    MaximumWidthRequest="50"
+                                    Source="{Binding ., Converter={StaticResource AirportVisitedConvertor}}" />
+                            </Grid>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+
+                </CollectionView>
+            </ScrollView>
+        </Grid>
+    </ContentPage.Content>
+</ContentPage>

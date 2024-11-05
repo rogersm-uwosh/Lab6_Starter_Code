@@ -1,4 +1,5 @@
-﻿using Lab6_Starter.Model;
+﻿using CommunityToolkit.Maui.Views;
+using Lab6_Starter.Model;
 namespace Lab6_Starter;
 
 public partial class MainPage : ContentPage
@@ -18,26 +19,25 @@ public partial class MainPage : ContentPage
 
     void AddAirport_Clicked(System.Object sender, System.EventArgs e)
     {
-        // The UI layer talks to the BusinessLogic layer, telling it what to do
-        DateTime dateVisited;
+        //Changed to a popup insert [Popup Team]
+        var popup = new EnterAirportDetailsPopup(null);
 
-        if (DateTime.TryParse(DateVisitedENT.Text, out dateVisited) == false)
-        {
-            DisplayAlert("Ruhroh", "Illegal date format", "OK");
-        }
-        else
-        {
-            AirportAdditionError result = MauiProgram.BusinessLogic.AddAirport(IdENT.Text, CityENT.Text, DateTime.Parse(DateVisitedENT.Text), int.Parse(RatingENT.Text));
-            if (result != AirportAdditionError.NoError)
-            {
-                DisplayAlert("Ruhroh", result.ToString(), "OK");
-            }
-        }
+        this.ShowPopup(popup);
     }
 
     void DeleteAirport_Clicked(System.Object sender, System.EventArgs e)
     {
         Airport currentAirport = CV.SelectedItem as Airport;
+        
+        // Check if an airport is selected
+        if (currentAirport == null)
+        {
+            // Show an alert if no airport is selected
+            DisplayAlert("Selection Error", "Please select an airport to delete.", "OK");
+            return; // Exit the method
+        }
+
+        // Proceed to delete the selected airport
         AirportDeletionError result = MauiProgram.BusinessLogic.DeleteAirport(currentAirport.Id);
         if (result != AirportDeletionError.NoError)
         {
@@ -45,23 +45,13 @@ public partial class MainPage : ContentPage
         }
     }
 
+
     void EditAirport_Clicked(System.Object sender, System.EventArgs e)
     {
+        //Changed to a popup insert [Popup Team]
         Airport currentAirport = CV.SelectedItem as Airport;
-        DateTime dateVisited;
-
-        if (DateTime.TryParse(DateVisitedENT.Text, out dateVisited) == false)
-        {
-            DisplayAlert("Ruhroh", "Illegal date format", "OK");
-        }
-        else
-        {
-            AirportEditError result = MauiProgram.BusinessLogic.EditAirport(currentAirport.Id, CityENT.Text, DateTime.Parse(DateVisitedENT.Text), int.Parse(RatingENT.Text));
-            if (result != AirportEditError.NoError)
-            {
-                DisplayAlert("Ruhroh", result.ToString(), "OK");
-            }
-        }
+        var popup = new EnterAirportDetailsPopup(currentAirport);
+        this.ShowPopup(popup);
     }
 
     void CalculateStatistics_Clicked(System.Object sender, System.EventArgs e)
