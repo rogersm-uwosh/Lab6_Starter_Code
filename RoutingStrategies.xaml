@@ -59,7 +59,7 @@
                        HorizontalOptions="FillAndExpand" 
                        HeightRequest="40"/>
                 </Frame>
-                <Label Text="nm" 
+                <Label Text="NM" 
                    VerticalOptions="Center" 
                    Margin="10,0,0,0"/>
             </HorizontalStackLayout>
@@ -75,7 +75,7 @@
             </HorizontalStackLayout>
 
             <!-- Suggested Routes -->
-            <Label Text="Suggested Routes" 
+            <Label Text="Suggested Route" 
                FontAttributes="Bold" 
                FontSize="Medium" 
                Margin="0,20,0,10"/>
@@ -109,15 +109,15 @@
                 <CollectionView.ItemTemplate>
                     <DataTemplate>
                         <Grid ColumnDefinitions="1*, 2*, 1*" Padding="0,10,0,0" HorizontalOptions="FillAndExpand">
-                            <Label Text="{Binding From}" 
+                            <Label Text="{Binding From.Airport.Id}" 
                                Grid.Column="0"
                                HorizontalTextAlignment="Start"
                                Padding="0,0,10,0"/>
-                            <Label Text="{Binding To}" 
+                            <Label Text="{Binding From.Airport.City}" 
                                Grid.Column="1"
                                HorizontalTextAlignment="Start"
                                Padding="0,0,10,0"/>
-                            <Label Text="{Binding Distance}" 
+                            <Label Text="{Binding Distance, StringFormat='{0:F1} NM'}"
                                Grid.Column="2"
                                HorizontalTextAlignment="End"
                                Padding="0,0,10,0"/>
