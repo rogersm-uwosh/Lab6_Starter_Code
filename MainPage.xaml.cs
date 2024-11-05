@@ -50,8 +50,9 @@ public partial class MainPage : ContentPage
     {
         //Changed to a popup insert [Popup Team]
         Airport currentAirport = CV.SelectedItem as Airport;
+        string currentAirportId = currentAirport.Id; 
         var popup = new EnterAirportDetailsPopup(currentAirport);
-        this.ShowPopup(popup);
+        this.ShowPopup(popup); 
     }
 
     void CalculateStatistics_Clicked(System.Object sender, System.EventArgs e)
