@@ -1,4 +1,5 @@
 using Lab6_Starter.Model;
+using Mapsui.Projections;
 using System.Collections.ObjectModel;
 
 namespace Lab6_Starter;
@@ -61,10 +62,9 @@ public class RoutePoint
     public double YScaled => Y * YScale;
     public Airport Airport { get; set; }
 
-    public RoutePoint(double x, double y, Airport airport) {
-        X = x;
-        Y = y;
+    public RoutePoint(Airport airport) {
         Airport = airport;
+        (X, Y) = SphericalMercator.FromLonLat(airport.Longitude, airport.Latitude);
     }
 
     public double DistanceFrom(RoutePoint other) {

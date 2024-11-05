@@ -43,6 +43,10 @@ public class Airport : INotifyPropertyChanged
         }
     }
 
+    // remove these when we get the other group's stuff
+    public double Longitude => 0;
+    public double Latitude => 0;
+
     public Airport(String id, String city, DateTime dateVisited, int rating)
     {
         Id = id;
