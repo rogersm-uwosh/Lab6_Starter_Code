@@ -203,5 +203,9 @@ public partial class BusinessLogic : IBusinessLogic
         return route;
     }
 
+    public ObservableCollection<Weather> GetWeathers()
+    {
+        throw new NotImplementedException();
+    }
 }
 
