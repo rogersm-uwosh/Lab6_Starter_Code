@@ -48,19 +48,23 @@ namespace Lab6_Starter;
 public partial class MapPage : ContentPage
 {
     // A style to paint a point green when this is applied
-    private static readonly VectorStyle visitedStyle = new()
+    private static readonly SymbolStyle visitedStyle = new()
     {
-        Fill = new(Color.Green)
+        Fill = new(Color.Green),
+        SymbolScale = 0.35f
     };
     // A style to paint a point orange when this is applied
-    private static readonly VectorStyle unvisitedStyle = new()
+    private static readonly SymbolStyle unvisitedStyle = new()
     {
-        Fill = new(Color.Orange)
+        Fill = new(Color.Orange),
+        SymbolScale = 0.35f
     };
 
+    // Caching the map created in the control so it can be refreshed later
+    private Map map;
     // A WritableLayer is essentially an overlay for the map that renders special features
     // that you add to it
-    private WritableLayer pointLayer = new();
+    private WritableLayer pointLayer = new() { Style = null };
 
     public MapPage()
 	{
@@ -69,7 +73,7 @@ public partial class MapPage : ContentPage
         // A .net MAUI control that contains a MapsUI map
         MapControl mapControl = new();
         // The MapsUI map from the new control
-        Map map = mapControl.Map;
+        map = mapControl.Map;
         
         // Add a layer to show the map from OpenStreetMap's API
         map.Layers.Add(OpenStreetMap.CreateTileLayer());
@@ -88,6 +92,10 @@ public partial class MapPage : ContentPage
         
         // Place the map control into MapPage under a grid prepared to contain it
         MapGrid.Add(mapControl);
+
+        // Manually setting IsChecked since putting this in the xaml sometimes causes it
+        // to be stuck as checked
+        VisitedRadioButton.IsChecked = true;
     }
 
     private void OnVisitedRadio_Clicked(object sender, CheckedChangedEventArgs e)
@@ -115,6 +123,8 @@ public partial class MapPage : ContentPage
                 }
             }
         }
+
+        map.Refresh();
     }
 
     private void OnUnvisitedRadio_Clicked(object sender, CheckedChangedEventArgs e)
@@ -146,6 +156,8 @@ public partial class MapPage : ContentPage
                 pointLayer.Add(GetPointFromLonLat(airportWithCoords.Longitude, airportWithCoords.Latitude, false));
             }
         }
+
+        map.Refresh();
     }
 
     private void OnBothRadio_Clicked(object sender, CheckedChangedEventArgs e)
@@ -174,6 +186,8 @@ public partial class MapPage : ContentPage
             // add a new point with these coords to the map
             pointLayer.Add(GetPointFromLonLat(airportWithCoords.Longitude, airportWithCoords.Latitude, visited));
         }
+
+        map.Refresh();
     }
 
     private static PointFeature GetPointFromLonLat(double longitude, double latitude, bool visited)

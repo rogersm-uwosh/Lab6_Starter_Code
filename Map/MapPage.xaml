@@ -21,7 +21,7 @@
                 <RadioButton Grid.Row="0" Grid.Column="0"
                              CheckedChanged="OnVisitedRadio_Clicked"
                              Content="Show Visited"
-                             IsChecked="True"/>
+                             x:Name="VisitedRadioButton"/>
                 <!-- Show Unvisited radio button -->
                 <RadioButton Grid.Row="0" Grid.Column="1"
                              CheckedChanged="OnUnvisitedRadio_Clicked"
