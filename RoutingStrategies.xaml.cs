@@ -16,7 +16,7 @@ namespace Lab6_Starter {
             Fill = new(Color.Orange)
         };
 
-        private static readonly IStyle visitedPointStyle = new SymbolStyle {
+        private static readonly IStyle startPointStyle = new SymbolStyle {
             SymbolScale = 0.5d,
             Fill = new(Color.Green)
         };
@@ -59,60 +59,77 @@ namespace Lab6_Starter {
 
             RouteMap.Map = map;
 
+            // Update current route (shouldn't do anything on startup)
             UpdateRoute(CurrentRoute);
         }
 
         private void GenerateRoute(object sender, EventArgs e) {
+            // Get the airport (not necessarily visited)
             string airportId = StartingAirportPicker.Text;
             Collection<Airport> available = _businessLogic.GetWisconsinAirports();
             Airport start = available.Where(x => x.Id.Equals(airportId)).FirstOrDefault();
             if (start == null) {
+                // Clears the map
                 UpdateRoute(null);
                 return;
             }
+
+            // Get the distance
             string distanceText = MaxDistanceEntry.Text;
             int distance = string.IsNullOrEmpty(distanceText) ? 0 : int.Parse(distanceText);
+
+            // Get if it should only find unvisited airports
             bool unvisitedOnly = UnvisitedSwitch.IsToggled;
 
+            // Update the route to be the one generated based on this information
             UpdateRoute(_businessLogic.GetRoute(start, distance, unvisitedOnly));
         }
 
         private void UpdateRoute(Route route) {
+            // Remove current layer
             if (routeLayer != null) {
                 RouteMap.Map.Layers.Remove(routeLayer);
             }
 
+            // If the route is null, stop, otherwise set this to the current route.
+            // We must not let it be null, however, for the sake of the UI and null
+            // such and such
             CurrentRoute = route ?? new();
             if (route == null) {
                 return;
             }
+
+            // Convert points to coordinates
             List<Coordinate> points = route.Points.Select(point => {
                 (double x, double y) = SphericalMercator.FromLonLat(point.X, point.Y);
                 return new Coordinate(x, y);
             }).ToList();
 
+            // Create path polygon
             GeometryFeature polygonFeature = new() {
                 Geometry = new LineString([.. points])
             };
             polygonFeature.Styles.Add(routeStyle);
 
+            // Make the points on the map, with a different style if it is
+            // the first point
             var pointFeatures = points
                 .Take(points.Count - 1)
                 .Select((point, i) => new PointFeature(point.X, point.Y) {
-                    Styles = [i == 0 ? visitedPointStyle : pointStyle]
+                    Styles = [i == 0 ? startPointStyle : pointStyle]
                 });
 
+            // Put the points on the map
             routeLayer = new MemoryLayer() {
                 Features = [polygonFeature, .. pointFeatures],
                 Style = null
             };
-
             RouteMap.Map.Layers.Add(routeLayer);
         }
 
         private static void ZoomToWisconsin(Navigator n)
         {
-            ZoomMapTo(n, 41.7, -93.1, 47.3, -86); // Wisconsin coordinates
+            ZoomMapTo(n, 41.7, -93.1, 47.3, -86); // Wisconsin bounding box coordinates
         }
 
         private static void ZoomMapTo(Navigator n, double latitudeMin, double longitudeMin, double latitudeMax, double longitudeMax)

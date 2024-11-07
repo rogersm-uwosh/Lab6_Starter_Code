@@ -51,16 +51,20 @@ public class Route {
     /// <param name="points">The points to get to on the route, starts and ends with the first in the list.</param>
     /// <returns>A decent route that visits each non-starting points exactly once.</returns>
     public static Route GenerateTravelingSalesmanRoute(List<RoutePoint> points) {
-        if (points.Count <= 2) {
+        // We need at least 2 points
+        if (points.Count < 2) {
             return null;
         }
         List<RoutePoint> mutPoints = points.Skip(1).ToList();
 
+        // Get the first step (nearest neighbor) for route object creation
         RoutePoint source = points[0];
-        RoutePoint firstStep = points.Skip(1).MinBy(points[0].DistanceFrom);
+        RoutePoint firstStep = mutPoints.MinBy(points[0].DistanceFrom);
         mutPoints.Remove(firstStep);
 
         Route route = new(source, firstStep);
+
+        // Using nearest neighbor, get the path we should take
         while (mutPoints.Count > 0) {
             RoutePoint last = route.End;
             RoutePoint closest = mutPoints.MinBy(last.DistanceFrom);
@@ -68,6 +72,7 @@ public class Route {
             mutPoints.Remove(closest);
         }
 
+        // Finally, go back to the first point
         route.AddPointOnEnd(source);
 
         return route;

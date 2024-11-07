@@ -199,18 +199,22 @@ public partial class BusinessLogic : IBusinessLogic
 
     public Route GetRoute(Airport source, int maxMiles, bool unvisitedOnly)
     {
+        // We need to force the start to be at the beginning, so we remove it
+        // and possibly already visited airports
         IEnumerable<Airport> excluded;
         if (unvisitedOnly) {
             excluded = GetAirports().Append(source);
         } else {
             excluded = [source];
         }
+        // Convert the airports to RoutePoints
         List<RoutePoint> routePoints = CalculateNearbyAirports(source, maxMiles)
             .Except(excluded, new AirportEqualityComparer())
             .Prepend(source)
             .Select(x => new RoutePoint(x))
             .ToList();
 
+        // Can't have a route with 0 or 1 airports
         if (routePoints.Count < 2) {
             return null;
         }
