@@ -95,3 +95,13 @@ public class Airport : INotifyPropertyChanged
     }
 
 }
+
+public class AirportEqualityComparer : IEqualityComparer<Airport> {
+    public bool Equals(Airport x, Airport y) {
+        return x.Equals(y);
+    }
+
+    public int GetHashCode(Airport obj) {
+        return obj.Id.GetHashCode();
+    }
+}

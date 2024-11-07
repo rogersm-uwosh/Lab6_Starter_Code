@@ -28,7 +28,7 @@ public partial class BusinessLogic
         ObservableCollection<Airport> nearbyAirports = [];
         Dictionary<string, int> idToMiles = new();
 
-        ObservableCollection<Airport> allAirports = GetAirports();
+        ObservableCollection<Airport> allAirports = GetWisconsinAirports();
 
         AirportCoordinates? sourceAirportCoordinates = airportCoordinates.FirstOrDefault(coordinates => coordinates.id == sourceAirport.Id, null);
         if (sourceAirportCoordinates == null)
@@ -39,31 +39,34 @@ public partial class BusinessLogic
         {
             AirportCoordinates? destinationAirportCoordinates = airportCoordinates.FirstOrDefault(coordinates => coordinates.id == destinationAirport.Id && coordinates.id != sourceAirport.Id, null);
 
-            if (destinationAirportCoordinates != null)
-            {
-                // Haversine formula to find distance between two points
-                double sourceLatitudeRadians = sourceAirportCoordinates.lat * (Math.PI / 180);
-                double destinationLatitudeRadians = destinationAirportCoordinates.lat * (Math.PI / 180);
-                double latitudeDiffRadians =
-                    (destinationAirportCoordinates.lat - sourceAirportCoordinates.lat) * (Math.PI / 180);
-                double longitudeDiffRadians =
-                    (destinationAirportCoordinates.lon - sourceAirportCoordinates.lon) * (Math.PI / 180);
-                double flatDistance = Math.Pow(Math.Sin(latitudeDiffRadians / 2.0), 2.0) +
-                                      (Math.Cos(sourceLatitudeRadians) *
-                                       Math.Cos(destinationLatitudeRadians) *
-                                       Math.Pow(Math.Sin(longitudeDiffRadians / 2.0), 2.0));
-                double angularDistance = 2 * Math.Atan2(Math.Sqrt(flatDistance), Math.Sqrt(1 - flatDistance));
-                double distanceInMeters = EARTH_RADIUS_IN_METERS * angularDistance;
-                double distanceInMiles = distanceInMeters * MILES_PER_METER;
-                if (distanceInMiles < maxMiles)
-                {
+            if (destinationAirportCoordinates != null) {
+                double distanceInMiles = GetDistanceFromAirportCoordinates(sourceAirportCoordinates, destinationAirportCoordinates);
+                if (distanceInMiles < maxMiles) {
                     nearbyAirports.Add(destinationAirport);
-                    idToMiles[destinationAirport.Id] = (int)Math.Round(distanceInMiles);
+                    idToMiles[destinationAirport.Id] = (int) Math.Round(distanceInMiles);
                 }
             }
         }
 
         AirportToMilesConverter.ConvertAll(idToMiles);
         return nearbyAirports;
+    }
+
+    public static double GetDistanceFromAirportCoordinates(AirportCoordinates sourceAirportCoordinates, AirportCoordinates destinationAirportCoordinates) {
+        // Haversine formula to find distance between two points
+        double sourceLatitudeRadians = sourceAirportCoordinates.lat * (Math.PI / 180);
+        double destinationLatitudeRadians = destinationAirportCoordinates.lat * (Math.PI / 180);
+        double latitudeDiffRadians =
+            (destinationAirportCoordinates.lat - sourceAirportCoordinates.lat) * (Math.PI / 180);
+        double longitudeDiffRadians =
+            (destinationAirportCoordinates.lon - sourceAirportCoordinates.lon) * (Math.PI / 180);
+        double flatDistance = Math.Pow(Math.Sin(latitudeDiffRadians / 2.0), 2.0) +
+                              (Math.Cos(sourceLatitudeRadians) *
+                               Math.Cos(destinationLatitudeRadians) *
+                               Math.Pow(Math.Sin(longitudeDiffRadians / 2.0), 2.0));
+        double angularDistance = 2 * Math.Atan2(Math.Sqrt(flatDistance), Math.Sqrt(1 - flatDistance));
+        double distanceInMeters = EARTH_RADIUS_IN_METERS * angularDistance;
+        double distanceInMiles = distanceInMeters * MILES_PER_METER;
+        return distanceInMiles;
     }
 }

@@ -36,8 +36,8 @@
                    HasShadow="True" 
                    HorizontalOptions="FillAndExpand">
                     <Entry x:Name="StartingAirportPicker" 
-                       Text="KATW" 
-                       HorizontalOptions="FillAndExpand" 
+                       MaxLength="4"
+                       HorizontalOptions="FillAndExpand"
                        HeightRequest="40"/>
                 </Frame>
             </HorizontalStackLayout>
@@ -54,7 +54,6 @@
                    HasShadow="True" 
                    HorizontalOptions="FillAndExpand">
                     <Entry x:Name="MaxDistanceEntry" 
-                       Text="60" 
                        Keyboard="Numeric" 
                        HorizontalOptions="FillAndExpand" 
                        HeightRequest="40"/>
@@ -66,13 +65,18 @@
 
             <!-- Unvisited Toggle -->
             <HorizontalStackLayout HorizontalOptions="FillAndExpand" Padding="0,10,0,0">
-                <Label Text="Unvisited:" 
+                <Label Text="Unvisited Only:" 
                    VerticalOptions="Center"
-                   Margin="0,0,-60,0" 
+                   Margin="0,0,-20,0" 
                    WidthRequest="140"/>
                 <Switch x:Name="UnvisitedSwitch" 
                     IsToggled="False" />
             </HorizontalStackLayout>
+            
+            <!-- Submit Button -->
+            <Button Text="Generate"
+                    Margin="20,0"
+                    Clicked="GenerateRoute"/>
 
             <!-- Suggested Routes -->
             <Label Text="Suggested Route" 
@@ -86,13 +90,13 @@
                         VerticalOptions="FillAndExpand"
                         ItemsSource="{Binding CurrentRoute.Edges}">
                 <CollectionView.Header>
-                    <Grid ColumnDefinitions="1*, 2*, 1*" HorizontalOptions="FillAndExpand">
-                        <Label Text="ICAO" 
+                    <Grid ColumnDefinitions="2*, 2*, 1*" HorizontalOptions="FillAndExpand">
+                        <Label Text="From" 
                            FontAttributes="Bold" 
                            HorizontalTextAlignment="Start"
                            Grid.Column="0"
                            Padding="0,0,10,0"/>
-                        <Label Text="City" 
+                        <Label Text="To" 
                            FontAttributes="Bold" 
                            HorizontalTextAlignment="Start"
                            Grid.Column="1"
@@ -108,15 +112,21 @@
                 <!-- Data template for table rows -->
                 <CollectionView.ItemTemplate>
                     <DataTemplate>
-                        <Grid ColumnDefinitions="1*, 2*, 1*" Padding="0,10,0,0" HorizontalOptions="FillAndExpand">
-                            <Label Text="{Binding From.Airport.Id}" 
+                        <Grid ColumnDefinitions="2*, 2*, 1*" Padding="0,10,0,0" HorizontalOptions="FillAndExpand">
+                            <HorizontalStackLayout 
                                Grid.Column="0"
-                               HorizontalTextAlignment="Start"
-                               Padding="0,0,10,0"/>
-                            <Label Text="{Binding From.Airport.City}" 
+                               Padding="0,0,10,0">
+                                <Label Text="{Binding From.Airport.Id}"/>
+                                <Label Text=" - "/>
+                                <Label Text="{Binding From.Airport.City}"/>
+                            </HorizontalStackLayout>
+                            <HorizontalStackLayout 
                                Grid.Column="1"
-                               HorizontalTextAlignment="Start"
-                               Padding="0,0,10,0"/>
+                               Padding="0,0,10,0">
+                                <Label Text="{Binding To.Airport.Id}"/>
+                                <Label Text=" - "/>
+                                <Label Text="{Binding To.Airport.City}"/>
+                            </HorizontalStackLayout>
                             <Label Text="{Binding Distance, StringFormat='{0:F1} NM'}"
                                Grid.Column="2"
                                HorizontalTextAlignment="End"
