@@ -73,16 +73,16 @@ namespace Lab6_Starter
             }
         }
 
-        public void DisplayNearbyAirports(double userLatitude, double userLongitude, double maxDistanceKm)
+        public void DisplayNearbyAirports(double userLatitude, double userLongitude, double maxDistanceNm)
         {
-            if (maxDistanceKm <= 0)
+            if (maxDistanceNm <= 0)
             {
                 DisplayAlert("Invalid Distance", "Please enter a positive number for distance.", "OK");
                 return;
             }
 
             // Fetch and filter airports based on distance and UnvisitedSwitch toggle
-            var unsortedAirports = _businessLogic.GetWisconsinAirportsWithinDistance(userLatitude, userLongitude, maxDistanceKm);
+            var unsortedAirports = _businessLogic.GetWisconsinAirportsWithinDistance(userLatitude, userLongitude, maxDistanceNm);
             var filteredAirports = UnvisitedSwitch.IsToggled
                 ? unsortedAirports.Where(airport => airport.DateVisited != DateTime.MinValue)
                 : unsortedAirports;

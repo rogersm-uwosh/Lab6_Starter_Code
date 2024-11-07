@@ -73,7 +73,7 @@ public partial class Database : IDatabase
 
     public static double CalculateDistance(double lat1, double lon1, double lat2, double lon2)
     {
-        var earthRadius = 6371; // Radius of the earth in km
+        var earthRadius = 3440.065; // Radius of the earth in nautical miles
         var dLat = (lat2 - lat1) * (Math.PI / 180);
         var dLon = (lon2 - lon1) * (Math.PI / 180);
         var a =
@@ -81,7 +81,7 @@ public partial class Database : IDatabase
             Math.Cos(lat1 * (Math.PI / 180)) * Math.Cos(lat2 * (Math.PI / 180)) *
             Math.Sin(dLon / 2) * Math.Sin(dLon / 2);
         var c = 2 * Math.Atan2(Math.Sqrt(a), Math.Sqrt(1 - a));
-        return earthRadius * c; // Distance in km
+        return earthRadius * c; // Distance in nautical miles
     }
 
     public Airport SelectAirportByCode(string airportCode)
