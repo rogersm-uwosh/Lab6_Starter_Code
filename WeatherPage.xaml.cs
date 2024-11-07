@@ -18,7 +18,7 @@ public partial class WeatherPage : ContentPage
 
     void Fetch_Clicked(object sender, EventArgs e)
     {
-        //Do something 
+        MauiProgram.BusinessLogic.GetClosestAirportWeather();
     }
 
 }
