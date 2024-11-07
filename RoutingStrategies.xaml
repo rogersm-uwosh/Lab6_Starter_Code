@@ -34,10 +34,10 @@
                        HasShadow="True" 
                        HorizontalOptions="FillAndExpand">
                     <Entry x:Name="StartingAirportPicker" 
-                           Placeholder="Enter Airport Code"
                            Text="" 
                            HorizontalOptions="FillAndExpand" 
-                           HeightRequest="40"/>
+                           HeightRequest="40"
+                           WidthRequest="60"/>
                 </Frame>
             </HorizontalStackLayout>
 
@@ -53,12 +53,12 @@
                        HasShadow="True" 
                        HorizontalOptions="FillAndExpand">
                     <Entry x:Name="MaxDistanceEntry" 
-                           Placeholder="Enter Distance in nm"
                            Text="" 
                            Keyboard="Numeric" 
                            HorizontalOptions="FillAndExpand" 
                            HeightRequest="40"
-                           TextChanged="OnMaxDistanceChanged"/>
+                           TextChanged="OnMaxDistanceChanged"
+                           WidthRequest="60"/>
                 </Frame>
                 <Label Text="nm" 
                        VerticalOptions="Center" 
