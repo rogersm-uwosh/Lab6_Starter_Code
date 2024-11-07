@@ -19,6 +19,18 @@ public partial class BusinessLogic : IBusinessLogic
 
     }
 
+    public ObservableCollection<Airport> WisconsinAirports
+    {
+        get { return GetAirports(); }
+
+    }
+
+    public ObservableCollection<Airport> WisconsinAirports
+    {
+        get { return GetAirports(); }
+
+    }
+
     public ObservableCollection<Airport> GetAllWisconsinAirports()
     {
         return db.GetAllWisconsinAirports();
@@ -193,6 +205,11 @@ public partial class BusinessLogic : IBusinessLogic
     public ObservableCollection<Airport> GetAirports()
     {
         return db.SelectAllAirports();
+    }
+
+    public ObservableCollection<Airport> GetWisconsinAirports()
+    {
+        return db.SelectAllWisconsinAirports();
     }
 
     public ObservableCollection<Weather> GetWeathers()

@@ -10,9 +10,9 @@ public class Airport : INotifyPropertyChanged
     String city;
     DateTime dateVisited;
     int rating;
+    double longitude;
+    double latitude;
     private string name;
-    private double latitude;
-    private double longitude;
     private string url;
     private double distance;
 
@@ -66,12 +66,40 @@ public class Airport : INotifyPropertyChanged
         }
     }
 
+    public double Latitude
+    {
+        get { return latitude; }
+        set { latitude = value;
+            OnPropertyChanged(nameof(Latitude));
+        }
+    }
+
+    public double Longitude
+    {
+        get { return longitude; }
+        set { longitude = value;
+            OnPropertyChanged(nameof(Longitude));
+        }
+    }
+
     public Airport(String id, String city, DateTime dateVisited, int rating)
     {
         Id = id;
         City = city;
         DateVisited = dateVisited;
         Rating = rating;
+        Latitude = 0.0;
+        Longitude = 0.0;
+    }
+
+    public Airport(String id, double latitude, double longitude)
+    {
+        Id = id;
+        City = "Appleton";
+        DateVisited = DateTime.Now;
+        Rating = 5;
+        Latitude = latitude;
+        Longitude = longitude;
     }
 
 

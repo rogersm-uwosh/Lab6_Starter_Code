@@ -11,6 +11,7 @@ public partial class Database : IDatabase
     private String connString;
 
     ObservableCollection<Airport> airports = new();
+    ObservableCollection<Airport> wisconsinAirports = new();
 
     public Database()
     {
@@ -227,6 +228,29 @@ public partial class Database : IDatabase
         {
             return AirportDeletionError.AirportNotFound;
         }
+    }
+
+    public ObservableCollection<Airport> SelectAllWisconsinAirports()
+    {
+        wisconsinAirports.Clear();
+        var conn = new NpgsqlConnection(connString);
+        conn.Open();
+
+        // using() ==> disposable types are properly disposed of, even if there is an exception thrown 
+        using var cmd = new NpgsqlCommand("SELECT id, lat, long FROM wi_airports", conn);
+        using var reader = cmd.ExecuteReader(); // used for SELECT statement, returns a forward-only traversable object
+
+        while (reader.Read()) // each time through we get another row in the table (i.e., another Airport)
+        {
+            String id = reader.GetString(0);
+            float lat = reader.GetFloat(1);
+            float lon = reader.GetFloat(2);
+            Airport airportToAdd = new(id, lat, lon);
+            wisconsinAirports.Add(airportToAdd);
+            Console.WriteLine(airportToAdd);
+        }
+
+        return wisconsinAirports;
     }
 
 
