@@ -4,7 +4,7 @@ using Mapsui.Tiling;
 using Mapsui.Utilities;
 using Microsoft.Maui.Controls;
 using System.Collections.ObjectModel;
-using Mapsui.Projections;
+using System.Linq;
 using Lab6_Starter.Model;
 
 namespace Lab6_Starter
@@ -17,34 +17,28 @@ namespace Lab6_Starter
         public RoutingStrategies()
         {
             InitializeComponent();
-            WisconsinAirports = _businessLogic.GetAllWisconsinAirports();
+            WisconsinAirports = new ObservableCollection<Airport>(_businessLogic.GetAllWisconsinAirports());
             BindingContext = this;
 
-            var mapUrl = GenerateOpenStreetMapUrl(44.2619, -88.4154, 10); // Appleton Airport coordinates
+            // Set up the map view with initial location (Appleton Airport coordinates)
+            var mapUrl = GenerateOpenStreetMapUrl(44.2619, -88.4154, 10);
             MapView.Source = mapUrl;
         }
 
         private void OnMaxDistanceChanged(object sender, TextChangedEventArgs e)
         {
-            // Attempt to parse the entered text as a double for max distance
             if (double.TryParse(MaxDistanceEntry.Text, out double maxDistanceKm))
             {
                 var startingAirportCode = StartingAirportPicker.Text;
-
-                // Check if the starting airport code is provided
                 if (!string.IsNullOrWhiteSpace(startingAirportCode))
                 {
-                    // Check if the starting airport exists in the database
                     var startingAirport = _businessLogic.SelectAirportByCode(startingAirportCode);
-
                     if (startingAirport != null)
                     {
-                        // Starting airport found; proceed with displaying nearby airports
                         DisplayNearbyAirports(startingAirport.Latitude, startingAirport.Longitude, maxDistanceKm);
                     }
                     else
                     {
-                        // Starting airport not found in the database; show an error
                         DisplayAlert("Error", "Starting airport not found in the database.", "OK");
                     }
                 }
@@ -61,15 +55,53 @@ namespace Lab6_Starter
 
         private void OnUnvisitedSwitchToggled(object sender, ToggledEventArgs e)
         {
-            // Re-run the display logic with the latest toggle status
+            // Get the starting airport code and max distance from the UI
             var startingAirportCode = StartingAirportPicker.Text;
+
             if (double.TryParse(MaxDistanceEntry.Text, out double maxDistanceKm) && !string.IsNullOrWhiteSpace(startingAirportCode))
             {
+                // Get the starting airport details
                 var startingAirport = _businessLogic.SelectAirportByCode(startingAirportCode);
-                if (startingAirport != null)
+                if (startingAirport == null)
                 {
-                    DisplayNearbyAirports(startingAirport.Latitude, startingAirport.Longitude, maxDistanceKm);
+                    DisplayAlert("Error", "Starting airport not found in the database.", "OK");
+                    return;
                 }
+
+                // Get the list of all airports and visited airports
+                ObservableCollection<Airport> visitedAirports = _businessLogic.GetAirports();
+                ObservableCollection<Airport> allAirports = _businessLogic.GetWisconsinAirportsWithinDistance(startingAirport.Latitude, startingAirport.Longitude, maxDistanceKm);
+
+                // Filter airports based on whether they are visited and toggle status
+                var filteredAirports = new ObservableCollection<Airport>();
+                foreach (var airport in allAirports)
+                {
+                    bool isVisited = visitedAirports.Any(visited => visited.Id == airport.Id);
+
+                    // Add to filtered list based on toggle status
+                    if (UnvisitedSwitch.IsToggled && !isVisited)
+                    {
+                        filteredAirports.Add(airport); // Only unvisited airports
+                    }
+                    else if (!UnvisitedSwitch.IsToggled)
+                    {
+                        filteredAirports.Add(airport); // All nearby airports
+                    }
+                }
+
+                // Update the WisconsinAirports collection to reflect the filtered results
+                WisconsinAirports.Clear();
+                foreach (var airport in filteredAirports.OrderBy(a => a.Distance))
+                {
+                    WisconsinAirports.Add(airport);
+                }
+
+                // Notify the UI of the change
+                OnPropertyChanged(nameof(WisconsinAirports));
+            }
+            else
+            {
+                DisplayAlert("Invalid Input", "Please enter a valid starting airport code and distance.", "OK");
             }
         }
 
@@ -81,19 +113,19 @@ namespace Lab6_Starter
                 return;
             }
 
-            // Fetch and filter airports based on distance and UnvisitedSwitch toggle
-            var unsortedAirports = _businessLogic.GetWisconsinAirportsWithinDistance(userLatitude, userLongitude, maxDistanceNm);
-            var filteredAirports = UnvisitedSwitch.IsToggled
-                ? unsortedAirports.Where(airport => airport.DateVisited != DateTime.MinValue)
-                : unsortedAirports;
+            // Fetch nearby airports within the specified distance
+            var nearbyAirports = _businessLogic.GetWisconsinAirportsWithinDistance(userLatitude, userLongitude, maxDistanceNm);
 
-            // Update the collection with sorted and filtered airports
-            WisconsinAirports = new ObservableCollection<Airport>(filteredAirports.OrderBy(airport => airport.Distance));
+            // Clear and update the WisconsinAirports collection
+            WisconsinAirports.Clear();
+            foreach (var airport in nearbyAirports.OrderBy(a => a.Distance))
+            {
+                WisconsinAirports.Add(airport);
+            }
 
-            // Notify the UI
+            // Notify the UI of the update
             OnPropertyChanged(nameof(WisconsinAirports));
         }
-
 
         private string GenerateOpenStreetMapUrl(double latitude, double longitude, int zoom)
         {

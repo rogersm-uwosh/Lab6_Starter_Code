@@ -17,7 +17,6 @@
              x:Class="Lab6_Starter.RoutingStrategies"
              Title="Routing Strategies">
 
-    <!-- ScrollView to make the entire page scrollable -->
     <ScrollView>
         <VerticalStackLayout Padding="10" 
                              HorizontalOptions="FillAndExpand" 
@@ -35,6 +34,7 @@
                        HasShadow="True" 
                        HorizontalOptions="FillAndExpand">
                     <Entry x:Name="StartingAirportPicker" 
+                           Placeholder="Enter Airport Code"
                            Text="" 
                            HorizontalOptions="FillAndExpand" 
                            HeightRequest="40"/>
@@ -53,6 +53,7 @@
                        HasShadow="True" 
                        HorizontalOptions="FillAndExpand">
                     <Entry x:Name="MaxDistanceEntry" 
+                           Placeholder="Enter Distance in nm"
                            Text="" 
                            Keyboard="Numeric" 
                            HorizontalOptions="FillAndExpand" 
@@ -70,16 +71,18 @@
                        VerticalOptions="Center"
                        Margin="0,0,-60,0" 
                        WidthRequest="140"/>
-                <Switch x:Name="UnvisitedSwitch" IsToggled="False" Toggled="OnUnvisitedSwitchToggled" />
+                <Switch x:Name="UnvisitedSwitch" 
+                        IsToggled="False" 
+                        Toggled="OnUnvisitedSwitchToggled" />
             </HorizontalStackLayout>
 
-            <!-- Suggested Routes -->
+            <!-- Suggested Routes Header -->
             <Label Text="Suggested Routes" 
                    FontAttributes="Bold" 
                    FontSize="Medium" 
                    Margin="0,20,0,10"/>
 
-            <!-- CollectionView for route edges -->
+            <!-- CollectionView for airport routes -->
             <CollectionView x:Name="RoutesCollectionView" 
                             HorizontalOptions="FillAndExpand"
                             VerticalOptions="FillAndExpand"

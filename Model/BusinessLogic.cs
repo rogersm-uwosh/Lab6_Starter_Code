@@ -25,12 +25,6 @@ public partial class BusinessLogic : IBusinessLogic
 
     }
 
-    public ObservableCollection<Airport> WisconsinAirports
-    {
-        get { return GetAirports(); }
-
-    }
-
     public ObservableCollection<Airport> GetAllWisconsinAirports()
     {
         return db.GetAllWisconsinAirports();

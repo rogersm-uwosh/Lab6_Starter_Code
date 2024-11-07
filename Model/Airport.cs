@@ -1,169 +1,153 @@
 ﻿using System;
 using System.ComponentModel;
 
-namespace Lab6_Starter.Model;
-
-[Serializable()]
-public class Airport : INotifyPropertyChanged
+namespace Lab6_Starter.Model
 {
-    String id;
-    String city;
-    DateTime dateVisited;
-    int rating;
-    double longitude;
-    double latitude;
-    private string name;
-    private string url;
-    private double distance;
-
-    public String Id
+    [Serializable()]
+    public class Airport : INotifyPropertyChanged
     {
-        get { return id; }
-        set
+        private string id;
+        private string city;
+        private DateTime dateVisited;
+        private int rating;
+        private double longitude;
+        private double latitude;
+        private string name;
+        private string url;
+        private double distance;
+
+        public string Id
         {
-            id = value;
-            OnPropertyChanged(nameof(Id));
+            get => id;
+            set
+            {
+                id = value;
+                OnPropertyChanged(nameof(Id));
+            }
         }
-    }
 
-    public double Distance
-    {
-        get => distance;
-        set
+        public string City
         {
-            distance = value;
-            OnPropertyChanged(nameof(Distance));
+            get => city;
+            set
+            {
+                city = value;
+                OnPropertyChanged(nameof(City));
+            }
         }
-    }
 
-    public String City
-    {
-        get { return city; }
-        set
+        public DateTime DateVisited
         {
-            city = value;
-            OnPropertyChanged(nameof(City));
+            get => dateVisited;
+            set
+            {
+                dateVisited = value;
+                OnPropertyChanged(nameof(DateVisited));
+            }
         }
-    }
 
-    public DateTime DateVisited
-    {
-        get { return dateVisited; }
-        set
+        public int Rating
         {
-            dateVisited = value;
-            OnPropertyChanged(nameof(DateVisited));
+            get => rating;
+            set
+            {
+                rating = value;
+                OnPropertyChanged(nameof(Rating));
+            }
         }
-    }
 
-    public int Rating
-    {
-        get { return rating; }
-        set
+        public double Latitude
         {
-            rating = value;
-            OnPropertyChanged(nameof(Rating));
+            get => latitude;
+            set
+            {
+                latitude = value;
+                OnPropertyChanged(nameof(Latitude));
+            }
         }
-    }
 
-    public double Latitude
-    {
-        get { return latitude; }
-        set { latitude = value;
-            OnPropertyChanged(nameof(Latitude));
-        }
-    }
-
-    public double Longitude
-    {
-        get { return longitude; }
-        set { longitude = value;
-            OnPropertyChanged(nameof(Longitude));
-        }
-    }
-
-    public Airport(String id, String city, DateTime dateVisited, int rating)
-    {
-        Id = id;
-        City = city;
-        DateVisited = dateVisited;
-        Rating = rating;
-        Latitude = 0.0;
-        Longitude = 0.0;
-    }
-
-    public Airport(String id, double latitude, double longitude)
-    {
-        Id = id;
-        City = "Appleton";
-        DateVisited = DateTime.Now;
-        Rating = 5;
-        Latitude = latitude;
-        Longitude = longitude;
-    }
-
-
-    public string Name
-    {
-        get => name;
-        set
+        public double Longitude
         {
-            name = value;
-            OnPropertyChanged(nameof(Name));
+            get => longitude;
+            set
+            {
+                longitude = value;
+                OnPropertyChanged(nameof(Longitude));
+            }
         }
-    }
 
-    public double Latitude
-    {
-        get => latitude;
-        set
+        public string Name
         {
-            latitude = value;
-            OnPropertyChanged(nameof(Latitude));
+            get => name;
+            set
+            {
+                name = value;
+                OnPropertyChanged(nameof(Name));
+            }
         }
-    }
 
-    public double Longitude
-    {
-        get => longitude;
-        set
+        public string Url
         {
-            longitude = value;
-            OnPropertyChanged(nameof(Longitude));
+            get => url;
+            set
+            {
+                url = value;
+                OnPropertyChanged(nameof(Url));
+            }
         }
-    }
 
-    public string Url
-    {
-        get => url;
-        set
+        public double Distance
         {
-            url = value;
-            OnPropertyChanged(nameof(Url));
+            get => distance;
+            set
+            {
+                distance = value;
+                OnPropertyChanged(nameof(Distance));
+            }
+        }
+
+        // Constructor with parameters for ID, city, date visited, and rating
+        public Airport(string id, string city, DateTime dateVisited, int rating)
+        {
+            Id = id;
+            City = city;
+            DateVisited = dateVisited;
+            Rating = rating;
+            Latitude = 0.0;
+            Longitude = 0.0;
+        }
+
+        // Constructor with parameters for ID, latitude, and longitude
+        public Airport(string id, double latitude, double longitude)
+        {
+            Id = id;
+            City = "Appleton";
+            DateVisited = DateTime.Now;
+            Rating = 5;
+            Latitude = latitude;
+            Longitude = longitude;
+        }
+
+        // Constructor with parameters for ID, name, latitude, longitude, and URL
+        public Airport(string id, string name, double latitude, double longitude, string url)
+        {
+            Id = id;
+            Name = name;
+            Latitude = latitude;
+            Longitude = longitude;
+            Url = url;
+        }
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        protected virtual void OnPropertyChanged(string propertyName)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+
+        public override bool Equals(object obj)
+        {
+            return obj is Airport otherAirport && Id == otherAirport.Id;
         }
     }
-
-    // Constructor with five parameters
-    public Airport(string id, string name, double latitude, double longitude, string url)
-    {
-        Id = id;
-        Name = name;
-        Latitude = latitude;
-        Longitude = longitude;
-        Url = url;
-    }
-
-    public event PropertyChangedEventHandler PropertyChanged;
-
-    protected virtual void OnPropertyChanged(string propertyName)
-    {
-        PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-    }
-
-    public override bool Equals(object obj)
-    {
-        var otherAirport = obj as Airport;
-        return Id == otherAirport.Id;
-    }
-
 }
