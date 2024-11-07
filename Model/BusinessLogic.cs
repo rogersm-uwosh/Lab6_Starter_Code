@@ -1,4 +1,6 @@
 ﻿using System.Collections.ObjectModel;
+using CommunityToolkit.Maui.Core.Extensions;
+using Lab6_Starter;
 using Lab6_Starter.Model;
 
 namespace FWAPPA.Model;
@@ -14,6 +16,12 @@ public partial class BusinessLogic : IBusinessLogic
     private readonly int MAX_RATING = 5;
 
     public ObservableCollection<Airport> Airports
+    {
+        get { return GetAirports(); }
+
+    }
+
+    public ObservableCollection<Airport> WisconsinAirports
     {
         get { return GetAirports(); }
 
@@ -177,6 +185,11 @@ public partial class BusinessLogic : IBusinessLogic
         return db.SelectAllAirports();
     }
 
+    public ObservableCollection<Airport> GetWisconsinAirports()
+    {
+        return db.SelectAllWisconsinAirports();
+    }
+
     public ObservableCollection<Weather> GetWeathers()
     {
         ObservableCollection<Weather> weathers = new ObservableCollection<Weather>();
@@ -184,18 +197,25 @@ public partial class BusinessLogic : IBusinessLogic
         return weathers;
     }
 
-    public Route GetRoute()
+    public Route GetRoute(Airport source, int maxMiles, bool unvisitedOnly)
     {
-        var route = new Route("KATW", "KUBB");
+        IEnumerable<Airport> excluded;
+        if (unvisitedOnly) {
+            excluded = GetAirports().Append(source);
+        } else {
+            excluded = [source];
+        }
+        List<RoutePoint> routePoints = CalculateNearbyAirports(source, maxMiles)
+            .Except(excluded, new AirportEqualityComparer())
+            .Prepend(source)
+            .Select(x => new RoutePoint(x))
+            .ToList();
 
-        // Add edges 
-        route.AddEdge("KATW", "Appleton", 0);
-        route.AddEdge("KFLD", "Fond du Lac", 23);
-        route.AddEdge("KUNN", "Dodge County", 28);
-        route.AddEdge("KUBB", "Burlington", 47);
-        route.AddEdge("KATW", "Appleton", 95);
+        if (routePoints.Count < 2) {
+            return null;
+        }
 
-        return route;
+        return Route.GenerateTravelingSalesmanRoute(routePoints);
     }
 
 }
