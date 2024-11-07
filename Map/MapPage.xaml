@@ -9,4 +9,35 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="Lab6_Starter.MapPage"
              Title="Map">
+    <Grid RowDefinitions="*,11*"
+          ColumnDefinitions="*">
+        <!-- Radio Buttons -->
+        <Frame Grid.Row="0" Grid.Column="0"
+               CornerRadius="0"
+               Margin="0">
+            <Grid RowDefinitions="*"
+                  ColumnDefinitions="*,*,*">
+                <!-- Show Visited radio button -->
+                <RadioButton Grid.Row="0" Grid.Column="0"
+                             CheckedChanged="OnVisitedRadio_Clicked"
+                             Content="Show Visited"
+                             x:Name="VisitedRadioButton"/>
+                <!-- Show Unvisited radio button -->
+                <RadioButton Grid.Row="0" Grid.Column="1"
+                             CheckedChanged="OnUnvisitedRadio_Clicked"
+                             Content="Show Unvisited"/>
+                <!-- Show Both radio button -->
+                <RadioButton Grid.Row="0" Grid.Column="2"
+                             CheckedChanged="OnBothRadio_Clicked"
+                             Content="Show Both"/>
+            </Grid>
+        </Frame>
+        <!-- Map -->
+        <Grid Grid.Row="1" Grid.Column="0"
+              RowDefinitions="*"
+              ColumnDefinitions="*"
+              x:Name="MapGrid">
+            
+        </Grid>
+    </Grid>
 </ContentPage>
