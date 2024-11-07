@@ -59,6 +59,20 @@ namespace Lab6_Starter
             }
         }
 
+        private void OnUnvisitedSwitchToggled(object sender, ToggledEventArgs e)
+        {
+            // Re-run the display logic with the latest toggle status
+            var startingAirportCode = StartingAirportPicker.Text;
+            if (double.TryParse(MaxDistanceEntry.Text, out double maxDistanceKm) && !string.IsNullOrWhiteSpace(startingAirportCode))
+            {
+                var startingAirport = _businessLogic.SelectAirportByCode(startingAirportCode);
+                if (startingAirport != null)
+                {
+                    DisplayNearbyAirports(startingAirport.Latitude, startingAirport.Longitude, maxDistanceKm);
+                }
+            }
+        }
+
         public void DisplayNearbyAirports(double userLatitude, double userLongitude, double maxDistanceKm)
         {
             if (maxDistanceKm <= 0)
@@ -67,15 +81,19 @@ namespace Lab6_Starter
                 return;
             }
 
-            // Get the list of airports within the specified distance
+            // Fetch and filter airports based on distance and UnvisitedSwitch toggle
             var unsortedAirports = _businessLogic.GetWisconsinAirportsWithinDistance(userLatitude, userLongitude, maxDistanceKm);
+            var filteredAirports = UnvisitedSwitch.IsToggled
+                ? unsortedAirports.Where(airport => airport.DateVisited != DateTime.MinValue)
+                : unsortedAirports;
 
-            // Sort airports by distance
-            WisconsinAirports = new ObservableCollection<Airport>(unsortedAirports.OrderBy(airport => airport.Distance));
+            // Update the collection with sorted and filtered airports
+            WisconsinAirports = new ObservableCollection<Airport>(filteredAirports.OrderBy(airport => airport.Distance));
 
-            // Notify the UI of changes
+            // Notify the UI
             OnPropertyChanged(nameof(WisconsinAirports));
         }
+
 
         private string GenerateOpenStreetMapUrl(double latitude, double longitude, int zoom)
         {

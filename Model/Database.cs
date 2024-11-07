@@ -5,7 +5,7 @@ using Npgsql; // To install this, add dotnet add package Npgsql
 
 namespace Lab6_Starter.Model;
 
-public class Database : IDatabase
+public partial class Database : IDatabase
 {
     private static System.Random rng = new();
     private String connString;

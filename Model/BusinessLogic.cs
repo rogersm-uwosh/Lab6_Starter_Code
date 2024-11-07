@@ -39,11 +39,15 @@ public partial class BusinessLogic : IBusinessLogic
         get { return GetWeathers(); }
 
     }
+    
+    partial void LoadAirportCoordinates();
+
     public BusinessLogic(IDatabase? db)
     {
         this.db = db;
+        LoadAirportCoordinates();
     }
-
+    
 
     public Airport FindAirport(String id)
     {
