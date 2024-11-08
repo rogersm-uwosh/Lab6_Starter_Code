@@ -2,6 +2,7 @@
 using System.Diagnostics.Metrics;
 using FWAPPA.NearbyAirports;
 using Lab6_Starter.Model;
+using Microsoft.Maui.Devices.Sensors;
 
 namespace FWAPPA.Model;
 
@@ -243,13 +244,17 @@ public partial class BusinessLogic : IBusinessLogic
         }
         return closestAirport;
     }
-
-    //This method needs to be implemented beyond hard coding 
+ 
     private AirportCoordinates GetCurrentCoordinates()
     {
-        float lat = (float)44.48463;
-        float lon = (float)-88.12971;
-        return new AirportCoordinates("", "",lat, lon, "");
+        var currLocation = Geolocation.GetLastKnownLocationAsync().Result;
+        float lat = (float)currLocation.Latitude;
+        float lon = (float)currLocation.Longitude;
+        if (currLocation == null) {
+            return new AirportCoordinates("", "", 0f, 0f, "");
+        } else {
+            return new AirportCoordinates("", "", lat, lon, "");
+        }
     }
 
     public Route GetRoute()
