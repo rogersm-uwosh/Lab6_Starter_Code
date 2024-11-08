@@ -23,6 +23,7 @@ public partial class BusinessLogic : IBusinessLogic
     }
 
     public Weather ClosestAirportWeather
+
     {
         get { return GetClosestAirportWeather(); }
     }
@@ -184,6 +185,7 @@ public partial class BusinessLogic : IBusinessLogic
     /// </summary>
     /// <returns>The weather of the closest airport</returns>
     public Weather GetClosestAirportWeather()
+
     {
         string airport = "";
         airport = FindClosestAirport();
