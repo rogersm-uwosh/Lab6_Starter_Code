@@ -20,14 +20,14 @@ public partial class Resources : ContentPage
     {
         // Creating a list of Link objects to represent resources
         var links = new List<Link>
-    {
-        new Link("Department of Transportation Home", "https://wisconsindot.gov/Pages/Home.aspx"),
-        new Link("Fly Wisconsin Pilot Information", "https://wisconsindot.gov/Pages/travel/air/pilot-info/flywi.aspx"),
-        new Link("Wisconsin Airport Management Association", "https://wiama.org/"),
-        new Link("Aviation Education Museums", "https://wisconsindot.gov/Pages/doing-bus/aeronautics/education/aved-museums.aspx"),
-        new Link("Fly Wisconsin Registration Form", "https://forms.office.com/g/PEKhtVaTxe"),
-        new Link("Fly Wisconsin Rules", "https://wisconsindot.gov/Pages/travel/air/pilot-info/flywi-rules.aspx")
-    };
+        {
+            new Link("Department of Transportation Home", "https://wisconsindot.gov/Pages/Home.aspx"),
+            new Link("Fly Wisconsin Pilot Information", "https://wisconsindot.gov/Pages/travel/air/pilot-info/flywi.aspx"),
+            new Link("Wisconsin Airport Management Association", "https://wiama.org/"),
+            new Link("Aviation Education Museums", "https://wisconsindot.gov/Pages/doing-bus/aeronautics/education/aved-museums.aspx"),
+            new Link("Fly Wisconsin Registration Form", "https://forms.office.com/g/PEKhtVaTxe"),
+            new Link("Fly Wisconsin Rules", "https://wisconsindot.gov/Pages/travel/air/pilot-info/flywi-rules.aspx")
+        };
 
         LinksCollectionView.ItemsSource = links;
     }

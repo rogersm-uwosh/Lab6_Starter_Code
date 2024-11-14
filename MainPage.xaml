@@ -21,8 +21,8 @@
             VerticalOptions="Start">
 
             <!-- This line says that the ItemsSource of the CollectionView is the Airports property of the Domain object (an ObservableCollection) -->
-            <CollectionView x:Name="CV" ItemsSource="{Binding Airports}" SelectionMode="Single">
-                <CollectionView.ItemTemplate>
+                <CollectionView x:Name="CV" ItemsSource="{Binding Airports}" SelectionMode="Single">
+                    <CollectionView.ItemTemplate>
                     <DataTemplate x:DataType="model:Airport">
                         <Grid RowDefinitions="*" ColumnDefinitions="*,2*,2*, 2*">
                             <Label Grid.Column="0" Text="{Binding Id}" VerticalTextAlignment="Center"/>
