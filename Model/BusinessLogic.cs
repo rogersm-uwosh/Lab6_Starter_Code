@@ -197,6 +197,11 @@ public partial class BusinessLogic : IBusinessLogic
         return db.SelectAllAirports();
     }
 
+    public ObservableCollection<Airport> GetWisconsinAirports()
+    {
+        return db.SelectAllWisconsinAirports();
+    }
+
     /// <summary>
     /// Get the weather of the closest airport
     /// </summary>
@@ -288,11 +293,6 @@ public partial class BusinessLogic : IBusinessLogic
         route.AddEdge("KATW", "Appleton", 95);
 
         return route;
-    }
-
-    public ObservableCollection<Weather> GetWeathers()
-    {
-        throw new NotImplementedException();
     }
 }
 

@@ -10,12 +10,9 @@ public interface IBusinessLogic
     Airport FindAirport(String id);
     String CalculateStatistics();
     ObservableCollection<Airport> GetAirports();
-
+    ObservableCollection<Airport> GetWisconsinAirports();
     Weather GetClosestAirportWeather();
-
-    ObservableCollection<Weather> GetWeathers();
     ObservableCollection<Airport> CalculateNearbyAirports(Airport sourceAirport, int maxMiles);
-
     Route GetRoute();
     ObservableCollection<Airport> GetAllWisconsinAirports();
     ObservableCollection<Airport> GetWisconsinAirportsWithinDistance(double userLatitude, double userLongitude, double maxDistanceKm);
