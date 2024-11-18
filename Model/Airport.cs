@@ -71,10 +71,10 @@ public class Airport : INotifyPropertyChanged
         Longitude = 0.0;
     }
 
-    public Airport(String id, double latitude, double longitude)
+    public Airport(String id, String city, double latitude, double longitude)
     {
         Id = id;
-        City = "Appleton";
+        City = city;
         DateVisited = DateTime.Now;
         Rating = 5;
         Latitude = latitude;
