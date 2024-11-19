@@ -18,7 +18,7 @@ public partial class Database : IDatabase
         connString = GetConnectionString();
     }
 
-    
+
 
     // Fills our local Airports ObservableCollection with all the airports in the database
     // We don't cache the airports in the database, so we have to go to the database to get them
@@ -46,6 +46,85 @@ public partial class Database : IDatabase
 
         return airports;
     }
+
+    // Add this method to the Database class
+    public ObservableCollection<Airport> GetAllWisconsinAirports()
+    {
+        ObservableCollection<Airport> wisconsinAirports = new ObservableCollection<Airport>();
+
+        using var conn = new NpgsqlConnection(connString);
+        conn.Open();
+
+        using var cmd = new NpgsqlCommand("SELECT id, name, lat, long, url FROM wi_airports", conn);
+        using var reader = cmd.ExecuteReader();
+
+        while (reader.Read())
+        {
+            string id = reader.GetString(0);
+            string name = reader.GetString(1);
+            double latitude = reader.GetDouble(2);
+            double longitude = reader.GetDouble(3);
+            string url = reader.GetString(4);
+
+            wisconsinAirports.Add(new Airport(id, name, latitude, longitude, url));
+        }
+
+        return wisconsinAirports;
+    }
+
+    public static double CalculateDistance(double lat1, double lon1, double lat2, double lon2)
+    {
+        var earthRadius = 3440.065; // Radius of the earth in nautical miles
+        var dLat = (lat2 - lat1) * (Math.PI / 180);
+        var dLon = (lon2 - lon1) * (Math.PI / 180);
+        var a =
+            Math.Sin(dLat / 2) * Math.Sin(dLat / 2) +
+            Math.Cos(lat1 * (Math.PI / 180)) * Math.Cos(lat2 * (Math.PI / 180)) *
+            Math.Sin(dLon / 2) * Math.Sin(dLon / 2);
+        var c = 2 * Math.Atan2(Math.Sqrt(a), Math.Sqrt(1 - a));
+        return earthRadius * c; // Distance in nautical miles
+    }
+
+    public Airport SelectAirportByCode(string airportCode)
+    {
+        Airport selectedAirport = null;
+        using var conn = new NpgsqlConnection(connString);
+        conn.Open();
+
+        using var cmd = new NpgsqlCommand("SELECT id, name, lat, long FROM wi_airports WHERE id = @id", conn);
+        cmd.Parameters.AddWithValue("id", airportCode);
+
+        using var reader = cmd.ExecuteReader();
+        if (reader.Read())
+        {
+            string id = reader.GetString(0);
+            string name = reader.GetString(1);
+            double latitude = reader.GetDouble(2);
+            double longitude = reader.GetDouble(3);
+            selectedAirport = new Airport(id, name, latitude, longitude, null);
+        }
+
+        return selectedAirport;
+    }
+
+
+    public ObservableCollection<Airport> GetWisconsinAirportsWithinDistance(double userLat, double userLon, double maxDistanceKm)
+    {
+        ObservableCollection<Airport> nearbyAirports = new ObservableCollection<Airport>();
+        var allAirports = GetAllWisconsinAirports();
+
+        foreach (var airport in allAirports)
+        {
+            double distance = CalculateDistance(userLat, userLon, airport.Latitude, airport.Longitude);
+            if (distance <= maxDistanceKm)
+            {
+                airport.Distance = distance; // Set the calculated distance
+                nearbyAirports.Add(airport);
+            }
+        }
+        return nearbyAirports;
+    }
+
 
     // Finds the airport with the given id, null if not found
     public Airport SelectAirport(String id)
@@ -144,7 +223,8 @@ public partial class Database : IDatabase
         {
             SelectAllAirports(); // go and fetch the airports again, otherwise Airports will be out of sync with the database
             return AirportDeletionError.NoError;
-        } else
+        }
+        else
         {
             return AirportDeletionError.AirportNotFound;
         }
@@ -167,7 +247,7 @@ public partial class Database : IDatabase
             String city = reader.GetString(1).PadRight(12).Substring(0,12);
             float lat = reader.GetFloat(2);
             float lon = reader.GetFloat(3);
-            Airport airportToAdd = new(id, city,lat, lon);
+            Airport airportToAdd = new(id, city, lat, lon);
             wisconsinAirports.Add(airportToAdd);
             Console.WriteLine(airportToAdd);
         }

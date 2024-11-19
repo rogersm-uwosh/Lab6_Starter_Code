@@ -18,59 +18,58 @@
              x:Class="Lab6_Starter.RoutingStrategies"
              Title="Routing Strategies">
 
-    <!-- ContentPage layout -->
     <ScrollView>
         <VerticalStackLayout Padding="10" 
-                         HorizontalOptions="FillAndExpand" 
-                         VerticalOptions="FillAndExpand">
+                             HorizontalOptions="FillAndExpand" 
+                             VerticalOptions="FillAndExpand">
 
             <!-- Starting Airport -->
             <HorizontalStackLayout HorizontalOptions="FillAndExpand" Padding="0,5,0,0">
                 <Label Text="Starting Airport:" 
-                   VerticalOptions="Center" 
-                   WidthRequest="140"
-                   Margin="0,0,-20,0"/>
+                       VerticalOptions="Center" 
+                       WidthRequest="140"
+                       Margin="0,0,-20,0"/>
                 <Frame BorderColor="Gray" 
-                   CornerRadius="5" 
-                   Padding="0" 
-                   HasShadow="True" 
-                   HorizontalOptions="FillAndExpand">
+                       CornerRadius="5" 
+                       Padding="0" 
+                       HasShadow="True" 
+                       HorizontalOptions="FillAndExpand">
                     <Entry x:Name="StartingAirportPicker" 
-                       MaxLength="4"
-                       HorizontalOptions="FillAndExpand"
-                       HeightRequest="40"/>
+                           MaxLength="4"
+                           HorizontalOptions="FillAndExpand"
+                           HeightRequest="40"/>
                 </Frame>
             </HorizontalStackLayout>
 
             <!-- Max Distance -->
             <HorizontalStackLayout HorizontalOptions="FillAndExpand" Padding="0,10,0,0">
                 <Label Text="Max Distance:" 
-                   VerticalOptions="Center" 
-                   WidthRequest="140"
-                   Margin="0,0,-20,0"/>
+                       VerticalOptions="Center" 
+                       WidthRequest="140"
+                       Margin="0,0,-20,0"/>
                 <Frame BorderColor="Gray" 
-                   CornerRadius="5" 
-                   Padding="0" 
-                   HasShadow="True" 
-                   HorizontalOptions="FillAndExpand">
+                       CornerRadius="5" 
+                       Padding="0" 
+                       HasShadow="True" 
+                       HorizontalOptions="FillAndExpand">
                     <Entry x:Name="MaxDistanceEntry" 
-                       Keyboard="Numeric" 
-                       HorizontalOptions="FillAndExpand" 
-                       HeightRequest="40"/>
+                           Keyboard="Numeric" 
+                           HorizontalOptions="FillAndExpand" 
+                           HeightRequest="40"/>
                 </Frame>
                 <Label Text="NM" 
-                   VerticalOptions="Center" 
-                   Margin="10,0,0,0"/>
+                       VerticalOptions="Center" 
+                       Margin="10,0,0,0"/>
             </HorizontalStackLayout>
 
             <!-- Unvisited Toggle -->
             <HorizontalStackLayout HorizontalOptions="FillAndExpand" Padding="0,10,0,0">
                 <Label Text="Unvisited Only:" 
-                   VerticalOptions="Center"
-                   Margin="0,0,-20,0" 
-                   WidthRequest="140"/>
+                       VerticalOptions="Center"
+                       Margin="0,0,-20,0" 
+                       WidthRequest="140"/>
                 <Switch x:Name="UnvisitedSwitch" 
-                    IsToggled="False" />
+                        IsToggled="False" />
             </HorizontalStackLayout>
             
             <!-- Submit Button -->
@@ -80,32 +79,32 @@
 
             <!-- Suggested Routes -->
             <Label Text="Suggested Route" 
-               FontAttributes="Bold" 
-               FontSize="Medium" 
-               Margin="0,20,0,10"/>
+                   FontAttributes="Bold" 
+                   FontSize="Medium" 
+                   Margin="0,20,0,10"/>
 
             <!-- CollectionView for route edges -->
             <CollectionView x:Name="RoutesCollectionView" 
-                        HorizontalOptions="FillAndExpand"
-                        VerticalOptions="FillAndExpand"
-                        ItemsSource="{Binding CurrentRoute.Edges}">
+                            HorizontalOptions="FillAndExpand"
+                            VerticalOptions="FillAndExpand"
+                            ItemsSource="{Binding CurrentRoute.Edges}">
                 <CollectionView.Header>
                     <Grid ColumnDefinitions="2*, 2*, 1*" HorizontalOptions="FillAndExpand">
                         <Label Text="From" 
-                           FontAttributes="Bold" 
-                           HorizontalTextAlignment="Start"
-                           Grid.Column="0"
-                           Padding="0,0,10,0"/>
+                               FontAttributes="Bold" 
+                               HorizontalTextAlignment="Start"
+                               Grid.Column="0"
+                               Padding="0,0,10,0"/>
                         <Label Text="To" 
-                           FontAttributes="Bold" 
-                           HorizontalTextAlignment="Start"
-                           Grid.Column="1"
-                           Padding="0,0,10,0"/>
+                               FontAttributes="Bold" 
+                               HorizontalTextAlignment="Start"
+                               Grid.Column="1"
+                               Padding="0,0,10,0"/>
                         <Label Text="Dist" 
-                           FontAttributes="Bold" 
-                           HorizontalTextAlignment="End"
-                           Grid.Column="2"
-                           Padding="0,0,10,0"/>
+                               FontAttributes="Bold" 
+                               HorizontalTextAlignment="End"
+                               Grid.Column="2"
+                               Padding="0,0,10,0"/>
                     </Grid>
                 </CollectionView.Header>
 
@@ -113,24 +112,20 @@
                 <CollectionView.ItemTemplate>
                     <DataTemplate>
                         <Grid ColumnDefinitions="2*, 2*, 1*" Padding="0,10,0,0" HorizontalOptions="FillAndExpand">
-                            <HorizontalStackLayout 
-                               Grid.Column="0"
-                               Padding="0,0,10,0">
+                            <HorizontalStackLayout Grid.Column="0" Padding="0,0,10,0">
                                 <Label Text="{Binding From.Airport.Id}"/>
                                 <Label Text=" - "/>
                                 <Label Text="{Binding From.Airport.City}"/>
                             </HorizontalStackLayout>
-                            <HorizontalStackLayout 
-                               Grid.Column="1"
-                               Padding="0,0,10,0">
+                            <HorizontalStackLayout Grid.Column="1" Padding="0,0,10,0">
                                 <Label Text="{Binding To.Airport.Id}"/>
                                 <Label Text=" - "/>
                                 <Label Text="{Binding To.Airport.City}"/>
                             </HorizontalStackLayout>
                             <Label Text="{Binding Distance, StringFormat='{0:F1} NM'}"
-                               Grid.Column="2"
-                               HorizontalTextAlignment="End"
-                               Padding="0,0,10,0"/>
+                                   Grid.Column="2"
+                                   HorizontalTextAlignment="End"
+                                   Padding="0,0,10,0"/>
                         </Grid>
                     </DataTemplate>
                 </CollectionView.ItemTemplate>
@@ -139,9 +134,9 @@
             <!-- Map -->
             <Label Text="Map" FontAttributes="Bold" FontSize="Medium" Margin="0,20,0,10"/>
             <mapsui:MapControl x:Name="RouteMap"
-                 HorizontalOptions="FillAndExpand"
-                 VerticalOptions="FillAndExpand"
-                 HeightRequest="400"/>
+                               HorizontalOptions="FillAndExpand"
+                               VerticalOptions="FillAndExpand"
+                               HeightRequest="400"/>
         </VerticalStackLayout>
 
     </ScrollView>

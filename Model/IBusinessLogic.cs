@@ -13,5 +13,8 @@ public interface IBusinessLogic
     ObservableCollection<Airport> GetWisconsinAirports();
     ObservableCollection<Weather> GetWeathers();
     ObservableCollection<Airport> CalculateNearbyAirports(Airport sourceAirport, int maxMiles);
+    ObservableCollection<Airport> GetAllWisconsinAirports();
+    ObservableCollection<Airport> GetWisconsinAirportsWithinDistance(double userLatitude, double userLongitude, double maxDistanceKm);
+    Airport SelectAirportByCode(string airportCode);
     Route GetRoute(Airport source, int maxMiles, bool unvisitedOnly = false);
 }

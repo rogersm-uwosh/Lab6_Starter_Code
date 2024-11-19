@@ -60,6 +60,14 @@ public partial class MapPage : ContentPage
         SymbolScale = 0.35f
     };
 
+    // Fetches all WI airports with coordinates from the database when the application starts
+    // Only updates once during the lifetime of the app
+    private static readonly ObservableCollection<Airport> allAirports
+        = MauiProgram.BusinessLogic.GetWisconsinAirports();
+    // Holds the current state of the visited airports when the map page is opened
+    // Updates once every time MapPage is switched to on the navigation bar
+    private ObservableCollection<Airport> visitedAirports;
+
     // Caching the map created in the control so it can be refreshed later
     private Map map;
     // A WritableLayer is essentially an overlay for the map that renders special features
@@ -93,9 +101,25 @@ public partial class MapPage : ContentPage
         // Place the map control into MapPage under a grid prepared to contain it
         MapGrid.Add(mapControl);
 
+        // Run OnAppearing() to prepare visitedAirports before setting VisitedRadioButton.IsChecked
+        OnAppearing();
         // Manually setting IsChecked since putting this in the xaml sometimes causes it
         // to be stuck as checked
         VisitedRadioButton.IsChecked = true;
+    }
+
+    /// <summary>
+    /// Runs once every time MapPage is switched to on the navigation bar
+    /// <para></para>
+    /// <para></para>
+    /// Necessary since MapPage's constructor only runs once when the application loads,
+    /// so if an airport is changed in MainPage, it would not be reflected here
+    /// without overriding OnAppearing().
+    /// </summary>
+    protected override void OnAppearing()
+    {
+        // Updates visitedAirports to contain the latest visited airports
+        visitedAirports = MauiProgram.BusinessLogic.GetAirports();
     }
 
     private void OnVisitedRadio_Clicked(object sender, CheckedChangedEventArgs e)
@@ -105,11 +129,6 @@ public partial class MapPage : ContentPage
 
         // clear all current points on the map
         pointLayer.Clear();
-
-        // this gets the airports that have been visited, as well as all airports
-        // that have cordinates connected to them
-        ObservableCollection<Airport> visitedAirports = MauiProgram.BusinessLogic.GetAirports();
-        ObservableCollection<Airport> allAirports = MauiProgram.BusinessLogic.GetWisconsinAirports();
 
         // find which airports have been visited, and add a point with their coordinates to the map
         foreach (Airport airportVisited in visitedAirports)
@@ -134,10 +153,6 @@ public partial class MapPage : ContentPage
 
         // clear all the points from the point layer
         pointLayer.Clear();
-
-        // get the airports visited and the airports with coordinates
-        ObservableCollection<Airport> visitedAirports = MauiProgram.BusinessLogic.GetAirports();
-        ObservableCollection<Airport> allAirports = MauiProgram.BusinessLogic.GetWisconsinAirports();
 
         // find which airports have not been visited, and add a point with their coordinates to the map
         foreach (Airport airportWithCoords in allAirports)
@@ -167,10 +182,6 @@ public partial class MapPage : ContentPage
 
         // clear the current points on the map
         pointLayer.Clear();
-
-        // get the airports visited and the airports with coordinates
-        ObservableCollection<Airport> visitedAirports = MauiProgram.BusinessLogic.GetAirports();
-        ObservableCollection<Airport> allAirports = MauiProgram.BusinessLogic.GetWisconsinAirports();
 
         // get a point from each airport's coordinates and place it on the map
         foreach (Airport airportWithCoords in allAirports)

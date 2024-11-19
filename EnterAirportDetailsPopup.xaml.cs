@@ -18,9 +18,9 @@ public partial class EnterAirportDetailsPopup : Popup
     private int rating = 0;
     private string airportToEditId;
 
-
     public EnterAirportDetailsPopup (Airport airport)
     {
+        //this.mainCV = mainCV;
         this.isEdit = isEdit;
         InitializeComponent();
         Console.WriteLine("Popup Opened");
@@ -36,6 +36,13 @@ public partial class EnterAirportDetailsPopup : Popup
             Calendar.DisplayDate = airport.DateVisited;
             Calendar.SelectedDate = airport.DateVisited;
             FillStars(airport.Rating);
+        }
+        else // Default the Calendar to Today's date
+        {
+            DateTime today = DateTime.Today;
+            Calendar.View = CalendarView.Month;
+            Calendar.DisplayDate = today;
+            Calendar.SelectedDate = today;
         }
     }
     
@@ -85,7 +92,7 @@ public partial class EnterAirportDetailsPopup : Popup
             "InvalidRating" => "Rating is not selected",
             "InvalidDate" => "Date is invalid",
             "DuplicateAirportId" => "Airport id is already used",
-            "NoError" => $"Successfully Added Airport{id}",
+            "NoError" => $"Successfully Added Airport {id}",
             _ => error.ToString()
         };
         IToast errorMessageToast = Toast.Make(errorMessage);
@@ -107,7 +114,7 @@ public partial class EnterAirportDetailsPopup : Popup
                 errorMessage = "Airport not found";
                 break;
             case "NoError":
-                errorMessage = $"Successfully Edited Airport{id}";
+                errorMessage = $"Successfully Edited Airport {id}";
                 Close();
                 break;
             default: errorMessage = error.ToString();
@@ -115,6 +122,8 @@ public partial class EnterAirportDetailsPopup : Popup
         }
         IToast errorMessageToast = Toast.Make(errorMessage);
         errorMessageToast.Show();
+
+        //mainCV.SelectedItem = MauiProgram.BusinessLogic.FindAirport(id);
     }
     
     
