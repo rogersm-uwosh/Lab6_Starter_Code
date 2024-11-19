@@ -111,21 +111,22 @@
                 <!-- Data template for table rows -->
                 <CollectionView.ItemTemplate>
                     <DataTemplate>
-                        <Grid ColumnDefinitions="2*, 2*, 1*" Padding="0,10,0,0" HorizontalOptions="FillAndExpand">
+                        <Grid ColumnDefinitions="2*,2*,*" Padding="0,10,0,0" HorizontalOptions="FillAndExpand">
                             <HorizontalStackLayout Grid.Column="0" Padding="0,0,10,0">
-                                <Label Text="{Binding From.Airport.Id}"/>
-                                <Label Text=" - "/>
-                                <Label Text="{Binding From.Airport.City}"/>
+                                <Label Text="{Binding From.Airport.Id}" FontSize="12"/>
+                                <Label Text=" - " FontSize="12"/>
+                                <Label Text="{Binding From.Airport.City}" FontSize="12"/>
                             </HorizontalStackLayout>
                             <HorizontalStackLayout Grid.Column="1" Padding="0,0,10,0">
-                                <Label Text="{Binding To.Airport.Id}"/>
-                                <Label Text=" - "/>
-                                <Label Text="{Binding To.Airport.City}"/>
+                                <Label Text="{Binding To.Airport.Id}" FontSize="12"/>
+                                <Label Text=" - " FontSize="12"/>
+                                <Label Text="{Binding To.Airport.City}" FontSize="12"/>
                             </HorizontalStackLayout>
-                            <Label Text="{Binding Distance, StringFormat='{0:F1} NM'}"
+                            <Label Text="{Binding Distance, StringFormat='1{0:F1} NM'}"
                                    Grid.Column="2"
                                    HorizontalTextAlignment="End"
-                                   Padding="0,0,10,0"/>
+                                   Padding="0,0,10,0"
+                                   FontSize="12"/>
                         </Grid>
                     </DataTemplate>
                 </CollectionView.ItemTemplate>
