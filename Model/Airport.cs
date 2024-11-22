@@ -117,11 +117,10 @@ namespace Lab6_Starter.Model
             Longitude = 0.0;
         }
 
-        // Constructor with parameters for ID, latitude, and longitude
-        public Airport(string id, double latitude, double longitude)
+    public Airport(String id, String city, double latitude, double longitude)
         {
             Id = id;
-            City = "Appleton";
+        City = city;
             DateVisited = DateTime.Now;
             Rating = 5;
             Latitude = latitude;
@@ -150,4 +149,15 @@ namespace Lab6_Starter.Model
             return obj is Airport otherAirport && Id == otherAirport.Id;
         }
     }
+
+    public class AirportEqualityComparer : IEqualityComparer<Airport> {
+        public bool Equals(Airport x, Airport y) {
+            return x.Equals(y);
+        }
+
+        public int GetHashCode(Airport obj) {
+            return obj.Id.GetHashCode();
+        }
+    }
+
 }

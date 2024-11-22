@@ -237,19 +237,20 @@ public partial class Database : IDatabase
         conn.Open();
 
         // using() ==> disposable types are properly disposed of, even if there is an exception thrown 
-        using var cmd = new NpgsqlCommand("SELECT id, lat, long FROM wi_airports", conn);
+        using var cmd = new NpgsqlCommand("SELECT id, name, lat, long FROM wi_airports", conn);
         using var reader = cmd.ExecuteReader(); // used for SELECT statement, returns a forward-only traversable object
 
         while (reader.Read()) // each time through we get another row in the table (i.e., another Airport)
         {
             String id = reader.GetString(0);
-            float lat = reader.GetFloat(1);
-            float lon = reader.GetFloat(2);
-            Airport airportToAdd = new(id, lat, lon);
+            //Make all city names only 12 characters long
+            String city = reader.GetString(1).PadRight(12).Substring(0,12);
+            float lat = reader.GetFloat(2);
+            float lon = reader.GetFloat(3);
+            Airport airportToAdd = new(id, city, lat, lon);
             wisconsinAirports.Add(airportToAdd);
             Console.WriteLine(airportToAdd);
         }
-
         return wisconsinAirports;
     }
 

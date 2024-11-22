@@ -1,6 +1,11 @@
 ﻿using System.Collections.ObjectModel;
+
 using System.Diagnostics.Metrics;
 using FWAPPA.NearbyAirports;
+
+using CommunityToolkit.Maui.Core.Extensions;
+using Lab6_Starter;
+
 using Lab6_Starter.Model;
 using Microsoft.Maui.Devices.Sensors;
 
@@ -281,18 +286,29 @@ public partial class BusinessLogic : IBusinessLogic
         }
     }
 
-    public Route GetRoute()
+    public Route GetRoute(Airport source, int maxMiles, bool unvisitedOnly)
     {
-        var route = new Route("KATW", "KUBB");
+        // We need to force the start to be at the beginning, so we remove it
+        // and possibly already visited airports
+        IEnumerable<Airport> excluded;
+        if (unvisitedOnly) {
+            excluded = GetAirports().Append(source);
+        } else {
+            excluded = [source];
+        }
+        // Convert the airports to RoutePoints
+        List<RoutePoint> routePoints = CalculateNearbyAirports(source, maxMiles)
+            .Except(excluded, new AirportEqualityComparer())
+            .Prepend(source)
+            .Select(x => new RoutePoint(x))
+            .ToList();
 
-        // Add edges 
-        route.AddEdge("KATW", "Appleton", 0);
-        route.AddEdge("KFLD", "Fond du Lac", 23);
-        route.AddEdge("KUNN", "Dodge County", 28);
-        route.AddEdge("KUBB", "Burlington", 47);
-        route.AddEdge("KATW", "Appleton", 95);
+        // Can't have a route with 0 or 1 airports
+        if (routePoints.Count < 2) {
+            return null;
+        }
 
-        return route;
+        return Route.GenerateTravelingSalesmanRoute(routePoints);
     }
 }
 
