@@ -1,7 +1,13 @@
 ﻿using System.Collections.ObjectModel;
+
+using System.Diagnostics.Metrics;
+using FWAPPA.NearbyAirports;
+
 using CommunityToolkit.Maui.Core.Extensions;
 using Lab6_Starter;
+
 using Lab6_Starter.Model;
+using Microsoft.Maui.Devices.Sensors;
 
 namespace FWAPPA.Model;
 
@@ -16,12 +22,6 @@ public partial class BusinessLogic : IBusinessLogic
     private readonly int MAX_RATING = 5;
 
     public ObservableCollection<Airport> Airports
-    {
-        get { return GetAirports(); }
-
-    }
-
-    public ObservableCollection<Airport> WisconsinAirports
     {
         get { return GetAirports(); }
 
@@ -42,10 +42,9 @@ public partial class BusinessLogic : IBusinessLogic
         return db.SelectAirportByCode(airportCode);
     }
 
-    public ObservableCollection<Weather> Weathers
+    public Weather ClosestAirportWeather
     {
-        get { return GetWeathers(); }
-
+        get { return GetClosestAirportWeather(); }
     }
     
     partial void LoadAirportCoordinates();
@@ -208,11 +207,83 @@ public partial class BusinessLogic : IBusinessLogic
         return db.SelectAllWisconsinAirports();
     }
 
-    public ObservableCollection<Weather> GetWeathers()
+    /// <summary>
+    /// Get the weather of the closest airport
+    /// </summary>
+    /// <returns>The weather of the closest airport</returns>
+    public Weather GetClosestAirportWeather()
+
     {
-        ObservableCollection<Weather> weathers = new ObservableCollection<Weather>();
-        weathers.Add(new Weather("METAR KJFK 161853Z 21015G25KT 10SM -RA SCT020 BKN050", "TAF KJFK 161720Z 1618/1718 21015KT P6SM -RA BKN050"));
-        return weathers;
+        string airport = "";
+        airport = FindClosestAirport();
+        HttpClient aviationWeatherCenter = new HttpClient();
+        try
+        {
+            var metarUrl = "https://aviationweather.gov/api/data/metar?ids=" + airport + "&format=raw";
+            var metar = aviationWeatherCenter.GetStringAsync(metarUrl).Result;
+            var tafUrl = "https://aviationweather.gov/api/data/taf?ids=" + airport + "&format=raw";
+            var taf = aviationWeatherCenter.GetStringAsync(tafUrl).Result;
+            return new Weather(airport, metar, taf);
+        }
+        catch (Exception ex)
+        {
+            return new Weather("Catch", ex.Message, "Catch");
+        }
+    }
+
+    /// <summary>
+    /// Get the name of the closest airport (Shout out to the Nearby Airports Group since a lot of this logic uses code that they made)
+    /// </summary>
+    /// <returns>The name of the closest airport</returns>
+    private string FindClosestAirport()
+    {
+        string closestAirport = "";
+        double closestDistance = double.MaxValue;
+
+        ObservableCollection<Airport> allAirports = GetAirports();
+
+        AirportCoordinates currentCoordinates = GetCurrentCoordinates();
+
+        foreach (Airport destinationAirport in allAirports)
+        {
+            AirportCoordinates? destinationAirportCoordinates = airportCoordinates.FirstOrDefault(coordinates => coordinates.id == destinationAirport.Id, null);
+
+            if (destinationAirportCoordinates != null)
+            {
+                // Haversine formula to find distance between two points
+                double sourceLatitudeRadians = currentCoordinates.lat * (Math.PI / 180);
+                double destinationLatitudeRadians = destinationAirportCoordinates.lat * (Math.PI / 180);
+                double latitudeDiffRadians =
+                    (destinationAirportCoordinates.lat - currentCoordinates.lat) * (Math.PI / 180);
+                double longitudeDiffRadians =
+                    (destinationAirportCoordinates.lon - currentCoordinates.lon) * (Math.PI / 180);
+                double flatDistance = Math.Pow(Math.Sin(latitudeDiffRadians / 2.0), 2.0) +
+                                      (Math.Cos(sourceLatitudeRadians) *
+                                       Math.Cos(destinationLatitudeRadians) *
+                                       Math.Pow(Math.Sin(longitudeDiffRadians / 2.0), 2.0));
+                double angularDistance = 2 * Math.Atan2(Math.Sqrt(flatDistance), Math.Sqrt(1 - flatDistance));
+                double distanceInMeters = EARTH_RADIUS_IN_METERS * angularDistance;
+                double distanceInMiles = distanceInMeters * MILES_PER_METER;
+                if (distanceInMiles < closestDistance)
+                {
+                    closestAirport = destinationAirport.Id;
+                    closestDistance = distanceInMiles;
+                }
+            }
+        }
+        return closestAirport;
+    }
+ 
+    private AirportCoordinates GetCurrentCoordinates()
+    {
+        var currLocation = Geolocation.GetLastKnownLocationAsync().Result;
+        float lat = (float)currLocation.Latitude;
+        float lon = (float)currLocation.Longitude;
+        if (currLocation == null) {
+            return new AirportCoordinates("", "", 0f, 0f, "");
+        } else {
+            return new AirportCoordinates("", "", lat, lon, "");
+        }
     }
 
     public Route GetRoute(Airport source, int maxMiles, bool unvisitedOnly)
@@ -239,6 +310,5 @@ public partial class BusinessLogic : IBusinessLogic
 
         return Route.GenerateTravelingSalesmanRoute(routePoints);
     }
-
 }
 

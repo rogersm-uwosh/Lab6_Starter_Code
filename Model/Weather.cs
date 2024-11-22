@@ -10,8 +10,19 @@ namespace Lab6_Starter.Model;
 [Serializable()]
 public class Weather : INotifyPropertyChanged
 {
+    String airport;
     String metar;
     String taf;
+
+    public String Airport
+    {
+        get { return airport; }
+        set
+        {
+            airport = value;
+            OnPropertyChanged(nameof(Airport));
+        }
+    }
 
     public String Metar 
     {
@@ -33,8 +44,9 @@ public class Weather : INotifyPropertyChanged
         }
     }
 
-    public Weather(String metar, String taf)
+    public Weather(String airport, String metar, String taf)
     {
+        Airport = airport;
         Metar = metar;
         Taf = taf;
     }
