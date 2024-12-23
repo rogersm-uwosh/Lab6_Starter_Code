@@ -120,7 +120,7 @@ public partial class EnterAirportDetailsPopup : Popup
             default: errorMessage = error.ToString();
                 break;
         }
-        IToast errorMessageToast = Toast.Make(errorMessage);
+        IToast errorMessageToast = Toast.Make(errorMessage, ToastDuration.Long);
         errorMessageToast.Show();
 
         //mainCV.SelectedItem = MauiProgram.BusinessLogic.FindAirport(id);
