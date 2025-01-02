@@ -25,9 +25,9 @@ public partial class MainPage : ContentPage
         this.ShowPopup(popup);
     }
 
-    void DeleteAirport_Clicked(System.Object sender, System.EventArgs e)
+    async void DeleteAirport_Clicked(System.Object sender, System.EventArgs e)
     {
-        Airport currentAirport = CV.SelectedItem as Airport;
+        VisitedAirport currentAirport = CV.SelectedItem as VisitedAirport;
         
         // Check if an airport is selected
         if (currentAirport == null)
@@ -38,7 +38,8 @@ public partial class MainPage : ContentPage
         }
 
         // Proceed to delete the selected airport
-        AirportDeletionError result = MauiProgram.BusinessLogic.DeleteAirport(currentAirport.Id);
+
+        AirportDeletionError result = await MauiProgram.BusinessLogic.DeleteAirport(currentAirport.Id);
         if (result != AirportDeletionError.NoError)
         {
             DisplayAlert("Ruhroh", result.ToString(), "OK");
@@ -49,7 +50,7 @@ public partial class MainPage : ContentPage
     void EditAirport_Clicked(System.Object sender, System.EventArgs e)
     {
         //Changed to a popup insert [Popup Team]
-        Airport currentAirport = CV.SelectedItem as Airport;
+        VisitedAirport currentAirport = CV.SelectedItem as VisitedAirport;
         string currentAirportId = currentAirport.Id; 
         var popup = new EnterAirportDetailsPopup(currentAirport);
         this.ShowPopup(popup); 

@@ -1,7 +1,6 @@
 ﻿using System.Globalization;
-using Lab6_Starter.Model;
 
-namespace FWAPPA.NearbyAirports;
+namespace Lab6_Starter.Model.NearbyAirports;
 
 /// <summary>
 /// Alexander Johnston wrote this class
@@ -12,7 +11,7 @@ public class AirportVisitedConverter : IValueConverter
 {
     public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
     {
-        if (value is not Airport airport) return null;
+        if (value is not WisconsinAirport airport) return null;
         bool isVisited = false;
         switch (airport.Id)
         {

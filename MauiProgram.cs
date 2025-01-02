@@ -3,14 +3,14 @@ using SkiaSharp.Views.Maui.Controls.Hosting;
 using Lab6_Starter.Model;
 using CommunityToolkit.Maui;
 using Syncfusion.Maui.Core.Hosting;
-using BusinessLogic = FWAPPA.Model.BusinessLogic;
+using BusinessLogic = Lab6_Starter.Model.BusinessLogic;
 
 namespace Lab6_Starter;
 
 public static class MauiProgram
 {
 	
-    public static IBusinessLogic BusinessLogic = new BusinessLogic(new Database());
+    public static IBusinessLogic BusinessLogic = new BusinessLogic(new DatabaseSupa());
 
     public static MauiApp CreateMauiApp()
 	{

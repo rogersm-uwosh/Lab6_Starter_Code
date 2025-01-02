@@ -1,4 +1,3 @@
-using FWAPPA.Model;
 using Lab6_Starter.Model;
 using Mapsui.Projections;
 using System.Collections.ObjectModel;
@@ -98,9 +97,9 @@ public class RoutePoint
 
     public double X { get; set; }
     public double Y { get; set; }
-    public Airport Airport { get; set; }
+    public WisconsinAirport Airport { get; set; }
 
-    public RoutePoint(Airport airport) {
+    public RoutePoint(WisconsinAirport airport) {
         Airport = airport;
         X = airport.Longitude;
         Y = airport.Latitude;

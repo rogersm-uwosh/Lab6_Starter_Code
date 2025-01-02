@@ -4,17 +4,17 @@ using System.Collections.ObjectModel;
 namespace Lab6_Starter.Model;
 public interface IBusinessLogic
 {
-    AirportAdditionError AddAirport(String id, String city, DateTime? dateVisited, int rating);
-    AirportDeletionError DeleteAirport(String id);
-    AirportEditError EditAirport(String id, String city, DateTime dateVisited, int rating);
-    Airport FindAirport(String id);
+    Task<AirportAdditionError> AddAirport(String id, String name, DateTime? dateVisited, int rating);
+    Task<AirportDeletionError> DeleteAirport(String id);
+    Task<AirportEditError> EditAirport(String id, String name, DateTime dateVisited, int rating);
+    Task<VisitedAirport?> FindAirport(String id);
     String CalculateStatistics();
-    ObservableCollection<Airport> GetAirports();
-    ObservableCollection<Airport> GetWisconsinAirports();
+    Task<ObservableCollection<VisitedAirport>> GetVisitedAirports();
+    ObservableCollection<WisconsinAirport> GetWisconsinAirports();
     ObservableCollection<Weather> GetWeathers();
-    ObservableCollection<Airport> CalculateNearbyAirports(Airport sourceAirport, int maxMiles);
-    ObservableCollection<Airport> GetAllWisconsinAirports();
-    ObservableCollection<Airport> GetWisconsinAirportsWithinDistance(double userLatitude, double userLongitude, double maxDistanceKm);
-    Airport SelectAirportByCode(string airportCode);
-    Route GetRoute(Airport source, int maxMiles, bool unvisitedOnly = false);
+    ObservableCollection<WisconsinAirport> CalculateNearbyAirports(WisconsinAirport sourceAirport, int maxMiles);
+    ObservableCollection<WisconsinAirport> GetAllWisconsinAirports();
+    ObservableCollection<WisconsinAirport> GetWisconsinAirportsWithinDistance(double userLatitude, double userLongitude, double maxDistanceKm);
+    WisconsinAirport SelectAirportByCode(string airportCode);
+    Route GetRoute(WisconsinAirport source, int maxMiles, bool unvisitedOnly = false);
 }

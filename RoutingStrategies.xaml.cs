@@ -66,8 +66,8 @@ namespace Lab6_Starter {
         private void GenerateRoute(object sender, EventArgs e) {
             // Get the airport (not necessarily visited)
             string airportId = StartingAirportPicker.Text;
-            Collection<Airport> available = _businessLogic.GetWisconsinAirports();
-            Airport start = available.Where(x => x.Id.Equals(airportId)).FirstOrDefault();
+            Collection<WisconsinAirport> available = _businessLogic.GetWisconsinAirports();
+            WisconsinAirport start = available.Where(x => x.Id.Equals(airportId)).FirstOrDefault();
             if (start == null) {
                 // Clears the map
                 UpdateRoute(null);

@@ -62,11 +62,11 @@ public partial class MapPage : ContentPage
 
     // Fetches all WI airports with coordinates from the database when the application starts
     // Only updates once during the lifetime of the app
-    private static readonly ObservableCollection<Airport> allAirports
+    private static readonly ObservableCollection<WisconsinAirport> allAirports
         = MauiProgram.BusinessLogic.GetWisconsinAirports();
     // Holds the current state of the visited airports when the map page is opened
     // Updates once every time MapPage is switched to on the navigation bar
-    private ObservableCollection<Airport> visitedAirports;
+    private ObservableCollection<VisitedAirport> visitedAirports;
 
     // Caching the map created in the control so it can be refreshed later
     private Map map;
@@ -116,10 +116,10 @@ public partial class MapPage : ContentPage
     /// so if an airport is changed in MainPage, it would not be reflected here
     /// without overriding OnAppearing().
     /// </summary>
-    protected override void OnAppearing()
+    protected override async void OnAppearing()
     {
         // Updates visitedAirports to contain the latest visited airports
-        visitedAirports = MauiProgram.BusinessLogic.GetAirports();
+        visitedAirports = await MauiProgram.BusinessLogic.GetVisitedAirports();
     }
 
     private void OnVisitedRadio_Clicked(object sender, CheckedChangedEventArgs e)
@@ -131,9 +131,9 @@ public partial class MapPage : ContentPage
         pointLayer.Clear();
 
         // find which airports have been visited, and add a point with their coordinates to the map
-        foreach (Airport airportVisited in visitedAirports)
+        foreach (VisitedAirport airportVisited in visitedAirports)
         {
-            foreach (Airport airportWithCoords in allAirports)
+            foreach (WisconsinAirport airportWithCoords in allAirports)
             {
                 if(airportVisited.Id == airportWithCoords.Id)
                 {
@@ -155,11 +155,11 @@ public partial class MapPage : ContentPage
         pointLayer.Clear();
 
         // find which airports have not been visited, and add a point with their coordinates to the map
-        foreach (Airport airportWithCoords in allAirports)
+        foreach (WisconsinAirport airportWithCoords in allAirports)
         {
             bool visited = false;
 
-            foreach (Airport airportVisited in visitedAirports)
+            foreach (VisitedAirport airportVisited in visitedAirports)
             {
                 if (airportVisited.Id == airportWithCoords.Id)
                     visited = true;
@@ -184,11 +184,11 @@ public partial class MapPage : ContentPage
         pointLayer.Clear();
 
         // get a point from each airport's coordinates and place it on the map
-        foreach (Airport airportWithCoords in allAirports)
+        foreach (WisconsinAirport airportWithCoords in allAirports)
         {
             bool visited = false;
 
-            foreach (Airport airportVisited in visitedAirports)
+            foreach (VisitedAirport airportVisited in visitedAirports)
             {
                 if (airportVisited.Id == airportWithCoords.Id)
                     visited = true;

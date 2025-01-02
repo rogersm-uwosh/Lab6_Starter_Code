@@ -1,11 +1,13 @@
 ﻿using System.Globalization;
-using Lab6_Starter.Model;
 
-namespace FWAPPA.NearbyAirports;
+namespace Lab6_Starter.Model.NearbyAirports;
 
 /// <summary>
 /// Alexander Johnston
 /// </summary>
+
+
+
 public class AirportToMilesConverter: IValueConverter
 {
 
@@ -22,7 +24,7 @@ public class AirportToMilesConverter: IValueConverter
     
     public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
     {
-        if (value is Airport airport)
+        if (value is WisconsinAirport airport)
         {
             return _idToMiles[airport.Id];
         }

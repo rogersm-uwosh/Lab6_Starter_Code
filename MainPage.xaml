@@ -2,8 +2,7 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:model="clr-namespace:Lab6_Starter.Model"
-             xmlns:model1="using:FWAPPA.Model"
-             x:DataType="model1:BusinessLogic" 
+             x:DataType="model:BusinessLogic" 
              x:Class="Lab6_Starter.MainPage"
              Title="Airports">
 
@@ -21,12 +20,12 @@
             VerticalOptions="Start">
 
             <!-- This line says that the ItemsSource of the CollectionView is the Airports property of the Domain object (an ObservableCollection) -->
-                <CollectionView x:Name="CV" ItemsSource="{Binding Airports}" SelectionMode="Single">
+                <CollectionView x:Name="CV" ItemsSource="{Binding VisitedAirports}" SelectionMode="Single">
                     <CollectionView.ItemTemplate>
-                    <DataTemplate x:DataType="model:Airport">
+                    <DataTemplate x:DataType="model:VisitedAirport">
                         <Grid RowDefinitions="*" ColumnDefinitions="*,2*,2*, 2*">
                             <Label Grid.Column="0" Text="{Binding Id}" VerticalTextAlignment="Center"/>
-                            <Label Grid.Column="1" Text="{Binding City}" VerticalTextAlignment="Center"/>
+                            <Label Grid.Column="1" Text="{Binding Name}" VerticalTextAlignment="Center"/>
                             <Label Grid.Column="2" Text="{Binding DateVisited}" VerticalTextAlignment="Center"/>
                             <Label Grid.Column="3" Text="{Binding Rating}" VerticalTextAlignment="Center" />
                             <Button Grid.Column="4" BackgroundColor="Transparent"  Clicked="DeleteAirport_Clicked"  ImageSource="trash.png" />
@@ -41,4 +40,3 @@
     </ScrollView>
 
 </ContentPage>
-

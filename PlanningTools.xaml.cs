@@ -1,4 +1,4 @@
-using FWAPPA.NearbyAirports;
+using Lab6_Starter.Model;
 
 namespace Lab6_Starter;
 
@@ -38,8 +38,9 @@ public partial class PlanningTools : ContentPage
             return;
         }
 
+        var visitedAirports = await MauiProgram.BusinessLogic.GetVisitedAirports(); 
         string subject = "Request to Redeem a T-Shirt";
-        string body = $"I have visited {MauiProgram.BusinessLogic.GetAirports().Count} airports and would like a prize";
+        string body = $"I have visited {visitedAirports.Count} airports and would like a prize";
         string[] recipients = [ FLY_WI_EMAIL_ADDRESS ];
 
         EmailMessage message = new()

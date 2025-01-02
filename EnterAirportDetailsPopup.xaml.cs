@@ -18,10 +18,10 @@ public partial class EnterAirportDetailsPopup : Popup
     private int rating = 0;
     private string airportToEditId;
 
-    public EnterAirportDetailsPopup (Airport airport)
+    public EnterAirportDetailsPopup (VisitedAirport airport)
     {
         //this.mainCV = mainCV;
-        this.isEdit = isEdit;
+        // this.isEdit = isEdit; // what was this about??
         InitializeComponent();
         Console.WriteLine("Popup Opened");
         if (airport != null) // only null if it's an edit
@@ -31,11 +31,11 @@ public partial class EnterAirportDetailsPopup : Popup
             IdEntry.IsVisible = false;
             airportToEditId = airport.Id;
             IdEntry.Text = airport.Id;
-            CityEntry.Text = airport.City;
+            CityEntry.Text = airport.Name;
             Calendar.View = CalendarView.Month;
-            Calendar.DisplayDate = airport.DateVisited;
+           // Calendar.DisplayDate = airport.DateVisited;
             Calendar.SelectedDate = airport.DateVisited;
-            FillStars(airport.Rating);
+           // FillStars(airport.Rating);
         }
         else // Default the Calendar to Today's date
         {
@@ -84,7 +84,7 @@ public partial class EnterAirportDetailsPopup : Popup
         string errorMessage;
         id = IdEntry.Text;
         city = CityEntry.Text;
-        AirportAdditionError error = MauiProgram.BusinessLogic.AddAirport(id, city, dateVisited, rating);
+        AirportAdditionError error = await MauiProgram.BusinessLogic.AddAirport(id, city, dateVisited, rating);
         errorMessage = error.ToString() switch
         {
             "InvalidIdLength" => "Id length is not between 3 and 4",
@@ -103,11 +103,11 @@ public partial class EnterAirportDetailsPopup : Popup
         }
     }
 
-    void editAirport()
+    async void editAirport()
     {
         string errorMessage;
         city = CityEntry.Text;
-        AirportEditError error = MauiProgram.BusinessLogic.EditAirport(airportToEditId, city, (DateTime)dateVisited, rating);
+        AirportEditError error = await MauiProgram.BusinessLogic.EditAirport(airportToEditId, city, (DateTime)dateVisited, rating);
         switch (error.ToString())
         {
             case "AirportNotFound":

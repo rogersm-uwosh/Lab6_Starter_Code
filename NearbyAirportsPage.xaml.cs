@@ -1,8 +1,7 @@
 ﻿using System.Collections.ObjectModel;
-using Lab6_Starter;
 using Lab6_Starter.Model;
 
-namespace FWAPPA.NearbyAirports;
+namespace Lab6_Starter;
 
 /// <summary>
 /// Written by Hiba Seraj
@@ -12,7 +11,7 @@ namespace FWAPPA.NearbyAirports;
 public partial class NearbyAirportsPage : ContentPage
 {
     IBusinessLogic BusinessLogic = MauiProgram.BusinessLogic;
-    public ObservableCollection<Airport> NearbyAirports { get; } = [];
+    public ObservableCollection<WisconsinAirport> NearbyAirports { get; } = [];
 
     public NearbyAirportsPage()
     {
@@ -25,7 +24,7 @@ public partial class NearbyAirportsPage : ContentPage
     /// </summary>
     /// <param name="sender"></param>
     /// <param name="e"></param>
-    private void OnSearchNearbyAirportBtn(object sender, EventArgs e)
+    private async void OnSearchNearbyAirportBtn(object sender, EventArgs e)
     {
         string airportName = AirportEntry.Text;
         string distanceMileText = DistanceEntry.Text;
@@ -36,7 +35,7 @@ public partial class NearbyAirportsPage : ContentPage
             return;
         }
 
-        Airport airport = BusinessLogic.FindAirport(airportName.ToUpper());
+        WisconsinAirport airport = BusinessLogic.SelectAirportByCode(airportName);
         bool isValidDistance = int.TryParse(distanceMileText, out int distanceMile);
         if (airport == null)
         {

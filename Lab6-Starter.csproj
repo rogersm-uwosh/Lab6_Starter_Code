@@ -2,8 +2,10 @@
 
 	<PropertyGroup>
 		<TargetFrameworks>net8.0-android;net8.0-ios;net8.0-maccatalyst</TargetFrameworks>
-		<TargetFrameworks Condition="$([MSBuild]::IsOSPlatform('windows'))">$(TargetFrameworks);net8.0-windows10.0.19041.0</TargetFrameworks>
-		<!-- Uncomment to also build the tizen app. You will need to install tizen by following this: https://github.com/Samsung/Tizen.NET -->
+		<TargetFrameworks Condition="$([MSBuild]::IsOSPlatform('windows'))">
+			$(TargetFrameworks);net8.0-windows10.0.19041.0</TargetFrameworks>
+		<!-- Uncomment to also build the tizen app. You will need to install tizen by following
+		this: https://github.com/Samsung/Tizen.NET -->
 		<!-- <TargetFrameworks>$(TargetFrameworks);net7.0-tizen</TargetFrameworks> -->
 		<OutputType>Exe</OutputType>
 		<RootNamespace>FWAPPA</RootNamespace>
@@ -22,23 +24,30 @@
 		<ApplicationDisplayVersion>1.0</ApplicationDisplayVersion>
 		<ApplicationVersion>1</ApplicationVersion>
 
-		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'ios'">11.0</SupportedOSPlatformVersion>
-		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'maccatalyst'">13.1</SupportedOSPlatformVersion>
-		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'android'">21.0</SupportedOSPlatformVersion>
-		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'windows'">10.0.17763.0</SupportedOSPlatformVersion>
-		<TargetPlatformMinVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'windows'">10.0.17763.0</TargetPlatformMinVersion>
-		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'tizen'">6.5</SupportedOSPlatformVersion>
+		<SupportedOSPlatformVersion
+			Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'ios'">11.0</SupportedOSPlatformVersion>
+		<SupportedOSPlatformVersion
+			Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'maccatalyst'">13.1</SupportedOSPlatformVersion>
+		<SupportedOSPlatformVersion
+			Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'android'">21.0</SupportedOSPlatformVersion>
+		<SupportedOSPlatformVersion
+			Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'windows'">10.0.17763.0</SupportedOSPlatformVersion>
+		<TargetPlatformMinVersion
+			Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'windows'">10.0.17763.0</TargetPlatformMinVersion>
+		<SupportedOSPlatformVersion
+			Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'tizen'">6.5</SupportedOSPlatformVersion>
 	</PropertyGroup>
 
-	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net8.0-ios|AnyCPU'">
-	  <CreatePackage>false</CreatePackage>
+	<PropertyGroup
+		Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net8.0-ios|AnyCPU'">
+		<CreatePackage>false</CreatePackage>
 	</PropertyGroup>
 	<ItemGroup>
 		<!-- App Icon -->
-		<MauiIcon Include="Resources\AppIcon\appicon.jpg" BaseSize="512,512" ForegroundScale=".65"/>
+		<MauiIcon Include="Resources\AppIcon\appicon.jpg" BaseSize="512,512" ForegroundScale=".65" />
 
 		<!-- Splash Screen -->
-		<MauiSplashScreen Include="Resources\Splash\splash.jpg" Color="#512BD4"/>
+		<MauiSplashScreen Include="Resources\Splash\splash.jpg" Color="#512BD4" />
 
 		<!-- Images -->
 		<MauiImage Include="Resources\Images\*" />
@@ -53,49 +62,56 @@
 
 	<ItemGroup>
 		<PackageReference Include="CommunityToolkit.Maui" Version="8.0.1" />
+		<PackageReference Include="CsvHelper" Version="33.0.1" />
 		<PackageReference Include="Mapsui.Maui" Version="4.1.7" />
 		<PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="8.0.0" />
 		<PackageReference Include="Microsoft.Maui.Controls.Maps" Version="8.0.92" />
 		<PackageReference Include="Npgsql" Version="8.0.5" />
 		<PackageReference Include="Microsoft.Extensions.Configuration" Version="8.0.0" />
 		<PackageReference Include="Microsoft.Extensions.Configuration.UserSecrets" Version="8.0.0" />
+		<PackageReference Include="Supabase" Version="1.1.1" />
 		<PackageReference Include="Syncfusion.Licensing" Version="27.1.53" />
 		<PackageReference Include="Syncfusion.Maui.Calendar" Version="27.1.53" />
 	</ItemGroup>
 
 	<ItemGroup>
-	  <None Remove="Model\" />
-	  <None Remove="Resources\Images\map_nav_icon.png" />
-	  <None Remove="Resources\Images\ic_fluent_star_24_filled_grey.svg" />
-	  <None Remove="Resources\Images\ic_fluent_star_24_filled_yellow.svg" />
-	  <None Remove="Resources\Images\trash.png" />
-	  <None Remove="Resources\Images\rectangle-list_48.png" />
+		<None Remove="Model\" />
+		<None Remove="Resources\Images\map_nav_icon.png" />
+		<None Remove="Resources\Images\ic_fluent_star_24_filled_grey.svg" />
+		<None Remove="Resources\Images\ic_fluent_star_24_filled_yellow.svg" />
+		<None Remove="Resources\Images\trash.png" />
+		<None Remove="Resources\Images\rectangle-list_48.png" />
 	</ItemGroup>
 	<ItemGroup>
-	  <BundleResource Include="Resources\Images\trash.png" />
-	  <BundleResource Include="Resources\Images\rectangle_list_48.png" />
+		<BundleResource Include="Resources\Images\trash.png" />
+		<BundleResource Include="Resources\Images\rectangle_list_48.png" />
 	</ItemGroup>
+
+	<ItemGroup>
+		 <MauiAsset Include="Resources\Raw\**" LogicalName="%(RecursiveDir)%(Filename)%(Extension)" />
+	</ItemGroup>
+
 	<ItemGroup>
 
-	  <MauiXaml Update="EnterAirportDetailsPopup.xaml">
-	    <Generator>MSBuild:Compile</Generator>
-	  </MauiXaml>
+		<MauiXaml Update="EnterAirportDetailsPopup.xaml">
+			<Generator>MSBuild:Compile</Generator>
+		</MauiXaml>
 	</ItemGroup>
 	<ItemGroup>
-	  <Compile Update="WeatherPage.xaml.cs">
-	    <DependentUpon>WeatherPage.xaml</DependentUpon>
-	  </Compile>
+		<Compile Update="WeatherPage.xaml.cs">
+			<DependentUpon>WeatherPage.xaml</DependentUpon>
+		</Compile>
 	</ItemGroup>
 	<ItemGroup>
 		<MauiXaml Update="WeatherPage.xaml">
 			<Generator>MSBuild:Compile</Generator>
 		</MauiXaml>
-	  <Compile Update="Resources.xaml.cs">
-	    <DependentUpon>Resources.xaml</DependentUpon>
-	  </Compile>
-	  <MauiXaml Update="Map\MapPage.xaml">
-	    <Generator>MSBuild:Compile</Generator>
-	  </MauiXaml>
+		<Compile Update="Resources.xaml.cs">
+			<DependentUpon>Resources.xaml</DependentUpon>
+		</Compile>
+		<MauiXaml Update="Map\MapPage.xaml">
+			<Generator>MSBuild:Compile</Generator>
+		</MauiXaml>
 	</ItemGroup>
 	<ItemGroup>
 		<MauiXaml Update="PlanningTools.xaml" />

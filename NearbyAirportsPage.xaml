@@ -6,14 +6,15 @@
 -->
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:nearbyAirports="clr-namespace:FWAPPA.NearbyAirports"
-             x:Class="FWAPPA.NearbyAirports.NearbyAirportsPage"
+             xmlns:nearbyAirports="clr-namespace:Lab6_Starter"
+             xmlns:nearbyAirportsModel="clr-namespace:Lab6_Starter.Model.NearbyAirports"
+             x:Class="Lab6_Starter.NearbyAirportsPage"
              Title="Nearby Airports"
              xmlns:model="clr-namespace:Lab6_Starter.Model"
              x:DataType="nearbyAirports:NearbyAirportsPage">
     <ContentPage.Resources>
-        <nearbyAirports:AirportVisitedConverter x:Key="AirportVisitedConvertor" />
-        <nearbyAirports:AirportToMilesConverter x:Key="AirportToMilesConverter" />
+        <nearbyAirportsModel:AirportVisitedConverter x:Key="AirportVisitedConvertor" />
+        <nearbyAirportsModel:AirportToMilesConverter x:Key="AirportToMilesConverter" />
     </ContentPage.Resources>
     <ContentPage.Content>
         <Grid
@@ -52,7 +53,7 @@
                     ItemsSource="{Binding NearbyAirports}">
 
                     <CollectionView.ItemTemplate>
-                        <DataTemplate x:DataType="model:Airport">
+                        <DataTemplate x:DataType="model:VisitedAirport">
                             <Grid
                                 RowDefinitions="*"
                                 ColumnDefinitions="*,*,*,*"
@@ -64,7 +65,7 @@
                                 <Label
                                     VerticalOptions="Center"
                                     Grid.Column="1"
-                                    Text="{Binding City }" />
+                                    Text="{Binding Name}" />
                                 <Label
                                     VerticalOptions="Center"
                                     HorizontalOptions="Center"

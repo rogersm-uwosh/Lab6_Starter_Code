@@ -1,17 +1,15 @@
 ﻿using System.Collections.ObjectModel;
 
-namespace Lab6_Starter.Model
+namespace Lab6_Starter.Model;
+public partial interface IDatabaseSupa
 {
-    public partial interface IDatabase
-    {
-        ObservableCollection<Airport> SelectAllAirports();
-        ObservableCollection<Airport> SelectAllWisconsinAirports();
-        Airport SelectAirport(String id);
-        AirportAdditionError InsertAirport(Airport airport);
-        AirportDeletionError DeleteAirport(Airport airport);
-        AirportEditError UpdateAirport(Airport replacementAirport);
-        ObservableCollection<Airport> GetAllWisconsinAirports();
-        ObservableCollection<Airport> GetWisconsinAirportsWithinDistance(double userLat, double userLon, double maxDistanceKm);
-        Airport SelectAirportByCode(string airportCode);
-    }
+    Task<ObservableCollection<VisitedAirport>> SelectAllVisitedAirports();
+    Task<VisitedAirport?> SelectAirport(String id);
+    Task<AirportAdditionError> InsertAirport(VisitedAirport airport);
+    Task<AirportEditError> UpdateAirport(VisitedAirport replacementAirport);
+    Task<AirportDeletionError> DeleteAirport(VisitedAirport airport);
+    ObservableCollection<WisconsinAirport> GetAllWisconsinAirports();
+    ObservableCollection<WisconsinAirport> GetWisconsinAirportsWithinDistance(double userLat, double userLon, double maxDistanceKm);
+    WisconsinAirport SelectAirportByCode(string airportCode);
+
 }
