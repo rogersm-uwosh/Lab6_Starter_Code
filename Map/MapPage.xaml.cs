@@ -78,6 +78,7 @@ public partial class MapPage : ContentPage
 	{
 		InitializeComponent();
 
+        try {
         // A .net MAUI control that contains a MapsUI map
         MapControl mapControl = new();
         // The MapsUI map from the new control
@@ -105,7 +106,10 @@ public partial class MapPage : ContentPage
         OnAppearing();
         // Manually setting IsChecked since putting this in the xaml sometimes causes it
         // to be stuck as checked
-        VisitedRadioButton.IsChecked = true;
+        //VisitedRadioButton.IsChecked = true;
+        }catch(Exception ex){
+            Console.WriteLine($"Error in MapPage constructor -- {ex.Message.ToString()}");
+        }
     }
 
     /// <summary>

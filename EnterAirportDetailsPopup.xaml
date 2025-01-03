@@ -39,6 +39,7 @@
             <Entry 
                    x:Name="IdEntry"
                    Placeholder="Enter ID"
+                   Text="KMCI"
                    IsVisible="True"
                    HorizontalOptions="Fill"
                    BackgroundColor="#ECF0F1"
@@ -64,6 +65,7 @@
             <Entry 
                    x:Name="CityEntry"
                    Placeholder="Enter City" 
+                   Text="Kansas City International"
                    HorizontalOptions="Fill"
                    BackgroundColor="#ECF0F1" 
                    TextColor="#2C3E50"

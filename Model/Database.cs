@@ -24,7 +24,7 @@ public partial class DatabaseSupa : IDatabaseSupa
 
     public Supabase.Client? supabaseClient;
 
-    ObservableCollection<VisitedAirport> visitedAirports = new();
+
     ObservableCollection<WisconsinAirport> wisconsinAirports;
 
     Dictionary<String, WisconsinAirport> wisconsinAirportsMap = new(); // for looking up airports by icao identifier
@@ -41,8 +41,8 @@ public partial class DatabaseSupa : IDatabaseSupa
         await supabaseClient.InitializeAsync();
         User user = await AuthenticateUser("mprogers@mac.com", "password1234");
         Console.WriteLine($"Logged in successfully: {supabaseClient.Auth.CurrentUser.Id}"); // e1bd9caa-8ae0-4301-9475-1ca6797109b0
-        var visitedAirports = await MauiProgram.BusinessLogic.GetVisitedAirports();
-        Console.WriteLine($"Now we have {visitedAirports.Count} visited airports");
+        await MauiProgram.BusinessLogic.GetVisitedAirports();
+       // Console.WriteLine($"Now we have {visitedAirports.Count} visited airports");
 
     }
 
@@ -111,6 +111,7 @@ public partial class DatabaseSupa : IDatabaseSupa
     /// <returns></returns>
     public async Task<ObservableCollection<VisitedAirport>> SelectAllVisitedAirports()
     {
+        ObservableCollection<VisitedAirport> visitedAirports = new();
         try
         {
             visitedAirports.Clear();
@@ -129,11 +130,20 @@ public partial class DatabaseSupa : IDatabaseSupa
 
 
     // Finds the visited airport with the given id, null if not found
+    // 
     public async Task<VisitedAirport?> SelectAirport(String id)
     {
-        VisitedAirport? airportToSelect = await supabaseClient!.From<VisitedAirport>().Where(x => x.Id == id).Single();
+        // This crashes because .Single() expects exactly one row
+        //VisitedAirport? airportToSelect = await supabaseClient!.From<VisitedAirport>().Where(x => x.Id == id).Single();
 
-        return airportToSelect;
+        var response = await supabaseClient!.From<VisitedAirport>().Where(x => x.Id == id).Get();
+
+        if (response.Models.Count == 0)
+        {
+            return null; // No matching airport found
+        }
+
+        return response.Models.First();
     }
 
 

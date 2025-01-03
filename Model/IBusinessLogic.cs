@@ -11,7 +11,7 @@ public interface IBusinessLogic
     String CalculateStatistics();
     Task<ObservableCollection<VisitedAirport>> GetVisitedAirports();
     ObservableCollection<WisconsinAirport> GetWisconsinAirports();
-    ObservableCollection<Weather> GetWeathers();
+    ObservableCollection<Weather> GetWeather();
     ObservableCollection<WisconsinAirport> CalculateNearbyAirports(WisconsinAirport sourceAirport, int maxMiles);
     ObservableCollection<WisconsinAirport> GetAllWisconsinAirports();
     ObservableCollection<WisconsinAirport> GetWisconsinAirportsWithinDistance(double userLatitude, double userLongitude, double maxDistanceKm);

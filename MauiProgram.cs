@@ -9,16 +9,16 @@ namespace Lab6_Starter;
 
 public static class MauiProgram
 {
-	
-    public static IBusinessLogic BusinessLogic = new BusinessLogic(new DatabaseSupa());
 
-    public static MauiApp CreateMauiApp()
+	public static IBusinessLogic BusinessLogic = new BusinessLogic(new DatabaseSupa());
+
+	public static MauiApp CreateMauiApp()
 	{
 		var builder = MauiApp.CreateBuilder();
 		builder.ConfigureSyncfusionCore(); // for selecting date with calendar
 		builder
 			.UseMauiApp<App>()
-            .UseMauiCommunityToolkit()
+			.UseMauiCommunityToolkit()
 			//[[ Alex Robinson - Dependency of MapsUI
 			.UseSkiaSharp(true)
 			//]]
@@ -27,6 +27,7 @@ public static class MauiProgram
 				fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
 				fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
 			}).UseMauiMaps();
+
 
 #if DEBUG
 		builder.Logging.AddDebug();

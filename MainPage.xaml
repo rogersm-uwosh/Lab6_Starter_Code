@@ -26,7 +26,7 @@
                         <Grid RowDefinitions="*" ColumnDefinitions="*,2*,2*, 2*">
                             <Label Grid.Column="0" Text="{Binding Id}" VerticalTextAlignment="Center"/>
                             <Label Grid.Column="1" Text="{Binding Name}" VerticalTextAlignment="Center"/>
-                            <Label Grid.Column="2" Text="{Binding DateVisited}" VerticalTextAlignment="Center"/>
+                            <Label Grid.Column="2" Text="{Binding DateVisited, StringFormat='{0:MM/dd/yyyy}'}" VerticalTextAlignment="Center"/>
                             <Label Grid.Column="3" Text="{Binding Rating}" VerticalTextAlignment="Center" />
                             <Button Grid.Column="4" BackgroundColor="Transparent"  Clicked="DeleteAirport_Clicked"  ImageSource="trash.png" />
                         </Grid>

@@ -74,36 +74,45 @@ public partial class EnterAirportDetailsPopup : Popup
 
     void Ok_Clicked(object sender, EventArgs e)
     {
-        string errorMessage;
-        var action = isEdit ? (Action)editAirport : (Action)addAirport;
+        // string errorMessage;
+        var action = isEdit ? (Action)EditAirport : (Action)AddAirport;
         action(); // this isn't super necessary, but it looks kinda neat (pretty self-explanatory here too)
     }
 
-    async void addAirport()
+    async void AddAirport()
     {
-        string errorMessage;
-        id = IdEntry.Text;
-        city = CityEntry.Text;
-        AirportAdditionError error = await MauiProgram.BusinessLogic.AddAirport(id, city, dateVisited, rating);
-        errorMessage = error.ToString() switch
+        try
         {
-            "InvalidIdLength" => "Id length is not between 3 and 4",
-            "InvalidCityLength" => "City length is not between 1 and 25",
-            "InvalidRating" => "Rating is not selected",
-            "InvalidDate" => "Date is invalid",
-            "DuplicateAirportId" => "Airport id is already used",
-            "NoError" => $"Successfully Added Airport {id}",
-            _ => error.ToString()
-        };
-        IToast errorMessageToast = Toast.Make(errorMessage);
-        await errorMessageToast.Show();
-        if (error.ToString() == "NoError") // switch is prettier, but we pay for it here I suppose
+            string errorMessage;
+            id = IdEntry.Text;
+            city = CityEntry.Text;
+            AirportAdditionError error = await MauiProgram.BusinessLogic.AddAirport(id, city, dateVisited, rating);
+            errorMessage = error.ToString() switch
+            {
+                "InvalidIdLength" => "Id length is not between 3 and 4",
+                "InvalidCityLength" => "City length is not between 1 and 25",
+                "InvalidRating" => "Rating is not selected",
+                "InvalidDate" => "Date is invalid",
+                "DuplicateAirportId" => "Airport id is already used",
+                "NoError" => $"Successfully Added Airport {id}",
+                _ => error.ToString()
+            };
+            IToast errorMessageToast = Toast.Make(errorMessage);
+            await errorMessageToast.Show();
+            if (error.ToString() == "NoError") // switch is prettier, but we pay for it here I suppose
+            {
+                Close();
+            }
+        }
+        catch (Exception ex)
         {
-            Close();
+            Console.WriteLine($"Exception in addAirport(): {ex.Message}");
+            IToast errorMessageToast = Toast.Make($"Exception: {ex.Message}", ToastDuration.Long);
+            await errorMessageToast.Show();
         }
     }
 
-    async void editAirport()
+    async void EditAirport()
     {
         string errorMessage;
         city = CityEntry.Text;
@@ -121,7 +130,7 @@ public partial class EnterAirportDetailsPopup : Popup
                 break;
         }
         IToast errorMessageToast = Toast.Make(errorMessage, ToastDuration.Long);
-        errorMessageToast.Show();
+        await errorMessageToast.Show();
 
         //mainCV.SelectedItem = MauiProgram.BusinessLogic.FindAirport(id);
     }

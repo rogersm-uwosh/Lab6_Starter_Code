@@ -58,7 +58,7 @@ public partial class BusinessLogic : IBusinessLogic
 
     public ObservableCollection<Weather> Weathers
     {
-        get { return GetWeathers(); }
+        get { return GetWeather(); }
 
     }
 
@@ -102,15 +102,15 @@ public partial class BusinessLogic : IBusinessLogic
         {
             return result;
         }
-
-        if (db.SelectAirport(id) != null)
+        var potentialDuplicateAirport = await db.SelectAirport(id);
+        if (potentialDuplicateAirport != null) // this now is true, because db.selectAirport(id) returns a Task ... oops
         {
             return AirportAdditionError.DuplicateAirportId;
         }
 
         VisitedAirport airport = new VisitedAirport(id, name, (DateTime)dateVisited, rating); // this will never be null, we check in checkAirportFields
         await db.InsertAirport(airport);
-
+        visitedAirports.Add(airport);
         return AirportAdditionError.NoError;
     }
 
@@ -126,6 +126,11 @@ public partial class BusinessLogic : IBusinessLogic
             AirportDeletionError success = await db.DeleteAirport(entry);
             if (success == AirportDeletionError.NoError)
             {
+                var airportToRemove = visitedAirports.FirstOrDefault(va => va.Id == id);
+                if (airportToRemove != null)
+                {
+                    visitedAirports.Remove(airportToRemove);
+                }
                 return AirportDeletionError.NoError;
 
             }
@@ -158,19 +163,28 @@ public partial class BusinessLogic : IBusinessLogic
             return AirportEditError.InvalidFieldError;
         }
 
-        VisitedAirport? airport = await db.SelectAirport(id);
-        airport.Id = id;
-        airport.Name = name;
-        airport.DateVisited = dateVisited;
-        airport.Rating = rating;
+        VisitedAirport? editedAirport = await db.SelectAirport(id); // get the airport to edit from the database
+        editedAirport.Id = id;                                      // change the airport's fields
+        editedAirport.Name = name;
+        editedAirport.DateVisited = dateVisited;
+        editedAirport.Rating = rating;
 
-        AirportEditError success = await db.UpdateAirport(airport);
-        if (success != AirportEditError.NoError)
+        AirportEditError success = await db.UpdateAirport(editedAirport);   // update it in Supabase
+        if (success == AirportEditError.NoError)                            // updated in Supabase? If so ...
         {
-            return AirportEditError.DBEditError;
-        }
+            var originalAirport = visitedAirports.FirstOrDefault(va => va.Id == id);    // find it locally
+            if (originalAirport != null)        
+            {
+                visitedAirports.Remove(originalAirport);
+                visitedAirports.Add(editedAirport);
+                return AirportEditError.NoError;
+            }
 
-        return AirportEditError.NoError;
+            return AirportEditError.DBEditError;    // couldn't find it in visitedAirports? But we selected it
+        }                                           // from the CollectionView, which was bound to [V]istedAirports
+                                                    // so if this happens something is messed up 
+
+        return success;                             // if we get down to this return stmt., there's been an error and we are returning it
     }
 
 
@@ -212,7 +226,7 @@ public partial class BusinessLogic : IBusinessLogic
             var airports = await db.SelectAllVisitedAirports(); // grab all the a
             foreach (var airport in airports)
             {
-                visitedAirports.Add(airport);
+                visitedAirports.Add(airport); // we're adding to visitedAirports
             }
             return visitedAirports;
         }
@@ -230,7 +244,7 @@ public partial class BusinessLogic : IBusinessLogic
         return db.GetAllWisconsinAirports();
     }
 
-    public ObservableCollection<Weather> GetWeathers()
+    public ObservableCollection<Weather> GetWeather()
     {
         ObservableCollection<Weather> weathers = new ObservableCollection<Weather>();
         weathers.Add(new Weather("METAR KJFK 161853Z 21015G25KT 10SM -RA SCT020 BKN050", "TAF KJFK 161720Z 1618/1718 21015KT P6SM -RA BKN050"));
