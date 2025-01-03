@@ -33,7 +33,7 @@ public partial class MainPage : ContentPage
         if (currentAirport == null)
         {
             // Show an alert if no airport is selected
-            DisplayAlert("Selection Error", "Please select an airport to delete.", "OK");
+            await DisplayAlert("Selection Error", "Please select an airport to delete.", "OK");
             return; // Exit the method
         }
 
@@ -42,7 +42,7 @@ public partial class MainPage : ContentPage
         AirportDeletionError result = await MauiProgram.BusinessLogic.DeleteAirport(currentAirport.Id);
         if (result != AirportDeletionError.NoError)
         {
-            DisplayAlert("Ruhroh", result.ToString(), "OK");
+            await DisplayAlert("Ruhroh", result.ToString(), "OK");
         }
     }
 

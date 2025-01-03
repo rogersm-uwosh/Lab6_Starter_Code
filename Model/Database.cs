@@ -39,6 +39,11 @@ public partial class DatabaseSupa : IDatabaseSupa
     {
         supabaseClient = new Supabase.Client(url, key);
         await supabaseClient.InitializeAsync();
+        User user = await AuthenticateUser("mprogers@mac.com", "password1234");
+        Console.WriteLine($"Logged in successfully: {supabaseClient.Auth.CurrentUser.Id}"); // e1bd9caa-8ae0-4301-9475-1ca6797109b0
+        var visitedAirports = await MauiProgram.BusinessLogic.GetVisitedAirports();
+        Console.WriteLine($"Now we have {visitedAirports.Count} visited airports");
+
     }
 
     public const String wiAirportsDictionaryFilename = "WIAirports.json";
@@ -52,13 +57,20 @@ public partial class DatabaseSupa : IDatabaseSupa
     /// <returns>an ObservableCollection<Airport>, representing all Wisconsin airports</returns>
     private async void PopulateWisconsinAirports()
     {
-        wisconsinAirports = [];
-        Dictionary<String, WisconsinAirport> wiAirportsDict = await ReadWisconsinAirportsMap(wiAirportsDictionaryFilename);
-
-        foreach (KeyValuePair<String, WisconsinAirport> kvp in wiAirportsDict)
+        try
         {
-            WisconsinAirport wiAirport = kvp.Value;
-            wisconsinAirports.Add(new WisconsinAirport(wiAirport.Id, wiAirport.Name, wiAirport.Latitude, wiAirport.Longitude, wiAirport.Url));
+            wisconsinAirports = [];
+            Dictionary<String, WisconsinAirport> wiAirportsDict = await ReadWisconsinAirportsMap(wiAirportsDictionaryFilename);
+
+            foreach (KeyValuePair<String, WisconsinAirport> kvp in wiAirportsDict)
+            {
+                WisconsinAirport wiAirport = kvp.Value;
+                wisconsinAirports.Add(new WisconsinAirport(wiAirport.Id, wiAirport.Name, wiAirport.Latitude, wiAirport.Longitude, wiAirport.Url));
+            }
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Error in PopulateWisconsinAirports(): {ex.Message}");
         }
     }
 
@@ -74,13 +86,14 @@ public partial class DatabaseSupa : IDatabaseSupa
             using Stream stream = await FileSystem.OpenAppPackageFileAsync(filename);
             using StreamReader reader = new StreamReader(stream);
             string jsonAirports = await reader.ReadToEndAsync();
-
-            return JsonSerializer.Deserialize<Dictionary<String, WisconsinAirport>>(jsonAirports)!;
+            Dictionary<String, WisconsinAirport> wiMap = JsonSerializer.Deserialize<Dictionary<String, WisconsinAirport>>(jsonAirports)!;
+            Console.WriteLine($"Here is one airport (KATW):{wiMap["KATW"]}");
+            return wiMap;
         }
         catch (Exception ex)
         {
-            Console.WriteLine($"Error reading Wisconsin Airports: {ex.Message}");
-            return null;
+            Console.WriteLine($"Error in ReadWisconsinAirportsMap(): {ex.Message}");
+            return new Dictionary<string, WisconsinAirport>();
         }
 
     }
@@ -101,9 +114,7 @@ public partial class DatabaseSupa : IDatabaseSupa
         try
         {
             visitedAirports.Clear();
-
             var response = await supabaseClient!.From<VisitedAirport>().Get();
-
             foreach (var airport in response.Models)
             {
                 visitedAirports.Add(airport);
@@ -113,7 +124,6 @@ public partial class DatabaseSupa : IDatabaseSupa
         {
             Console.WriteLine(ex.Message);
         }
-
         return visitedAirports;
     }
 

@@ -14,10 +14,24 @@ public partial class BusinessLogic : IBusinessLogic
     IDatabaseSupa db;
     private readonly int MAX_RATING = 5;
 
+
+    public BusinessLogic(IDatabaseSupa db)
+    {
+        this.db = db;
+        GetVisitedAirports();
+
+    }
+
+
+
     ObservableCollection<VisitedAirport> visitedAirports = [];
     public ObservableCollection<VisitedAirport> VisitedAirports
     {
-        get { return visitedAirports; }
+        get
+        {
+            Console.WriteLine($"Returning visitedAirports, which has {visitedAirports.Count} elements");
+            return visitedAirports;
+        }
 
     }
 
@@ -48,13 +62,6 @@ public partial class BusinessLogic : IBusinessLogic
 
     }
 
-    partial void LoadAirportCoordinates();
-
-    public BusinessLogic(IDatabaseSupa db)
-    {
-        this.db = db;
-        LoadAirportCoordinates();
-    }
 
 
     public async Task<VisitedAirport?> FindAirport(String id)
@@ -200,7 +207,22 @@ public partial class BusinessLogic : IBusinessLogic
 
     public async Task<ObservableCollection<VisitedAirport>> GetVisitedAirports()
     {
-        return await db.SelectAllVisitedAirports();
+        try
+        {
+            var airports = await db.SelectAllVisitedAirports(); // grab all the a
+            foreach (var airport in airports)
+            {
+                visitedAirports.Add(airport);
+            }
+            return visitedAirports;
+        }
+
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Error loading visited airports: {ex.Message}");
+        }
+
+        return visitedAirports;
     }
 
     public ObservableCollection<WisconsinAirport> GetWisconsinAirports()

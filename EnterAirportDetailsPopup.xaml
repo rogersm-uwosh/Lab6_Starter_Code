@@ -122,24 +122,24 @@
                              WidthRequest="24" 
                              Grid.Column="1"
                              CommandParameter="2"
-                             Source="Resources/Images/ic_fluent_star_24_filled_grey" />
+                             Source="ic_fluent_star_24_filled_grey" />
                 <ImageButton x:Name="starThree" 
                              Clicked="Star_Clicked"
                              WidthRequest="24" 
                              Grid.Column="2"
                              CommandParameter="3"
-                             Source="Resources/Images/ic_fluent_star_24_filled_grey" />
+                             Source="ic_fluent_star_24_filled_grey" />
                 <ImageButton x:Name="starFour" 
                              Clicked="Star_Clicked" 
                              WidthRequest="24" Grid.Column="3"
                              CommandParameter="4"
-                             Source="Resources/Images/ic_fluent_star_24_filled_grey" />
+                             Source="ic_fluent_star_24_filled_grey" />
                 <ImageButton x:Name="starFive" 
                              Clicked="Star_Clicked" 
                              WidthRequest="24" 
                              Grid.Column="4"
                              CommandParameter="5"
-                             Source="Resources/Images/ic_fluent_star_24_filled_grey" />
+                             Source="ic_fluent_star_24_filled_grey" />
             </Grid>
         </HorizontalStackLayout>
 

@@ -10,8 +10,8 @@ namespace Lab6_Starter;
 public partial class EnterAirportDetailsPopup : Popup
 {
     private bool isEdit;
-    const string greyStarPath = "Resources/Images/ic_fluent_star_24_filled_grey.svg";
-    const string yellowStarPath = "Resources/Images/ic_fluent_star_24_filled_yellow.svg";
+    const string greyStarPath = "ic_fluent_star_24_filled_grey.png";
+    const string yellowStarPath = "ic_fluent_star_24_filled_yellow.png";
     private string id = "";
     private string city = "";
     private DateTime? dateVisited = null; 

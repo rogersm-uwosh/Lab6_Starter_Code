@@ -77,15 +77,18 @@
 	<ItemGroup>
 		<None Remove="Model\" />
 		<None Remove="Resources\Images\map_nav_icon.png" />
-		<None Remove="Resources\Images\ic_fluent_star_24_filled_grey.svg" />
-		<None Remove="Resources\Images\ic_fluent_star_24_filled_yellow.svg" />
-		<None Remove="Resources\Images\trash.png" />
-		<None Remove="Resources\Images\rectangle-list_48.png" />
 	</ItemGroup>
-	<ItemGroup>
+
+	<!-- <ItemGroup>
+		<MauiImage Include="Resources\Images\ic_fluent_star_24_filled_grey.png" />
+		<MauiImage Include="Resources\Images\ic_fluent_star_24_filled_yellow.png" />
+	</ItemGroup> -->
+
+
+	<!-- <ItemGroup>
 		<BundleResource Include="Resources\Images\trash.png" />
 		<BundleResource Include="Resources\Images\rectangle_list_48.png" />
-	</ItemGroup>
+	</ItemGroup> -->
 
 	<ItemGroup>
 		 <MauiAsset Include="Resources\Raw\**" LogicalName="%(RecursiveDir)%(Filename)%(Extension)" />
