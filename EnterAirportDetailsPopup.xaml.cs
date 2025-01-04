@@ -16,7 +16,7 @@ public partial class EnterAirportDetailsPopup : Popup
     private string city = "";
     private DateTime? dateVisited = null; 
     private int rating = 0;
-    private string airportToEditId;
+    private string? airportToEditId;
 
     public EnterAirportDetailsPopup (VisitedAirport airport)
     {

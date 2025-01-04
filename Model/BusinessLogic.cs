@@ -29,7 +29,6 @@ public partial class BusinessLogic : IBusinessLogic
     {
         get
         {
-            Console.WriteLine($"Returning visitedAirports, which has {visitedAirports.Count} elements");
             return visitedAirports;
         }
 
@@ -164,7 +163,7 @@ public partial class BusinessLogic : IBusinessLogic
         }
 
         VisitedAirport? editedAirport = await db.SelectAirport(id); // get the airport to edit from the database
-        editedAirport.Id = id;                                      // change the airport's fields
+        editedAirport!.Id = id;                                      // change the airport's fields
         editedAirport.Name = name;
         editedAirport.DateVisited = dateVisited;
         editedAirport.Rating = rating;
@@ -224,10 +223,12 @@ public partial class BusinessLogic : IBusinessLogic
         try
         {
             var airports = await db.SelectAllVisitedAirports(); // grab all the airports
-            visitedAirports.Clear();
-            foreach (var airport in airports)
+
+            visitedAirports.Clear();                            // empty out visitedAirports
+
+            foreach (var airport in airports)                  // add each of the fetched airports in turn to visitedAirports
             {
-                visitedAirports.Add(airport); // we're adding to visitedAirports
+                visitedAirports.Add(airport);                  
             }
             return visitedAirports;
         }

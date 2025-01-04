@@ -50,8 +50,8 @@ public partial class MainPage : ContentPage
     void EditAirport_Clicked(System.Object sender, System.EventArgs e)
     {
         //Changed to a popup insert [Popup Team]
-        VisitedAirport currentAirport = CV.SelectedItem as VisitedAirport;
-        string currentAirportId = currentAirport.Id; 
+        VisitedAirport? currentAirport = CV.SelectedItem as VisitedAirport;
+        string? currentAirportId = currentAirport.Id; 
         var popup = new EnterAirportDetailsPopup(currentAirport);
         this.ShowPopup(popup); 
     }

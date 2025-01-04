@@ -31,7 +31,7 @@ public partial class NearbyAirportsPage : ContentPage
 
         if (airportName == null)
         {
-            DisplayAlert("", "Please enter a valid airport name", "OK");
+            await DisplayAlert("", "Please enter a valid airport name", "OK");
             return;
         }
 
@@ -39,19 +39,19 @@ public partial class NearbyAirportsPage : ContentPage
         bool isValidDistance = int.TryParse(distanceMileText, out int distanceMile);
         if (airport == null)
         {
-            DisplayAlert("Error", "Airport not found", "OK");
+            await DisplayAlert("Error", "Airport not found", "OK");
             return;
         }
 
         if (!isValidDistance)
         {
-            DisplayAlert("Error", "Distance is invalid", "OK");
+            await DisplayAlert("Error", "Distance is invalid", "OK");
             return;
         }
 
         if (distanceMile < 0)
         {
-            DisplayAlert("Error", "Distance must be greater than 0", "OK");
+            await DisplayAlert("Error", "Distance must be greater than 0", "OK");
             return;
         }
 
@@ -60,6 +60,6 @@ public partial class NearbyAirportsPage : ContentPage
         {
             NearbyAirports.Add(nearbyAirport);
         }
-        
+
     }
 }

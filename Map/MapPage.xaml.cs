@@ -66,10 +66,10 @@ public partial class MapPage : ContentPage
         = MauiProgram.BusinessLogic.GetWisconsinAirports();
     // Holds the current state of the visited airports when the map page is opened
     // Updates once every time MapPage is switched to on the navigation bar
-    private ObservableCollection<VisitedAirport> visitedAirports;
+    private ObservableCollection<VisitedAirport>? visitedAirports;
 
     // Caching the map created in the control so it can be refreshed later
-    private Map map;
+    private Map? map;
     // A WritableLayer is essentially an overlay for the map that renders special features
     // that you add to it
     private WritableLayer pointLayer = new() { Style = null };
@@ -135,9 +135,9 @@ public partial class MapPage : ContentPage
         pointLayer.Clear();
 
         // find which airports have been visited, and add a point with their coordinates to the map
-        foreach (VisitedAirport airportVisited in visitedAirports)
+        foreach (VisitedAirport airportVisited in visitedAirports!)
         {
-            foreach (WisconsinAirport airportWithCoords in allAirports)
+            foreach (WisconsinAirport airportWithCoords in allAirports!)
             {
                 if(airportVisited.Id == airportWithCoords.Id)
                 {
@@ -147,7 +147,7 @@ public partial class MapPage : ContentPage
             }
         }
 
-        map.Refresh();
+        map!.Refresh();
     }
 
     private void OnUnvisitedRadio_Clicked(object sender, CheckedChangedEventArgs e)
@@ -163,7 +163,7 @@ public partial class MapPage : ContentPage
         {
             bool visited = false;
 
-            foreach (VisitedAirport airportVisited in visitedAirports)
+            foreach (VisitedAirport airportVisited in visitedAirports!)
             {
                 if (airportVisited.Id == airportWithCoords.Id)
                     visited = true;
@@ -176,7 +176,7 @@ public partial class MapPage : ContentPage
             }
         }
 
-        map.Refresh();
+        map!.Refresh();
     }
 
     private void OnBothRadio_Clicked(object sender, CheckedChangedEventArgs e)
@@ -192,7 +192,7 @@ public partial class MapPage : ContentPage
         {
             bool visited = false;
 
-            foreach (VisitedAirport airportVisited in visitedAirports)
+            foreach (VisitedAirport airportVisited in visitedAirports!)
             {
                 if (airportVisited.Id == airportWithCoords.Id)
                     visited = true;
@@ -202,7 +202,7 @@ public partial class MapPage : ContentPage
             pointLayer.Add(GetPointFromLonLat(airportWithCoords.Longitude, airportWithCoords.Latitude, visited));
         }
 
-        map.Refresh();
+        map!.Refresh();
     }
 
     private static PointFeature GetPointFromLonLat(double longitude, double latitude, bool visited)
