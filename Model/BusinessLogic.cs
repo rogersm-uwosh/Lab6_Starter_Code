@@ -223,7 +223,8 @@ public partial class BusinessLogic : IBusinessLogic
     {
         try
         {
-            var airports = await db.SelectAllVisitedAirports(); // grab all the a
+            var airports = await db.SelectAllVisitedAirports(); // grab all the airports
+            visitedAirports.Clear();
             foreach (var airport in airports)
             {
                 visitedAirports.Add(airport); // we're adding to visitedAirports
