@@ -13,7 +13,7 @@
              xmlns:model="clr-namespace:Lab6_Starter.Model"
              x:DataType="nearbyAirports:NearbyAirportsPage">
     <ContentPage.Resources>
-        <nearbyAirportsModel:AirportVisitedConverter x:Key="AirportVisitedConvertor" />
+        <nearbyAirportsModel:AirportVisitedConverter x:Key="AirportVisitedConverter" />
         <nearbyAirportsModel:AirportToMilesConverter x:Key="AirportToMilesConverter" />
     </ContentPage.Resources>
     <ContentPage.Content>
@@ -78,7 +78,7 @@
                                     Grid.Column="3"
                                     MaximumHeightRequest="50"
                                     MaximumWidthRequest="50"
-                                    Source="{Binding ., Converter={StaticResource AirportVisitedConvertor}}" /> -->
+                                    Source="{Binding ., Converter={StaticResource AirportVisitedConverter}}" /> -->
                             </Grid>
                         </DataTemplate>
                     </CollectionView.ItemTemplate>
