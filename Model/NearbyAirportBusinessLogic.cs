@@ -49,7 +49,7 @@ public partial class BusinessLogic
             }
         }
 
-        AirportToMilesConverter.ConvertAll(idToMiles);
+        AirportToMilesConverter.ConvertAll(idToMiles); // calling convert all to ... populate _idToMiles with the (id, distance) entries
         return nearbyAirports;
     }
 

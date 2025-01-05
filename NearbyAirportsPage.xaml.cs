@@ -11,7 +11,7 @@ namespace Lab6_Starter;
 public partial class NearbyAirportsPage : ContentPage
 {
     IBusinessLogic BusinessLogic = MauiProgram.BusinessLogic;
-    public ObservableCollection<WisconsinAirport> NearbyAirports { get; } = [];
+    public ObservableCollection<WisconsinAirport> NearbyAirports { get; } = new ObservableCollection<WisconsinAirport>();
 
     public NearbyAirportsPage()
     {
@@ -56,10 +56,11 @@ public partial class NearbyAirportsPage : ContentPage
         }
 
         NearbyAirports.Clear();
-        foreach (var nearbyAirport in BusinessLogic.CalculateNearbyAirports(airport, distanceMile))
+        foreach (WisconsinAirport nearbyAirport in BusinessLogic.CalculateNearbyAirports(airport, distanceMile))
         {
             NearbyAirports.Add(nearbyAirport);
+            
         }
-
+        
     }
 }

@@ -25,7 +25,7 @@ public partial class DatabaseSupa : IDatabaseSupa
     public Supabase.Client? supabaseClient;
 
 
-    ObservableCollection<WisconsinAirport> wisconsinAirports;
+    ObservableCollection<WisconsinAirport>? wisconsinAirports;
 
     Dictionary<String, WisconsinAirport> wisconsinAirportsMap = new(); // for looking up airports by icao identifier
 
@@ -42,7 +42,6 @@ public partial class DatabaseSupa : IDatabaseSupa
         User user = await AuthenticateUser("mprogers@mac.com", "password1234");
         Console.WriteLine($"Logged in successfully: {supabaseClient.Auth.CurrentUser.Id}"); // e1bd9caa-8ae0-4301-9475-1ca6797109b0
         await MauiProgram.BusinessLogic.GetVisitedAirports();
-       // Console.WriteLine($"Now we have {visitedAirports.Count} visited airports");
 
     }
 
@@ -60,9 +59,9 @@ public partial class DatabaseSupa : IDatabaseSupa
         try
         {
             wisconsinAirports = [];
-            Dictionary<String, WisconsinAirport> wiAirportsDict = await ReadWisconsinAirportsMap(wiAirportsDictionaryFilename);
+            await ReadWisconsinAirportsMap(wiAirportsDictionaryFilename);   // ok, now we have a map of all Wisconsin Airports
 
-            foreach (KeyValuePair<String, WisconsinAirport> kvp in wiAirportsDict)
+            foreach (KeyValuePair<String, WisconsinAirport> kvp in wisconsinAirportsMap)    // let's use that to populate wisconsinAirports as
             {
                 WisconsinAirport wiAirport = kvp.Value;
                 wisconsinAirports.Add(new WisconsinAirport(wiAirport.Id, wiAirport.Name, wiAirport.Latitude, wiAirport.Longitude, wiAirport.Url));
@@ -79,21 +78,19 @@ public partial class DatabaseSupa : IDatabaseSupa
     /// </summary>
     /// <param name="filename"location of the WisconsinAirports map></param>
     /// <returns>A map of Wisconsin airports, indexed by id (icao identifier)</returns>
-    private async Task<Dictionary<String, WisconsinAirport>> ReadWisconsinAirportsMap(String filename = wiAirportsDictionaryFilename)
+    private async Task ReadWisconsinAirportsMap(String filename = wiAirportsDictionaryFilename)
     {
         try
         {
             using Stream stream = await FileSystem.OpenAppPackageFileAsync(filename);
             using StreamReader reader = new StreamReader(stream);
             string jsonAirports = await reader.ReadToEndAsync();
-            Dictionary<String, WisconsinAirport> wiMap = JsonSerializer.Deserialize<Dictionary<String, WisconsinAirport>>(jsonAirports)!;
-            Console.WriteLine($"Here is one airport (KATW):{wiMap["KATW"]}");
-            return wiMap;
+            wisconsinAirportsMap = JsonSerializer.Deserialize<Dictionary<String, WisconsinAirport>>(jsonAirports)!;
+            Console.WriteLine($"Here is one airport (KATW):{wisconsinAirportsMap["KATW"]}");
         }
         catch (Exception ex)
         {
             Console.WriteLine($"Error in ReadWisconsinAirportsMap(): {ex.Message}");
-            return new Dictionary<string, WisconsinAirport>();
         }
 
     }

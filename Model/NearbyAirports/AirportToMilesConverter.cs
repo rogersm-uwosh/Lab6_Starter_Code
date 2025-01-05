@@ -24,8 +24,10 @@ public class AirportToMilesConverter: IValueConverter
     
     public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
     {
+        Console.WriteLine("Greetings from Convert()");
         if (value is WisconsinAirport airport)
         {
+            Console.WriteLine($"Processing {airport.Id}");
             return _idToMiles[airport.Id];
         }
 
