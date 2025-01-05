@@ -32,5 +32,7 @@
 	<array>
 		<string>mailto</string>
 	</array>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>FWAPPA needs to access your location to find the closest weather</string>
 </dict>
 </plist>

@@ -55,11 +55,7 @@ public partial class BusinessLogic : IBusinessLogic
         return db.SelectAirportByCode(airportCode);
     }
 
-    public ObservableCollection<Weather> Weathers
-    {
-        get { return GetWeather(); }
 
-    }
 
 
 
@@ -246,13 +242,11 @@ public partial class BusinessLogic : IBusinessLogic
         return db.GetAllWisconsinAirports();
     }
 
-    public ObservableCollection<Weather> GetWeather()
-    {
-        ObservableCollection<Weather> weathers = new ObservableCollection<Weather>();
-        weathers.Add(new Weather("METAR KJFK 161853Z 21015G25KT 10SM -RA SCT020 BKN050", "TAF KJFK 161720Z 1618/1718 21015KT P6SM -RA BKN050"));
-        return weathers;
-    }
-
+     /// <summary>
+     /// Get the weather of the closest airport
+     /// </summary>
+     /// <returns>The weather of the closest airport</returns>
+    
     public Route GetRoute(WisconsinAirport source, int maxMiles, bool unvisitedOnly)
     {
         // // We need to force the start to be at the beginning, so we remove it
