@@ -1,0 +1,47 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    x:Class="Lab6_Starter.LoginPage"
+    Title="Welcome to FWAPPA!">
+
+    <Grid  RowDefinitions="10*, 4*, 3*, 1.15*, 1.15*" Padding="25">
+    
+        <Image Grid.Row="0" Source="biplane" HeightRequest="300" WidthRequest="200"/>
+
+        <VerticalStackLayout Grid.Row="1" >
+        <Entry x:Name="UserIdENT"
+            
+            Placeholder="UserId"
+            Text="{Binding UserId}"
+            Keyboard="Default">
+            <Entry.Keyboard>
+                <Keyboard x:FactoryMethod="Create">
+                    <x:Arguments>
+                        <KeyboardFlags>None</KeyboardFlags>
+                    </x:Arguments>
+                </Keyboard>
+            </Entry.Keyboard>
+        </Entry> 
+
+        <Entry x:Name="PasswordENT"
+            Placeholder="Password"
+            Text="{Binding Password}"
+            IsPassword="True"
+            Keyboard="Default">
+            <Entry.Keyboard>
+                <Keyboard x:FactoryMethod="Create">
+                    <x:Arguments>
+                        <KeyboardFlags>None</KeyboardFlags>
+                    </x:Arguments>
+                </Keyboard>
+            </Entry.Keyboard>
+        </Entry>
+        </VerticalStackLayout>
+
+        <!-- Notice the IsVisible binding, XAML supports "trutihness" (0 is false, > 0 true) -->
+        <Label Grid.Row="2" Text="{Binding ErrorMessage}" TextColor="Red"  IsVisible="{Binding ErrorMessage.Length}"/>
+       <Button Grid.Row="3" Text="Login" Clicked="Login_Clicked" Margin="1"/>
+       <Button Grid.Row="4" Text="Register" Clicked="Register_Clicked" Margin="2"/>
+       
+    </Grid>
+</ContentPage>

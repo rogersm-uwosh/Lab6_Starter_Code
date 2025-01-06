@@ -1,12 +1,11 @@
 ﻿using System.Collections.ObjectModel;
-//using CommunityToolkit.Maui.Core.Extensions;
 
 
 namespace Lab6_Starter.Model;
 
 public partial class BusinessLogic : IBusinessLogic
 {
-
+   
     const int BRONZE_LEVEL = 42;
     const int SILVER_LEVEL = 84;
     const int GOLD_LEVEL = 128;
@@ -18,14 +17,13 @@ public partial class BusinessLogic : IBusinessLogic
     public BusinessLogic(IDatabaseSupa db)
     {
         this.db = db;
-        GetVisitedAirports();
 
     }
 
 
 
-    ObservableCollection<VisitedAirport> visitedAirports = [];
-    public ObservableCollection<VisitedAirport> VisitedAirports
+    SortableObservableCollection<VisitedAirport> visitedAirports = [];
+    public ObservableCollection<VisitedAirport> VisitedAirports // this is all the Visited Airports
     {
         get
         {
@@ -34,7 +32,7 @@ public partial class BusinessLogic : IBusinessLogic
 
     }
 
-    public ObservableCollection<WisconsinAirport> WisconsinAirports
+    public ObservableCollection<WisconsinAirport> WisconsinAirports // this is all 142 or so Wisconsin Airports
     {
         get { return GetAllWisconsinAirports(); }
 
@@ -54,9 +52,6 @@ public partial class BusinessLogic : IBusinessLogic
     {
         return db.SelectAirportByCode(airportCode);
     }
-
-
-
 
 
     public async Task<VisitedAirport?> FindAirport(String id)
@@ -106,6 +101,7 @@ public partial class BusinessLogic : IBusinessLogic
         VisitedAirport airport = new VisitedAirport(id, name, (DateTime)dateVisited, rating); // this will never be null, we check in checkAirportFields
         await db.InsertAirport(airport);
         visitedAirports.Add(airport);
+        visitedAirports.Sort(airport => airport.Id!);
         return AirportAdditionError.NoError;
     }
 
@@ -218,8 +214,9 @@ public partial class BusinessLogic : IBusinessLogic
     {
         try
         {
-            var airports = await db.SelectAllVisitedAirports(); // grab all the airports
+            ObservableCollection<VisitedAirport> airports = await db.SelectAllVisitedAirports(); // grab all the airports
 
+            airports = new ObservableCollection<VisitedAirport>(airports.OrderBy(a => a.Id));
             visitedAirports.Clear();                            // empty out visitedAirports
 
             foreach (var airport in airports)                  // add each of the fetched airports in turn to visitedAirports

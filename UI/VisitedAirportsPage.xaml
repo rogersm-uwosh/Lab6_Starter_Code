@@ -3,14 +3,16 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:model="clr-namespace:Lab6_Starter.Model"
              x:DataType="model:BusinessLogic" 
-             x:Class="Lab6_Starter.MainPage"
+             x:Class="Lab6_Starter.VisitedAirportsPage"
              Title="Airports">
 
-    <ContentPage.ToolbarItems>
-        <ToolbarItem Text="Add" Clicked="AddAirport_Clicked"/>
-        <ToolbarItem Text="Edit" Clicked="EditAirport_Clicked"/>
-        <ToolbarItem Text="Stats" Clicked="CalculateStatistics_Clicked"/>
 
+
+    <ContentPage.ToolbarItems>
+        <ToolbarItem x:Name="AddAirportBtn" IconImageSource="plus.png" Text="Add"
+            Clicked="AddAirport_Clicked" />
+        <ToolbarItem x:Name="LogoutBtn" IconImageSource="logout.png" Text="Logout"
+            Clicked="Logout_Clicked" />
     </ContentPage.ToolbarItems>
     <ScrollView>
        <ScrollView>
@@ -28,7 +30,12 @@
                             <Label Grid.Column="1" Text="{Binding Name}" VerticalTextAlignment="Center"/>
                             <Label Grid.Column="2" Text="{Binding DateVisited, StringFormat='{0:MM/dd/yyyy}'}" VerticalTextAlignment="Center"/>
                             <Label Grid.Column="3" Text="{Binding Rating}" VerticalTextAlignment="Center" />
-                            <Button Grid.Column="4" BackgroundColor="Transparent"  Clicked="DeleteAirport_Clicked"  ImageSource="trash.png" />
+                            <HorizontalStackLayout Grid.Column="4">
+                            <Button MaximumWidthRequest="75" BackgroundColor="Transparent"
+                                Clicked="EditAirport_Clicked" ImageSource="pencil.png" />
+                            <Button MaximumWidthRequest="75" BackgroundColor="Transparent"
+                                Clicked="DeleteAirport_Clicked" ImageSource="trash.png" />
+                        </HorizontalStackLayout>
                         </Grid>
                     </DataTemplate>
 

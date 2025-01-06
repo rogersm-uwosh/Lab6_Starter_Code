@@ -14,7 +14,7 @@
         <NavigationPage IconImageSource="rectangle_list_48.png"
             Title="Airports">
             <x:Arguments>
-                <local:MainPage />
+                <local:VisitedAirportsPage />
             </x:Arguments>
         </NavigationPage>
         <NavigationPage IconImageSource="idea.png" Title="Planning Tools">

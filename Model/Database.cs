@@ -39,9 +39,9 @@ public partial class DatabaseSupa : IDatabaseSupa
     {
         supabaseClient = new Supabase.Client(url, key);
         await supabaseClient.InitializeAsync();
-        User user = await AuthenticateUser("mprogers@mac.com", "password1234");
-        Console.WriteLine($"Logged in successfully: {supabaseClient.Auth.CurrentUser.Id}"); // e1bd9caa-8ae0-4301-9475-1ca6797109b0
-        await MauiProgram.BusinessLogic.GetVisitedAirports();
+        // User user = await AuthenticateUser("mprogers@mac.com", "password1234");
+        // Console.WriteLine($"Logged in successfully: {supabaseClient.Auth.CurrentUser.Id}"); // e1bd9caa-8ae0-4301-9475-1ca6797109b0
+        // await MauiProgram.BusinessLogic.GetVisitedAirports();
 
     }
 
@@ -249,66 +249,4 @@ public partial class DatabaseSupa : IDatabaseSupa
 
 
 
-
-    // Fetches the password from the user secrets store (um, this works in VS, but not in the beta of VSC's C# extension)
-    // This assumes the NuGet package is installed -- dotnet add package Microsoft.Extensions.Configuration.UserSecrets
-    static String FetchPassword()
-    {
-        // IConfiguration config = new ConfigurationBuilder().AddUserSecrets<Database>().Build();
-        // return config["CockroachDBPassword"] ?? "thQ0vyMPC96yfUpkjY4dBg"; // if it can't find the password, returns ... the password (this works in VS, not VSC) 
-        return "thQ0vyMPC96yfUpkjY4dBg";
-    }
-
-
-    public async void ProcessUserRequest(string email, string password)
-    {
-        Console.Write("Do you wish to register or authenticate? (r/a): ");
-        String? choice = Console.ReadLine();
-
-        if (choice == "r" || choice == "R")
-        {
-            var user = await RegisterUser(email, password);
-        }
-        else if (choice == "a" || choice == "A")
-        {
-            var user = await AuthenticateUser(email, password);
-            if (user == null)
-            {
-                Environment.Exit(-1); // bail here ()
-            }
-        }
-        else
-        {
-            Console.WriteLine("Invalid choice.");
-            Environment.Exit(-1);
-        }
-    }
-
-    public async Task<User?> AuthenticateUser(string email, string password)
-    {
-        try
-        {
-            var session = await supabaseClient!.Auth.SignIn(email, password);
-            return session?.User; // 
-        }
-        catch (Exception ex)
-        {
-            Console.WriteLine($"Authentication failed -- {ex.Message}");
-            return null;
-        }
-    }
-
-    public async Task<User?> RegisterUser(string email, string password)
-    {
-        try
-        {
-            var session = await supabaseClient!.Auth.SignUp(email, password);
-            return session?.User;
-        }
-        catch (Exception ex)
-        {
-            Console.WriteLine($"Registration failed -- {ex.Message}");
-            return null;
-        }
-    }
 }

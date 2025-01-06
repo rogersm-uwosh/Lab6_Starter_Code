@@ -2,9 +2,9 @@
 using Lab6_Starter.Model;
 namespace Lab6_Starter;
 
-public partial class MainPage : ContentPage
+public partial class VisitedAirportsPage : ContentPage
 {
-    public MainPage()
+    public VisitedAirportsPage()
     {
         InitializeComponent();
 
@@ -14,6 +14,8 @@ public partial class MainPage : ContentPage
 
         BindingContext = MauiProgram.BusinessLogic;
     }
+
+
 
     // Various event handlers for the buttons on the main page
 
@@ -28,7 +30,7 @@ public partial class MainPage : ContentPage
     async void DeleteAirport_Clicked(System.Object sender, System.EventArgs e)
     {
         VisitedAirport currentAirport = CV.SelectedItem as VisitedAirport;
-        
+
         // Check if an airport is selected
         if (currentAirport == null)
         {
@@ -51,15 +53,21 @@ public partial class MainPage : ContentPage
     {
         //Changed to a popup insert [Popup Team]
         VisitedAirport? currentAirport = CV.SelectedItem as VisitedAirport;
-        string? currentAirportId = currentAirport.Id; 
+        string? currentAirportId = currentAirport.Id;
         var popup = new EnterAirportDetailsPopup(currentAirport);
-        this.ShowPopup(popup); 
+        this.ShowPopup(popup);
     }
 
     void CalculateStatistics_Clicked(System.Object sender, System.EventArgs e)
     {
         String result = MauiProgram.BusinessLogic.CalculateStatistics();
         DisplayAlert("Your Progress", result.ToString(), "Good to know");
+    }
+
+    void Logout_Clicked(System.Object sender, System.EventArgs e)
+    {
+        MauiProgram.BusinessLogic.VisitedAirports.Clear(); // otherwise, when logging in again, 
+        Application.Current!.MainPage = new LoginPage();
     }
 }
 
