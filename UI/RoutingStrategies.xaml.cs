@@ -9,19 +9,24 @@ using Mapsui.Styles;
 using Color = Mapsui.Styles.Color;
 using System.Collections.ObjectModel;
 
-namespace Lab6_Starter {
-    public partial class RoutingStrategies : ContentPage {
-        private static readonly IStyle pointStyle = new SymbolStyle {
+namespace Lab6_Starter
+{
+    public partial class RoutingStrategies : ContentPage
+    {
+        private static readonly IStyle pointStyle = new SymbolStyle
+        {
             SymbolScale = 0.5d,
             Fill = new(Color.Orange)
         };
 
-        private static readonly IStyle startPointStyle = new SymbolStyle {
+        private static readonly IStyle startPointStyle = new SymbolStyle
+        {
             SymbolScale = 0.5d,
             Fill = new(Color.Green)
         };
 
-        private static readonly IStyle routeStyle = new VectorStyle() {
+        private static readonly IStyle routeStyle = new VectorStyle()
+        {
             Line = new(Color.Black, 2)
         };
 
@@ -29,20 +34,23 @@ namespace Lab6_Starter {
 
         private ILayer routeLayer;
 
-        public Route CurrentRoute {
-            get {
-                return currentRoute;
-            }
-            set {
-                if (currentRoute != value) {
+        public Route CurrentRoute
+        {
+            get { return currentRoute; }
+            set
+            {
+                if (currentRoute != value)
+                {
                     currentRoute = value;
                     OnPropertyChanged();
                 }
             }
         }
+
         private Route currentRoute;
 
-        public RoutingStrategies() {
+        public RoutingStrategies()
+        {
             InitializeComponent();
 
             // Get the route from the business logic
@@ -63,12 +71,14 @@ namespace Lab6_Starter {
             UpdateRoute(CurrentRoute);
         }
 
-        private void GenerateRoute(object sender, EventArgs e) {
+        private void GenerateRoute(object sender, EventArgs e)
+        {
             // Get the airport (not necessarily visited)
-            string airportId = StartingAirportPicker.Text;
+            string airportId = StartingAirportEntry.Text.ToUpper();
             Collection<WisconsinAirport> available = _businessLogic.GetWisconsinAirports();
             WisconsinAirport start = available.Where(x => x.Id.Equals(airportId)).FirstOrDefault();
-            if (start == null) {
+            if (start == null)
+            {
                 // Clears the map
                 UpdateRoute(null);
                 return;
@@ -85,9 +95,11 @@ namespace Lab6_Starter {
             UpdateRoute(_businessLogic.GetRoute(start, distance, unvisitedOnly));
         }
 
-        private void UpdateRoute(Route route) {
+        private void UpdateRoute(Route route)
+        {
             // Remove current layer
-            if (routeLayer != null) {
+            if (routeLayer != null)
+            {
                 RouteMap.Map.Layers.Remove(routeLayer);
             }
 
@@ -95,18 +107,21 @@ namespace Lab6_Starter {
             // We must not let it be null, however, for the sake of the UI and null
             // such and such
             CurrentRoute = route ?? new();
-            if (route == null) {
+            if (route == null)
+            {
                 return;
             }
 
             // Convert points to coordinates
-            List<Coordinate> points = route.Points.Select(point => {
+            List<Coordinate> points = route.Points.Select(point =>
+            {
                 (double x, double y) = SphericalMercator.FromLonLat(point.X, point.Y);
                 return new Coordinate(x, y);
             }).ToList();
 
             // Create path polygon
-            GeometryFeature polygonFeature = new() {
+            GeometryFeature polygonFeature = new()
+            {
                 Geometry = new LineString([.. points])
             };
             polygonFeature.Styles.Add(routeStyle);
@@ -115,12 +130,14 @@ namespace Lab6_Starter {
             // the first point
             var pointFeatures = points
                 .Take(points.Count - 1)
-                .Select((point, i) => new PointFeature(point.X, point.Y) {
+                .Select((point, i) => new PointFeature(point.X, point.Y)
+                {
                     Styles = [i == 0 ? startPointStyle : pointStyle]
                 });
 
             // Put the points on the map
-            routeLayer = new MemoryLayer() {
+            routeLayer = new MemoryLayer()
+            {
                 Features = [polygonFeature, .. pointFeatures],
                 Style = null
             };
@@ -132,7 +149,8 @@ namespace Lab6_Starter {
             ZoomMapTo(n, 41.7, -93.1, 47.3, -86); // Wisconsin bounding box coordinates
         }
 
-        private static void ZoomMapTo(Navigator n, double latitudeMin, double longitudeMin, double latitudeMax, double longitudeMax)
+        private static void ZoomMapTo(Navigator n, double latitudeMin, double longitudeMin, double latitudeMax,
+            double longitudeMax)
         {
             (double minX, double minY) = SphericalMercator.FromLonLat(longitudeMin, latitudeMin);
             (double maxX, double maxY) = SphericalMercator.FromLonLat(longitudeMax, latitudeMax);

@@ -16,5 +16,5 @@ public interface IBusinessLogic
     ObservableCollection<WisconsinAirport> GetAllWisconsinAirports();
     ObservableCollection<WisconsinAirport> GetWisconsinAirportsWithinDistance(double userLatitude, double userLongitude, double maxDistanceKm);
     WisconsinAirport SelectAirportByCode(string airportCode);
-    Route GetRoute(WisconsinAirport source, int maxMiles, bool unvisitedOnly = false);
+    Route? GetRoute(WisconsinAirport source, int maxMiles, bool unvisitedOnly = false);
 }

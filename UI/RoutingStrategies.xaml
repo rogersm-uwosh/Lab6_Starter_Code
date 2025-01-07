@@ -34,7 +34,7 @@
                        Padding="0" 
                        HasShadow="True" 
                        HorizontalOptions="FillAndExpand">
-                    <Entry x:Name="StartingAirportPicker" 
+                    <Entry x:Name="StartingAirportEntry" 
                            MaxLength="4"
                            HorizontalOptions="FillAndExpand"
                            HeightRequest="40"/>

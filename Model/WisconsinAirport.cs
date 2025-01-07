@@ -39,4 +39,32 @@ public class WisconsinAirport
     public String ToString(){
         return $"{Id}, {Name}, {Latitude}, {Longitude}, {Url}";
     }
+    
+    public override bool Equals(object? obj)
+    {
+        return obj is WisconsinAirport otherAirport && Id == otherAirport.Id;
+    }
+
+    public override int GetHashCode()
+    {
+        return Id.GetHashCode();
+    }
+}
+
+public class WisconsinAirportEqualityComparer : IEqualityComparer<WisconsinAirport>
+{
+    public bool Equals(WisconsinAirport? x, WisconsinAirport? y)
+    {
+        if (x == null || y == null)
+        {
+            return false;
+        }
+
+        return x.Equals(y);
+    }
+
+    public int GetHashCode(WisconsinAirport obj)
+    {
+        return obj.Id!.GetHashCode();
+    }
 }

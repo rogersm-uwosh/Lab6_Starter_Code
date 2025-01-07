@@ -126,7 +126,7 @@ namespace Lab6_Starter.Model;
         }
     }
 
-    public class AirportEqualityComparer : IEqualityComparer<VisitedAirport>
+    public class VisitedAirportEqualityComparer : IEqualityComparer<VisitedAirport>
     {
         public bool Equals(VisitedAirport? x, VisitedAirport? y)
         {
