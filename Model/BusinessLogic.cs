@@ -255,9 +255,9 @@ public partial class BusinessLogic : IBusinessLogic
         if (unvisitedOnly)
         {
             IEnumerable<WisconsinAirport> allAirports = GetAllWisconsinAirports();
-            IEnumerable<string?> visitedAirportIds = GetVisitedAirports().Result.Select(airport => airport.Id);
+            IEnumerable<string?> visitedAirportIds = visitedAirports.Select(airport => airport.Id);
             excluded.AddRange(
-                allAirports.Where(airport => !visitedAirportIds.Contains(airport.Id))
+                allAirports.Where(airport => visitedAirportIds.Contains(airport.Id))
             );
         }
 
