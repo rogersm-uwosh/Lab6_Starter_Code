@@ -1,12 +1,11 @@
 ﻿using System.Collections.ObjectModel;
 
-//using CommunityToolkit.Maui.Core.Extensions;
-
 
 namespace Lab6_Starter.Model;
 
 public partial class BusinessLogic : IBusinessLogic
 {
+   
     const int BRONZE_LEVEL = 42;
     const int SILVER_LEVEL = 84;
     const int GOLD_LEVEL = 128;
@@ -18,20 +17,25 @@ public partial class BusinessLogic : IBusinessLogic
     public BusinessLogic(IDatabaseSupa db)
     {
         this.db = db;
-        GetVisitedAirports();
+
     }
 
 
-    ObservableCollection<VisitedAirport> visitedAirports = [];
 
-    public ObservableCollection<VisitedAirport> VisitedAirports
+    SortableObservableCollection<VisitedAirport> visitedAirports = [];
+    public ObservableCollection<VisitedAirport> VisitedAirports // this is all the Visited Airports
     {
-        get { return visitedAirports; }
+        get
+        {
+            return visitedAirports;
+        }
+
     }
 
-    public ObservableCollection<WisconsinAirport> WisconsinAirports
+    public ObservableCollection<WisconsinAirport> WisconsinAirports // this is all 142 or so Wisconsin Airports
     {
         get { return GetAllWisconsinAirports(); }
+
     }
 
     public ObservableCollection<WisconsinAirport> GetAllWisconsinAirports()
@@ -39,10 +43,7 @@ public partial class BusinessLogic : IBusinessLogic
         return db.GetAllWisconsinAirports();
     }
 
-    public ObservableCollection<WisconsinAirport> GetWisconsinAirportsWithinDistance(
-        double userLatitude,
-        double userLongitude,
-        double maxDistanceKm)
+    public ObservableCollection<WisconsinAirport> GetWisconsinAirportsWithinDistance(double userLatitude, double userLongitude, double maxDistanceKm)
     {
         return db.GetWisconsinAirportsWithinDistance(userLatitude, userLongitude, maxDistanceKm);
     }
@@ -60,16 +61,15 @@ public partial class BusinessLogic : IBusinessLogic
 
     private AirportAdditionError CheckAirportFields(String? id, String? name, DateTime? dateVisited, int rating)
     {
+
         if (id == null || id.Length < 3 || id.Length > 4)
         {
             return AirportAdditionError.InvalidIdLength;
         }
-
         if (name == null || name.Length < 3)
         {
             return AirportAdditionError.InvalidCityLength;
         }
-
         if (rating < 1 || rating > MAX_RATING)
         {
             return AirportAdditionError.InvalidRating;
@@ -86,33 +86,30 @@ public partial class BusinessLogic : IBusinessLogic
 
     public async Task<AirportAdditionError> AddAirport(String id, String name, DateTime? dateVisited, int rating)
     {
+
         var result = CheckAirportFields(id, name, dateVisited, rating);
         if (result != AirportAdditionError.NoError)
         {
             return result;
         }
-
         var potentialDuplicateAirport = await db.SelectAirport(id);
         if (potentialDuplicateAirport != null) // this now is true, because db.selectAirport(id) returns a Task ... oops
         {
             return AirportAdditionError.DuplicateAirportId;
         }
 
-        VisitedAirport
-            airport = new VisitedAirport(
-                id,
-                name,
-                (DateTime)dateVisited,
-                rating
-            ); // this will never be null, we check in checkAirportFields
+        VisitedAirport airport = new VisitedAirport(id, name, (DateTime)dateVisited, rating); // this will never be null, we check in checkAirportFields
         await db.InsertAirport(airport);
         visitedAirports.Add(airport);
+        visitedAirports.Sort(airport => airport.Id!);
         return AirportAdditionError.NoError;
     }
 
 
+
     public async Task<AirportDeletionError> DeleteAirport(String id)
     {
+
         var entry = await db.SelectAirport(id);
 
         if (entry != null)
@@ -125,8 +122,8 @@ public partial class BusinessLogic : IBusinessLogic
                 {
                     visitedAirports.Remove(airportToRemove);
                 }
-
                 return AirportDeletionError.NoError;
+
             }
             else
             {
@@ -150,6 +147,7 @@ public partial class BusinessLogic : IBusinessLogic
     /// <returns></returns>
     public async Task<AirportEditError> EditAirport(String id, String name, DateTime dateVisited, int rating)
     {
+
         var fieldCheck = CheckAirportFields(id, name, dateVisited, rating);
         if (fieldCheck != AirportAdditionError.NoError)
         {
@@ -157,27 +155,27 @@ public partial class BusinessLogic : IBusinessLogic
         }
 
         VisitedAirport? editedAirport = await db.SelectAirport(id); // get the airport to edit from the database
-        editedAirport!.Id = id; // change the airport's fields
+        editedAirport!.Id = id;                                      // change the airport's fields
         editedAirport.Name = name;
         editedAirport.DateVisited = dateVisited;
         editedAirport.Rating = rating;
 
-        AirportEditError success = await db.UpdateAirport(editedAirport); // update it in Supabase
-        if (success == AirportEditError.NoError) // updated in Supabase? If so ...
+        AirportEditError success = await db.UpdateAirport(editedAirport);   // update it in Supabase
+        if (success == AirportEditError.NoError)                            // updated in Supabase? If so ...
         {
-            var originalAirport = visitedAirports.FirstOrDefault(va => va.Id == id); // find it locally
-            if (originalAirport != null)
+            var originalAirport = visitedAirports.FirstOrDefault(va => va.Id == id);    // find it locally
+            if (originalAirport != null)        
             {
                 visitedAirports.Remove(originalAirport);
                 visitedAirports.Add(editedAirport);
                 return AirportEditError.NoError;
             }
 
-            return AirportEditError.DBEditError; // couldn't find it in visitedAirports? But we selected it
-        } // from the CollectionView, which was bound to [V]istedAirports
-        // so if this happens something is messed up 
+            return AirportEditError.DBEditError;    // couldn't find it in visitedAirports? But we selected it
+        }                                           // from the CollectionView, which was bound to [V]istedAirports
+                                                    // so if this happens something is messed up 
 
-        return success; // if we get down to this return stmt., there's been an error and we are returning it
+        return success;                             // if we get down to this return stmt., there's been an error and we are returning it
     }
 
 
@@ -208,28 +206,23 @@ public partial class BusinessLogic : IBusinessLogic
             numAirportsUntilNextLevel = 0;
         }
 
-        return String.Format(
-            "{0} airport{1} visited; {2} airports remaining until achieving {3}",
-            numAirportsVisited,
-            numAirportsVisited != 1 ? "s" : "",
-            numAirportsUntilNextLevel,
-            nextLevel
-        );
+        return String.Format("{0} airport{1} visited; {2} airports remaining until achieving {3}",
+              numAirportsVisited, numAirportsVisited != 1 ? "s" : "", numAirportsUntilNextLevel, nextLevel);
     }
 
     public async Task<ObservableCollection<VisitedAirport>> GetVisitedAirports()
     {
         try
         {
-            var airports = await db.SelectAllVisitedAirports(); // grab all the airports
+            ObservableCollection<VisitedAirport> airports = await db.SelectAllVisitedAirports(); // grab all the airports
 
-            visitedAirports.Clear(); // empty out visitedAirports
+            airports = new ObservableCollection<VisitedAirport>(airports.OrderBy(a => a.Id));
+            visitedAirports.Clear();                            // empty out visitedAirports
 
-            foreach (var airport in airports) // add each of the fetched airports in turn to visitedAirports
+            foreach (var airport in airports)                  // add each of the fetched airports in turn to visitedAirports
             {
-                visitedAirports.Add(airport);
+                visitedAirports.Add(airport);                  
             }
-
             return visitedAirports;
         }
 
@@ -246,37 +239,41 @@ public partial class BusinessLogic : IBusinessLogic
         return db.GetAllWisconsinAirports();
     }
 
-    /// <summary>
-    /// Get the weather of the closest airport
-    /// </summary>
-    /// <returns>The weather of the closest airport</returns>
-    public Route? GetRoute(WisconsinAirport source, int maxMiles, bool unvisitedOnly)
+     /// <summary>
+     /// Get the weather of the closest airport
+     /// </summary>
+     /// <returns>The weather of the closest airport</returns>
+    
+    public Route GetRoute(WisconsinAirport source, int maxMiles, bool unvisitedOnly)
     {
-        // We need to force the start to be at the beginning, so we remove it
-        // and possibly already visited airports
-        List<WisconsinAirport> excluded = [source];
-        if (unvisitedOnly)
-        {
-            IEnumerable<WisconsinAirport> allAirports = GetAllWisconsinAirports();
-            IEnumerable<string?> visitedAirportIds = GetVisitedAirports().Result.Select(airport => airport.Id);
-            excluded.AddRange(
-                allAirports.Where(airport => !visitedAirportIds.Contains(airport.Id))
-            );
-        }
+        // // We need to force the start to be at the beginning, so we remove it
+        // // and possibly already visited airports
+        // IEnumerable<Airport> excluded;
+        // if (unvisitedOnly)
+        // {
+        //     excluded = GetAirports().Append(source);
+        // }
+        // else
+        // {
+        //     excluded = [source];
+        // }
+        // // Convert the airports to RoutePoints
+        // List<RoutePoint> routePoints = CalculateNearbyAirports(source, maxMiles)
+        //     .Except(excluded, new AirportEqualityComparer())
+        //     .Prepend(source)
+        //     .Select(x => new RoutePoint(x))
+        //     .ToList();
 
-        // Convert the airports to RoutePoints
-        List<RoutePoint> routePoints = CalculateNearbyAirports(source, maxMiles)
-            .Except(excluded, new WisconsinAirportEqualityComparer())
-            .Prepend(source)
-            .Select(x => new RoutePoint(x))
-            .ToList();
+        // // Can't have a route with 0 or 1 airports
+        // if (routePoints.Count < 2)
+        // {
+        //     return null;
+        // }
 
-        // Can't have a route with 0 or 1 airports
-        if (routePoints.Count < 2)
-        {
-            return null;
-        }
+        // return Route.GenerateTravelingSalesmanRoute(routePoints);
 
-        return Route.GenerateTravelingSalesmanRoute(routePoints);
+        return null;
     }
+
 }
+

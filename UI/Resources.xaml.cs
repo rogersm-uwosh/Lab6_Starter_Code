@@ -41,4 +41,10 @@ public partial class Resources : ContentPage
             await Launcher.Default.OpenAsync(link.Url);
         }
     }
+
+    void Logout_Clicked(System.Object sender, System.EventArgs e)
+    {
+        MauiProgram.BusinessLogic.VisitedAirports.Clear(); // otherwise, when logging in again, Bad Things happen
+        Application.Current!.MainPage = new LoginPage();
+    }
 }

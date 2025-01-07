@@ -218,4 +218,10 @@ public partial class MapPage : ContentPage
 
         return feature;
     }
+
+        void Logout_Clicked(System.Object sender, System.EventArgs e)
+    {
+        MauiProgram.BusinessLogic.VisitedAirports.Clear(); // otherwise, when logging in again, 
+        Application.Current!.MainPage = new LoginPage();
+    }
 }

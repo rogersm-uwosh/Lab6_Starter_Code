@@ -1,10 +1,16 @@
-<?xml version="1.0" encoding="utf-8" ?>
+<?xml version="1.0" encoding="utf-8"?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="Lab6_Starter.PlanningTools"
-             Title="Planning Tools">
+        xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+        x:Class="Lab6_Starter.PlanningTools"
+        Title="Planning Tools">
+
+        <ContentPage.ToolbarItems>
+
+                <ToolbarItem x:Name="LogoutBtn" IconImageSource="logout.png" Text="Logout"
+                        Clicked="Logout_Clicked" />
+        </ContentPage.ToolbarItems>
         <Grid RowDefinitions="*,*,40,*,*"
-              ColumnDefinitions="*,5*,40,5*,*">
+                ColumnDefinitions="*,5*,40,5*,*">
                 <Button Grid.Row="1"
                         Grid.Column="1"
                         Text="Nearby Airports"
@@ -18,7 +24,7 @@
                                 <Shadow Brush="Black"
                                         Opacity="0.7"
                                         Radius="20"
-                                        Offset="5,5"/>
+                                        Offset="5,5" />
                         </Button.Shadow>
                 </Button>
                 <Button Grid.Row="1"
@@ -34,7 +40,7 @@
                                 <Shadow Brush="Black"
                                         Opacity="0.7"
                                         Radius="20"
-                                        Offset="5,5"/>
+                                        Offset="5,5" />
                         </Button.Shadow>
                 </Button>
                 <Button Grid.Row="3"
@@ -49,7 +55,7 @@
                                 <Shadow Brush="Black"
                                         Opacity="0.7"
                                         Radius="20"
-                                        Offset="5,5"/>
+                                        Offset="5,5" />
                         </Button.Shadow>
                 </Button>
                 <Button Grid.Row="3"
@@ -65,7 +71,7 @@
                                 <Shadow Brush="Black"
                                         Opacity="0.7"
                                         Radius="20"
-                                        Offset="5,5"/>
+                                        Offset="5,5" />
                         </Button.Shadow>
                 </Button>
         </Grid>

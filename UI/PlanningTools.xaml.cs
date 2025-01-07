@@ -53,4 +53,11 @@ public partial class PlanningTools : ContentPage
 
         await Email.Default.ComposeAsync(message);
     }
+
+        void Logout_Clicked(System.Object sender, System.EventArgs e)
+    {
+        MauiProgram.BusinessLogic.VisitedAirports.Clear(); // otherwise, when logging in again, 
+        Application.Current!.MainPage = new LoginPage();
+        // await Navigation.PopAsync();
+    }
 }

@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8" ?>
+<?xml version="1.0" encoding="utf-8"?>
 <!--
     Brady Blocksom & Alex Robinson 
     This file went through a lot of iterations, starting out as a prototype
@@ -6,38 +6,42 @@
     was added by Alex since these were no longer necessary
 -->
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="Lab6_Starter.MapPage"
-             Title="Map">
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    x:Class="Lab6_Starter.MapPage"
+    Title="Map">
+    <ContentPage.ToolbarItems>
+        <ToolbarItem x:Name="LogoutBtn" IconImageSource="logout.png" Text="Logout"
+            Clicked="Logout_Clicked" />
+    </ContentPage.ToolbarItems>
     <Grid RowDefinitions="*,9*"
-          ColumnDefinitions="*">
+        ColumnDefinitions="*">
         <!-- Radio Buttons -->
         <Frame Grid.Row="0" Grid.Column="0"
-               CornerRadius="0"
-               Margin="1">
+            CornerRadius="0"
+            Margin="1">
             <Grid RowDefinitions="*"
-                  ColumnDefinitions="*,*,*">
+                ColumnDefinitions="*,*,*">
                 <!-- Show Visited radio button -->
                 <RadioButton Grid.Row="0" Grid.Column="0"
-                             CheckedChanged="OnVisitedRadio_Clicked"
-                             Content="Visited"
-                             x:Name="VisitedRadioButton"/>
+                    CheckedChanged="OnVisitedRadio_Clicked"
+                    Content="Visited"
+                    x:Name="VisitedRadioButton" />
                 <!-- Show Unvisited radio button -->
                 <RadioButton Grid.Row="0" Grid.Column="1"
-                             CheckedChanged="OnUnvisitedRadio_Clicked"
-                             Content="Unvisited"/>
+                    CheckedChanged="OnUnvisitedRadio_Clicked"
+                    Content="Unvisited" />
                 <!-- Show Both radio button -->
                 <RadioButton Grid.Row="0" Grid.Column="2"
-                             CheckedChanged="OnBothRadio_Clicked"
-                             Content="Both"/>
+                    CheckedChanged="OnBothRadio_Clicked"
+                    Content="Both" />
             </Grid>
         </Frame>
         <!-- Map -->
         <Grid Grid.Row="1" Grid.Column="0"
-              RowDefinitions="*"
-              ColumnDefinitions="*"
-              x:Name="MapGrid">
-            
+            RowDefinitions="*"
+            ColumnDefinitions="*"
+            x:Name="MapGrid">
+
         </Grid>
     </Grid>
 </ContentPage>

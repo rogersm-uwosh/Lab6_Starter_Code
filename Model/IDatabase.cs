@@ -1,4 +1,6 @@
 ﻿using System.Collections.ObjectModel;
+using Supabase;
+using Supabase.Gotrue;
 
 namespace Lab6_Starter.Model;
 public partial interface IDatabaseSupa
@@ -11,5 +13,11 @@ public partial interface IDatabaseSupa
     ObservableCollection<WisconsinAirport> GetAllWisconsinAirports();
     ObservableCollection<WisconsinAirport> GetWisconsinAirportsWithinDistance(double userLat, double userLon, double maxDistanceKm);
     WisconsinAirport SelectAirportByCode(string airportCode);
+
+// Authentication and registration methods
+
+    public Task<User?> AuthenticateUser(string email, string password);
+
+    public Task<User?> RegisterUser(string email, string password);
 
 }

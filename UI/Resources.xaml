@@ -3,6 +3,10 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     x:Class="Lab6_Starter.Resources"
     Title="Resources">
+    <ContentPage.ToolbarItems>
+        <ToolbarItem x:Name="LogoutBtn" IconImageSource="logout.png" Text="Logout"
+            Clicked="Logout_Clicked" />
+    </ContentPage.ToolbarItems>
 
     <!-- CollectionView to display a list of links -->
     <CollectionView x:Name="LinksCollectionView">
@@ -25,7 +29,7 @@
                             Text="{Binding Description}">
                             <!-- TapGestureRecognizer to handle link clicks -->
                             <Label.GestureRecognizers>
-                                <TapGestureRecognizer Tapped="OnLinkTapped"/>
+                                <TapGestureRecognizer Tapped="OnLinkTapped" />
                             </Label.GestureRecognizers>
                         </Label>
                     </StackLayout>
