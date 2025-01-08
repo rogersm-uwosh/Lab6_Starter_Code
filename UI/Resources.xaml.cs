@@ -1,4 +1,4 @@
-namespace Lab6_Starter;
+namespace FWAPPA.UI;
 
 /*
  * This class is the background functionality/methods for the resources page.

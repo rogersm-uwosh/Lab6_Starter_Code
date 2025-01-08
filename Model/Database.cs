@@ -1,19 +1,7 @@
 ﻿using System.Collections.ObjectModel;
-
-using Npgsql; // To install this, add dotnet add package Npgsql 
-using Supabase;
-using Supabase.Gotrue;
-
-
-using CsvHelper.Configuration;
-using System.Runtime.Loader;
-using System.Data;
 using System.Text.Json;
-using System.IO.Enumeration;
 
-using Lab6_Starter;
-
-namespace Lab6_Starter.Model;
+namespace FWAPPA.Model;
 
 
 public partial class DatabaseSupa : IDatabaseSupa

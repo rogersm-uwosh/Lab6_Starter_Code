@@ -1,5 +1,4 @@
-﻿using System;
-namespace Lab6_Starter.Model;
+﻿namespace FWAPPA.Model;
 
 public enum AirportAdditionError
 {

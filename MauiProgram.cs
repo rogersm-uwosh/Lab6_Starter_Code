@@ -1,11 +1,11 @@
-﻿using Microsoft.Extensions.Logging;
+﻿using CommunityToolkit.Maui;
+using FWAPPA.Model;
+using Microsoft.Extensions.Logging;
 using SkiaSharp.Views.Maui.Controls.Hosting;
-using Lab6_Starter.Model;
-using CommunityToolkit.Maui;
 using Syncfusion.Maui.Core.Hosting;
-using BusinessLogic = Lab6_Starter.Model.BusinessLogic;
+using BusinessLogic = FWAPPA.Model.BusinessLogic;
 
-namespace Lab6_Starter;
+namespace FWAPPA;
 
 public static class MauiProgram
 {

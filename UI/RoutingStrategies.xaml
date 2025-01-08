@@ -1,4 +1,5 @@
-<?xml version="1.0" encoding="utf-8" ?>
+<?xml version="1.0" encoding="utf-8"?>
+
 <!--!
     Name: Carissa Engebose, Pachia Lee, and Hannah Hotchkiss
     Date: 10/16/24
@@ -15,129 +16,139 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:mapsui="clr-namespace:Mapsui.UI.Maui;assembly=Mapsui.UI.Maui"
-             x:Class="Lab6_Starter.RoutingStrategies"
+             xmlns:model="clr-namespace:FWAPPA.Model"
+             x:Class="FWAPPA.UI.RoutingStrategies"
+             x:DataType="model:BusinessLogic"
              Title="Routing Strategies">
 
     <ScrollView>
-        <VerticalStackLayout Padding="10" 
-                             HorizontalOptions="FillAndExpand" 
+        <VerticalStackLayout Padding="10"
+                             HorizontalOptions="FillAndExpand"
                              VerticalOptions="FillAndExpand">
 
             <!-- Starting Airport -->
-            <HorizontalStackLayout HorizontalOptions="FillAndExpand" Padding="0,5,0,0">
-                <Label Text="Starting Airport:" 
-                       VerticalOptions="Center" 
+            <HorizontalStackLayout HorizontalOptions="FillAndExpand"
+                                   Padding="0,5,0,0">
+                <Label Text="Starting Airport:"
+                       VerticalOptions="Center"
                        WidthRequest="140"
-                       Margin="0,0,-20,0"/>
-                <Frame BorderColor="Gray" 
-                       CornerRadius="5" 
-                       Padding="0" 
-                       HasShadow="True" 
+                       Margin="0,0,-20,0" />
+                <Frame BorderColor="Gray"
+                       CornerRadius="5"
+                       Padding="0"
+                       HasShadow="True"
                        HorizontalOptions="FillAndExpand">
-                    <Entry x:Name="StartingAirportEntry" 
+                    <Entry x:Name="StartingAirportEntry"
                            MaxLength="4"
                            HorizontalOptions="FillAndExpand"
-                           HeightRequest="40"/>
+                           HeightRequest="40" />
                 </Frame>
             </HorizontalStackLayout>
 
             <!-- Max Distance -->
-            <HorizontalStackLayout HorizontalOptions="FillAndExpand" Padding="0,10,0,0">
-                <Label Text="Max Distance:" 
-                       VerticalOptions="Center" 
+            <HorizontalStackLayout HorizontalOptions="FillAndExpand"
+                                   Padding="0,10,0,0">
+                <Label Text="Max Distance:"
+                       VerticalOptions="Center"
                        WidthRequest="140"
-                       Margin="0,0,-20,0"/>
-                <Frame BorderColor="Gray" 
-                       CornerRadius="5" 
-                       Padding="0" 
-                       HasShadow="True" 
+                       Margin="0,0,-20,0" />
+                <Frame BorderColor="Gray"
+                       CornerRadius="5"
+                       Padding="0"
+                       HasShadow="True"
                        HorizontalOptions="FillAndExpand">
-                    <Entry x:Name="MaxDistanceEntry" 
-                           Keyboard="Numeric" 
-                           HorizontalOptions="FillAndExpand" 
-                           HeightRequest="40"/>
+                    <Entry x:Name="MaxDistanceEntry"
+                           Keyboard="Numeric"
+                           HorizontalOptions="FillAndExpand"
+                           HeightRequest="40" />
                 </Frame>
-                <Label Text="NM" 
-                       VerticalOptions="Center" 
-                       Margin="10,0,0,0"/>
+                <Label Text="NM"
+                       VerticalOptions="Center"
+                       Margin="10,0,0,0" />
             </HorizontalStackLayout>
 
             <!-- Unvisited Toggle -->
-            <HorizontalStackLayout HorizontalOptions="FillAndExpand" Padding="0,10,0,0">
-                <Label Text="Unvisited Only:" 
+            <HorizontalStackLayout HorizontalOptions="FillAndExpand"
+                                   Padding="0,10,0,0">
+                <Label Text="Unvisited Only:"
                        VerticalOptions="Center"
-                       Margin="0,0,-20,0" 
-                       WidthRequest="140"/>
-                <Switch x:Name="UnvisitedSwitch" 
+                       Margin="0,0,-20,0"
+                       WidthRequest="140" />
+                <Switch x:Name="UnvisitedSwitch"
                         IsToggled="False" />
             </HorizontalStackLayout>
-            
+
             <!-- Submit Button -->
             <Button Text="Generate"
                     Margin="20,0"
-                    Clicked="GenerateRoute"/>
+                    Clicked="GenerateRoute" />
 
             <!-- Suggested Routes -->
-            <Label Text="Suggested Route" 
-                   FontAttributes="Bold" 
-                   FontSize="Medium" 
-                   Margin="0,20,0,10"/>
+            <Label Text="Suggested Route"
+                   FontAttributes="Bold"
+                   FontSize="Medium"
+                   Margin="0,20,0,10" />
 
             <!-- CollectionView for route edges -->
-            <CollectionView x:Name="RoutesCollectionView" 
+            <CollectionView x:Name="RoutesCollectionView"
                             HorizontalOptions="FillAndExpand"
                             VerticalOptions="FillAndExpand"
                             ItemsSource="{Binding CurrentRoute.Edges}">
                 <CollectionView.Header>
                     <Grid ColumnDefinitions="2*, 2*, 1*" HorizontalOptions="FillAndExpand">
-                        <Label Text="From" 
-                               FontAttributes="Bold" 
+                        <Label Text="From"
+                               FontAttributes="Bold"
                                HorizontalTextAlignment="Start"
                                Grid.Column="0"
-                               Padding="0,0,10,0"/>
-                        <Label Text="To" 
-                               FontAttributes="Bold" 
+                               Padding="0,0,10,0" />
+                        <Label Text="To"
+                               FontAttributes="Bold"
                                HorizontalTextAlignment="Start"
                                Grid.Column="1"
-                               Padding="0,0,10,0"/>
-                        <Label Text="Dist" 
-                               FontAttributes="Bold" 
+                               Padding="0,0,10,0" />
+                        <Label Text="Dist"
+                               FontAttributes="Bold"
                                HorizontalTextAlignment="End"
                                Grid.Column="2"
-                               Padding="0,0,10,0"/>
+                               Padding="0,0,10,0" />
                     </Grid>
                 </CollectionView.Header>
 
                 <!-- Data template for table rows -->
                 <CollectionView.ItemTemplate>
-                    <DataTemplate>
+                    <DataTemplate
+                        x:DataType="model:RouteEdge">
                         <Grid ColumnDefinitions="2*,2*,*" Padding="0,10,0,0" HorizontalOptions="FillAndExpand">
                             <HorizontalStackLayout Grid.Column="0" Padding="0,0,10,0">
-                                <Label Text="{Binding From.Airport.Id}" FontSize="12"/>
-                                <Label Text=" - " FontSize="12"/>
-                                <Label Text="{Binding From.Airport.City}" FontSize="12"/>
+                                <Label Text="{Binding From.Airport.Id}" FontSize="12" />
+                                <Label Text=" - " FontSize="12" />
+                                <Label Text="{Binding From.Airport.Name}" FontSize="12" />
                             </HorizontalStackLayout>
                             <HorizontalStackLayout Grid.Column="1" Padding="0,0,10,0">
-                                <Label Text="{Binding To.Airport.Id}" FontSize="12"/>
-                                <Label Text=" - " FontSize="12"/>
-                                <Label Text="{Binding To.Airport.City}" FontSize="12"/>
+                                <Label Text="{Binding To.Airport.Id}" FontSize="12" />
+                                <Label Text=" - " FontSize="12" />
+                                <Label Text="{Binding To.Airport.Name}" FontSize="12" />
                             </HorizontalStackLayout>
                             <Label Text="{Binding Distance, StringFormat='1{0:F1} NM'}"
                                    Grid.Column="2"
                                    HorizontalTextAlignment="End"
                                    Padding="0,0,10,0"
-                                   FontSize="12"/>
+                                   FontSize="12" />
                         </Grid>
                     </DataTemplate>
                 </CollectionView.ItemTemplate>
             </CollectionView>
 
             <!-- Map -->
-            <Label Text="Map" FontAttributes="Bold" FontSize="Medium" Margin="0,20,0,10"/>
+            <Label Text="Map"
+                   FontAttributes="Bold"
+                   FontSize="Medium"
+                   Margin="0,20,0,10" />
+
             <mapsui:MapControl x:Name="RouteMap"
                                HorizontalOptions="FillAndExpand"
                                VerticalOptions="FillAndExpand"
-                               HeightRequest="400"/>
+                               HeightRequest="400" />
         </VerticalStackLayout>
 
     </ScrollView>

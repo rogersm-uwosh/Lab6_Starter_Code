@@ -2,7 +2,7 @@
 using Microsoft.Maui;
 using Microsoft.Maui.Hosting;
 
-namespace Lab6_Starter;
+namespace FWAPPA;
 
 class Program : MauiApplication
 {

@@ -1,4 +1,4 @@
-namespace Lab6_Starter
+namespace FWAPPA
 {
     /*
     * This class represents a link with a description and URL.

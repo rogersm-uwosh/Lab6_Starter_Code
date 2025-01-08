@@ -1,6 +1,6 @@
 using System.Collections.ObjectModel;
 
-namespace Lab6_Starter.Model;
+namespace FWAPPA.Model;
 
 public class SortableObservableCollection<T> : ObservableCollection<T>
 {

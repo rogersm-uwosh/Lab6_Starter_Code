@@ -1,6 +1,4 @@
-﻿using System;
-using System.ComponentModel;
-using System.Text.Json.Serialization;
+﻿using System.ComponentModel;
 using Supabase.Postgrest.Attributes;
 using Supabase.Postgrest.Models;
 
@@ -9,7 +7,7 @@ This used to have a property called Distance, duplicating
 the Distance property in VisitedAirport
 That's now exclusiveluy in the WisconsinAirport class
 */
-namespace Lab6_Starter.Model;
+namespace FWAPPA.Model;
 
     [Serializable()]
     [Table("visited_airports")]

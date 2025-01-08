@@ -1,6 +1,6 @@
-﻿using FWAPPA;
-using Syncfusion.Licensing;
-namespace Lab6_Starter;
+﻿using FWAPPA.UI;
+
+namespace FWAPPA;
 
 public partial class App : Application
 {

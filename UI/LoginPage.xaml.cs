@@ -1,10 +1,4 @@
-namespace Lab6_Starter;
-
-using Lab6_Starter.Model;
-
-using CommunityToolkit.Maui.Views;
-using Supabase.Gotrue;
-using Microsoft.IdentityModel.Tokens;
+namespace FWAPPA.UI;
 
 /// <summary>
 /// This is the code-behind for the LoginPage.xaml

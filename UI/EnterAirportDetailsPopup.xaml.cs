@@ -1,11 +1,10 @@
 using CommunityToolkit.Maui.Alerts;
 using CommunityToolkit.Maui.Core;
 using CommunityToolkit.Maui.Views;
-using Lab6_Starter.Model;
+using FWAPPA.Model;
 using Syncfusion.Maui.Calendar;
 
-
-namespace Lab6_Starter;
+namespace FWAPPA.UI;
 
 public partial class EnterAirportDetailsPopup : Popup
 {

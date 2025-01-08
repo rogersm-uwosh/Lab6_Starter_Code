@@ -1,7 +1,7 @@
 ﻿using System.Collections.ObjectModel;
-using Lab6_Starter.Model.NearbyAirports;
+using FWAPPA.Model.NearbyAirports;
 
-namespace Lab6_Starter.Model;
+namespace FWAPPA.Model;
 
 /// <summary>
 /// Jason Wang
@@ -25,7 +25,7 @@ public partial class BusinessLogic
         ObservableCollection<WisconsinAirport> allAirports = GetWisconsinAirports();
 
         WisconsinAirport? wisconsinAirport =
-            WisconsinAirports.FirstOrDefault(airport => airport?.Id == sourceAirport.Id, null);
+            Enumerable.FirstOrDefault<WisconsinAirport?>(WisconsinAirports, airport => airport?.Id == sourceAirport.Id, null);
         if (wisconsinAirport == null)
         {
             return [];
@@ -34,8 +34,7 @@ public partial class BusinessLogic
         foreach (WisconsinAirport destinationAirport in allAirports)
         {
             WisconsinAirport? destinationAirportCoordinates =
-                WisconsinAirports.FirstOrDefault(
-                    airport => airport?.Id == destinationAirport.Id && airport.Id != sourceAirport.Id, null);
+                Enumerable.FirstOrDefault<WisconsinAirport?>(WisconsinAirports, airport => airport?.Id == destinationAirport.Id && airport.Id != sourceAirport.Id, null);
 
             if (destinationAirportCoordinates != null)
             {

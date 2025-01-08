@@ -1,8 +1,6 @@
-﻿using System;
-using System.ComponentModel;
-using CsvHelper.Configuration.Attributes;
+﻿using CsvHelper.Configuration.Attributes;
 
-namespace Lab6_Starter.Model;
+namespace FWAPPA.Model;
 
 /// <summary>
 /// A WIAirport represents a Wisconsin airport, with 
@@ -28,11 +26,11 @@ public class WisconsinAirport
     public double Distance {get;set;}
 
     public WisconsinAirport(String id, String name, double latitude, double longitude, string url){
-        this.Id = id;
-        this.Name = name;
-        this.Latitude = latitude;
-        this.Longitude = longitude;
-        this.Url = url;
+        Id = id;
+        Name = name;
+        Latitude = latitude;
+        Longitude = longitude;
+        Url = url;
     }
 
     override

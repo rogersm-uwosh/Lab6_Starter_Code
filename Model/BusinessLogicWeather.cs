@@ -1,8 +1,8 @@
 using System.Collections.ObjectModel;
+
 //using CommunityToolkit.Maui.Core.Extensions;
 
-
-namespace Lab6_Starter.Model;
+namespace FWAPPA.Model;
 
 public partial class BusinessLogic : IBusinessLogic
 {

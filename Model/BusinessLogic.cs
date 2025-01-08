@@ -1,42 +1,34 @@
 ﻿using System.Collections.ObjectModel;
 
+namespace FWAPPA.Model;
 
-namespace Lab6_Starter.Model;
-
-public partial class BusinessLogic : IBusinessLogic
+public partial class BusinessLogic(IDatabaseSupa db) : IBusinessLogic
 {
    
     const int BRONZE_LEVEL = 42;
     const int SILVER_LEVEL = 84;
     const int GOLD_LEVEL = 128;
 
-    IDatabaseSupa db;
     private readonly int MAX_RATING = 5;
+    
+    private readonly SortableObservableCollection<VisitedAirport> visitedAirports = [];
+    public ObservableCollection<VisitedAirport> VisitedAirports => visitedAirports; // this is all the Visited Airports
 
+    private Route currentRoute = new();
 
-    public BusinessLogic(IDatabaseSupa db)
+    public Route CurrentRoute
     {
-        this.db = db;
-
-    }
-
-
-
-    SortableObservableCollection<VisitedAirport> visitedAirports = [];
-    public ObservableCollection<VisitedAirport> VisitedAirports // this is all the Visited Airports
-    {
-        get
+        get => currentRoute;
+        set
         {
-            return visitedAirports;
+            if (currentRoute != value)
+            {
+                currentRoute = value;
+            }
         }
-
     }
 
-    public ObservableCollection<WisconsinAirport> WisconsinAirports // this is all 142 or so Wisconsin Airports
-    {
-        get { return GetAllWisconsinAirports(); }
-
-    }
+    private ObservableCollection<WisconsinAirport> WisconsinAirports => GetAllWisconsinAirports(); // this is all 142 or so Wisconsin Airports
 
     public ObservableCollection<WisconsinAirport> GetAllWisconsinAirports()
     {
@@ -135,15 +127,14 @@ public partial class BusinessLogic : IBusinessLogic
             return AirportDeletionError.AirportNotFound;
         }
     }
-
+    
     /// <summary>
     /// 
     /// </summary>
-    /// <param name="clue"></param>
-    /// <param name="answer"></param>
-    /// <param name="difficulty"></param>
-    /// <param name="date"></param>
     /// <param name="id"></param>
+    /// <param name="name"></param>
+    /// <param name="dateVisited"></param>
+    /// <param name="rating"></param>
     /// <returns></returns>
     public async Task<AirportEditError> EditAirport(String id, String name, DateTime dateVisited, int rating)
     {
@@ -237,44 +228,6 @@ public partial class BusinessLogic : IBusinessLogic
     public ObservableCollection<WisconsinAirport> GetWisconsinAirports()
     {
         return db.GetAllWisconsinAirports();
-    }
-    
-    /// <summary>
-    /// Finds a route to visit all airports within a specific range from a starting airport.
-    /// The route will end at the starting airport.
-    /// </summary>
-    /// <param name="source">The starting airport.</param>
-    /// <param name="maxMiles">How many miles from the source the airports in the route should be.</param>
-    /// <param name="unvisitedOnly">If true, then visited airports will not be in the route.</param>
-    /// <returns></returns>
-    public Route? GetRoute(WisconsinAirport source, int maxMiles, bool unvisitedOnly)
-    {
-        // We need to force the start to be at the beginning, so we remove it
-        // and possibly already visited airports
-        List<WisconsinAirport> excluded = [source];
-        if (unvisitedOnly)
-        {
-            IEnumerable<WisconsinAirport> allAirports = GetAllWisconsinAirports();
-            IEnumerable<string?> visitedAirportIds = visitedAirports.Select(airport => airport.Id);
-            excluded.AddRange(
-                allAirports.Where(airport => visitedAirportIds.Contains(airport.Id))
-            );
-        }
-
-        // Convert the airports to RoutePoints
-        List<RoutePoint> routePoints = CalculateNearbyAirports(source, maxMiles)
-            .Except(excluded, new WisconsinAirportEqualityComparer())
-            .Prepend(source)
-            .Select(x => new RoutePoint(x))
-            .ToList();
-
-        // Can't have a route with 0 or 1 airports
-        if (routePoints.Count < 2)
-        {
-            return null;
-        }
-
-        return Route.GenerateTravelingSalesmanRoute(routePoints);
     }
 
 }
