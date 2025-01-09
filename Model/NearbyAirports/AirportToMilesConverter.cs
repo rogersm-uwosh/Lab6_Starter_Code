@@ -1,12 +1,10 @@
 ﻿using System.Globalization;
 
-namespace Lab6_Starter.Model.NearbyAirports;
+namespace FWAPPA.Model.NearbyAirports;
 
 /// <summary>
 /// Alexander Johnston
 /// </summary>
-
-
 
 public class AirportToMilesConverter: IValueConverter
 {

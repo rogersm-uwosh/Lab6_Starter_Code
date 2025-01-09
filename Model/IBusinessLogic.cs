@@ -1,10 +1,10 @@
-﻿using System.Collections.Generic;
-using System.Collections.ObjectModel;
+﻿using System.Collections.ObjectModel;
 
-namespace Lab6_Starter.Model;
+namespace FWAPPA.Model;
 public interface IBusinessLogic
 {
     ObservableCollection<VisitedAirport> VisitedAirports {get;}
+    Route CurrentRoute { get; set; }
     Task<AirportAdditionError> AddAirport(String id, String name, DateTime? dateVisited, int rating);
     Task<AirportDeletionError> DeleteAirport(String id);
     Task<AirportEditError> EditAirport(String id, String name, DateTime dateVisited, int rating);
@@ -17,7 +17,7 @@ public interface IBusinessLogic
     ObservableCollection<WisconsinAirport> GetAllWisconsinAirports();
     ObservableCollection<WisconsinAirport> GetWisconsinAirportsWithinDistance(double userLatitude, double userLongitude, double maxDistanceKm);
     WisconsinAirport SelectAirportByCode(string airportCode);
-    Route GetRoute(WisconsinAirport source, int maxMiles, bool unvisitedOnly = false);
+    Route? GetRoute(WisconsinAirport source, int maxMiles, bool unvisitedOnly = false);
 
 // Authentication and registration methods
     public Task<Boolean> AuthenticateUser(string email, string password);

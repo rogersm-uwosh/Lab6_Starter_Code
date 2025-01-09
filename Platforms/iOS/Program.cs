@@ -1,7 +1,6 @@
-﻿using ObjCRuntime;
-using UIKit;
+﻿using UIKit;
 
-namespace Lab6_Starter;
+namespace FWAPPA;
 
 public class Program
 {

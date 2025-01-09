@@ -1,8 +1,6 @@
-using Lab6_Starter.Model;
-using Mapsui.Projections;
 using System.Collections.ObjectModel;
 
-namespace Lab6_Starter;
+namespace FWAPPA.Model;
 
 public class Route {
     // Start and end nodes

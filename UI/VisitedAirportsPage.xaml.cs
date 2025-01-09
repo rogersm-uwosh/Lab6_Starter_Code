@@ -1,6 +1,7 @@
 ﻿using CommunityToolkit.Maui.Views;
-using Lab6_Starter.Model;
-namespace Lab6_Starter;
+using FWAPPA.Model;
+
+namespace FWAPPA.UI;
 
 public partial class VisitedAirportsPage : ContentPage
 {
@@ -53,7 +54,6 @@ public partial class VisitedAirportsPage : ContentPage
     {
         //Changed to a popup insert [Popup Team]
         VisitedAirport? currentAirport = CV.SelectedItem as VisitedAirport;
-        string? currentAirportId = currentAirport.Id;
         var popup = new EnterAirportDetailsPopup(currentAirport);
         this.ShowPopup(popup);
     }

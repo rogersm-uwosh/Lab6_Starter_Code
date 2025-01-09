@@ -1,7 +1,8 @@
 ﻿using Android.App;
 using Android.Runtime;
+using FWAPPA;
 
-namespace Lab6_Starter;
+namespace FWAPPA;
 
 [Application]
 public class MainApplication : MauiApplication

@@ -1,9 +1,9 @@
-﻿using System.Collections.ObjectModel;
-using Supabase.Gotrue;
+﻿using Supabase.Gotrue;
+
 //using CommunityToolkit.Maui.Core.Extensions;
 
 
-namespace Lab6_Starter.Model;
+namespace FWAPPA.Model;
 
 public partial class BusinessLogic : IBusinessLogic
 {

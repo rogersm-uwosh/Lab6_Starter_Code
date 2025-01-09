@@ -1,8 +1,7 @@
 ﻿using System.Collections.ObjectModel;
-using Supabase;
 using Supabase.Gotrue;
 
-namespace Lab6_Starter.Model;
+namespace FWAPPA.Model;
 public partial interface IDatabaseSupa
 {
     Task<ObservableCollection<VisitedAirport>> SelectAllVisitedAirports();

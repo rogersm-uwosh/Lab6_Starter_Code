@@ -1,5 +1,4 @@
-﻿using Lab6_Starter.Model;
-namespace Lab6_Starter;
+﻿namespace FWAPPA.UI;
 
 public partial class WeatherPage : ContentPage
 {

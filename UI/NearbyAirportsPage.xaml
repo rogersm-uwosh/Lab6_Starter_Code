@@ -6,15 +6,14 @@
 -->
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:nearbyAirports="clr-namespace:Lab6_Starter"
-             xmlns:nearbyAirportsModel="clr-namespace:Lab6_Starter.Model.NearbyAirports"
-             x:Class="Lab6_Starter.NearbyAirportsPage"
+             x:Class="FWAPPA.UI.NearbyAirportsPage"
              Title="Nearby Airports"
-             xmlns:model="clr-namespace:Lab6_Starter.Model"
-             x:DataType="nearbyAirports:NearbyAirportsPage">
+             xmlns:model="clr-namespace:FWAPPA.Model"
+             xmlns:nearbyAirports1="clr-namespace:FWAPPA.Model.NearbyAirports"
+             xmlns:ui="clr-namespace:FWAPPA.UI"
+             x:DataType="ui:NearbyAirportsPage">
     <ContentPage.Resources>
-        <nearbyAirportsModel:AirportVisitedConverter x:Key="AirportVisitedConverter" />
-        <nearbyAirportsModel:AirportToMilesConverter x:Key="AirportToMilesConverter" />
+        <nearbyAirports1:AirportToMilesConverter x:Key="AirportToMilesConverter" />
     </ContentPage.Resources>
     <ContentPage.Content>
         <Grid

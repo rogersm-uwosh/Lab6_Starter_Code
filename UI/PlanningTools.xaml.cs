@@ -1,12 +1,9 @@
-using Lab6_Starter.Model;
-
-namespace Lab6_Starter;
+namespace FWAPPA.UI;
 
 public partial class PlanningTools : ContentPage
 {
     public const string FLY_WI_EMAIL_ADDRESS = "FlyWI@dot.wi.gov";
-
-
+    
     public PlanningTools()
 	{
 		InitializeComponent();
