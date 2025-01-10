@@ -3,6 +3,9 @@ using FWAPPA.Model;
 
 namespace FWAPPA.UI;
 
+/// <summary>
+/// This displays all the visited airports
+/// </summary>
 public partial class VisitedAirportsPage : ContentPage
 {
     public VisitedAirportsPage()
@@ -70,5 +73,10 @@ public partial class VisitedAirportsPage : ContentPage
     {
         MauiProgram.BusinessLogic.VisitedAirports.Clear(); // otherwise, when logging in again, 
         Application.Current!.MainPage = new LoginPage();
+    }
+
+    private void Button_Clicked(object sender, EventArgs e)
+    {
+
     }
 }

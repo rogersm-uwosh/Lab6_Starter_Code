@@ -1,30 +1,35 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-
+﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:model="clr-namespace:FWAPPA.Model"
-             x:DataType="model:BusinessLogic"
+             x:DataType="model:BusinessLogic" 
              x:Class="FWAPPA.UI.VisitedAirportsPage"
              Title="Airports">
-
+    
     <ContentPage.ToolbarItems>
         <ToolbarItem x:Name="AddAirportBtn" IconImageSource="plus.png" Text="Add"
-                     Clicked="AddAirport_Clicked" />
+            Clicked="AddAirport_Clicked" />
         <ToolbarItem x:Name="LogoutBtn" IconImageSource="logout.png" Text="Logout"
-                     Clicked="Logout_Clicked" />
+            Clicked="Logout_Clicked" />
     </ContentPage.ToolbarItems>
     <ScrollView>
-        <ScrollView>
-            <VerticalStackLayout
-                Spacing="25"
-                Padding="30,0"
-                VerticalOptions="Start">
+       <ScrollView>
+        <VerticalStackLayout
+            Spacing="25"
+            Padding="30,0"
+            VerticalOptions="Start">
 
-                <!-- This line says that the ItemsSource of the CollectionView is the Airports property of the Domain object (an ObservableCollection) -->
-                <CollectionView x:Name="CV"
-                                ItemsSource="{Binding VisitedAirports}">
+            <!-- This line says that the ItemsSource of the CollectionView is the Airports property of the Domain object (an ObservableCollection) -->
+                <CollectionView x:Name="CV" ItemsSource="{Binding VisitedAirports}">
+                    <CollectionView.HeaderTemplate>
+                        <DataTemplate>
+                            <HorizontalStackLayout>
+                                <Label Text="Id            Name                   Date                  Rating          Edit/Delete"/>
+                            </HorizontalStackLayout>
+                        </DataTemplate>
+                    </CollectionView.HeaderTemplate>
                     <CollectionView.ItemTemplate>
-                        <DataTemplate x:DataType="model:VisitedAirport">
+<DataTemplate x:DataType="model:VisitedAirport">
                             <Grid RowDefinitions="*"
                                   ColumnDefinitions="2*, 4*, 4*, 2*, 2*, 2*">
                                 <Label Grid.Column="0"
@@ -59,11 +64,11 @@
                             </Grid>
                         </DataTemplate>
 
-                    </CollectionView.ItemTemplate>
+                </CollectionView.ItemTemplate>
 
-                </CollectionView>
-            </VerticalStackLayout>
-        </ScrollView>
+            </CollectionView>
+        </VerticalStackLayout>
+    </ScrollView>
     </ScrollView>
 
 </ContentPage>

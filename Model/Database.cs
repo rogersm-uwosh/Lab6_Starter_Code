@@ -41,7 +41,7 @@ public partial class DatabaseSupa : IDatabaseSupa
     /// Should we store both in the app bundle? That might be better -- an infintesimal amount of extra storage and
     /// (very slightly) faster bootup time
     /// </summary>
-    /// <returns>an ObservableCollection<Airport>, representing all Wisconsin airports</returns>
+    /// <returns>an ObservableCollection&lt;Airport&gt;, representing all Wisconsin airports</returns>
     private async void PopulateWisconsinAirports()
     {
         try
@@ -62,9 +62,9 @@ public partial class DatabaseSupa : IDatabaseSupa
     }
 
     /// <summary>
-    /// This reads in a map (Dictionary<String, WisconsinAirport>)stored in JSON in the app bundle
+    /// This reads in a map (Dictionary&lt;String, WisconsinAirport&gt;)stored in JSON in the app bundle
     /// </summary>
-    /// <param name="filename"location of the WisconsinAirports map></param>
+    /// <param name="filename">location of the WisconsinAirports map</param>
     /// <returns>A map of Wisconsin airports, indexed by id (icao identifier)</returns>
     private async Task ReadWisconsinAirportsMap(String filename = wiAirportsDictionaryFilename)
     {
@@ -188,7 +188,7 @@ public partial class DatabaseSupa : IDatabaseSupa
     /// This method used to do a lot more, but since we now populate wisconsinAirports in the constructor, all it has to do is return it. 
     /// We retain this method since it is used elsewhere
     /// </summary>
-    /// <returns>an ObservableCollection<Airport>, representing all Wisconsin airports</returns>
+    /// <returns>an ObservableCollection&lt;Airport&gt;, representing all Wisconsin airports</returns>
     public ObservableCollection<WisconsinAirport> GetAllWisconsinAirports()
     {
         return wisconsinAirports;
