@@ -8,19 +8,17 @@ namespace FWAPPA.UI;
 
 public partial class EnterAirportDetailsPopup : Popup
 {
-    private bool isEdit;
-    const string greyStarPath = "ic_fluent_star_24_filled_grey.png";
-    const string yellowStarPath = "ic_fluent_star_24_filled_yellow.png";
+    private readonly bool isEdit;
+    private const string GreyStarPath = "ic_fluent_star_24_filled_grey.png";
+    private const string YellowStarPath = "ic_fluent_star_24_filled_yellow.png";
     private string id = "";
     private string city = "";
-    private DateTime? dateVisited = null; 
-    private int rating = 0;
-    private string? airportToEditId;
+    private DateTime? dateVisited;
+    private int rating;
+    private readonly string? airportToEditId;
 
-    public EnterAirportDetailsPopup (VisitedAirport airport)
+    public EnterAirportDetailsPopup(VisitedAirport? airport)
     {
-        //this.mainCV = mainCV;
-        // this.isEdit = isEdit; // what was this about??
         InitializeComponent();
         Console.WriteLine("Popup Opened");
         if (airport != null) // only null if it's an edit
@@ -28,13 +26,12 @@ public partial class EnterAirportDetailsPopup : Popup
             isEdit = true; // technically we could use whether airportToEditId is null to check this, but this is more clear
             IdLabel.IsVisible = false;
             IdEntry.IsVisible = false;
+            IdEntry.Text = airport.Id; // This is not visible ???
             airportToEditId = airport.Id;
-            IdEntry.Text = airport.Id;
             CityEntry.Text = airport.Name;
             Calendar.View = CalendarView.Month;
-           // Calendar.DisplayDate = airport.DateVisited;
             Calendar.SelectedDate = airport.DateVisited;
-           // FillStars(airport.Rating);
+            FillStars(airport.Rating);
         }
         else // Default the Calendar to Today's date
         {
@@ -44,61 +41,83 @@ public partial class EnterAirportDetailsPopup : Popup
             Calendar.SelectedDate = today;
         }
     }
-    
 
-    void OnCalendarSelectionChanged(object sender, EventArgs e)
+    private void OnCalendarSelectionChanged(object sender, EventArgs e)
     {
-        dateVisited = Calendar.SelectedDate ;
+        DateTime? selectedDate = Calendar.SelectedDate;
+        if (selectedDate == null)
+        {
+            return;
+        }
+
+        dateVisited = selectedDate.Value;
     }
-    
-    //select rating
+
+    // select rating
     private void Star_Clicked(object sender, EventArgs e)
     {
-        var button = sender as ImageButton;
+        if (sender is not ImageButton button)
         {
-            int starCount = Convert.ToInt32(button.CommandParameter); // the button we press has a parameter that tells us which one it is
-            FillStars(starCount);
+            return;
         }
+
+        int starCount =
+            Convert.ToInt32(button
+                .CommandParameter); // the button we press has a parameter that tells us which one it is
+        FillStars(starCount);
     }
-    
-    private void FillStars (int numStars) {
-        starOne.Source = starTwo.Source = starThree.Source = starFour.Source = starFive.Source = greyStarPath;
+
+    private void FillStars(int numStars)
+    {
         var stars = new[] { starOne, starTwo, starThree, starFour, starFive };
         rating = numStars;
         for (int i = 0; i < stars.Length; i++)
         {
-            stars[i].Source = (i < numStars) ? yellowStarPath : greyStarPath; // sets as many stars to yellow as were clicked
+            stars[i].Source =
+                (i < numStars) ? YellowStarPath : GreyStarPath; // sets as many stars to yellow as were clicked
         }
     }
 
-    void Ok_Clicked(object sender, EventArgs e)
+    private void Ok_Clicked(object sender, EventArgs e)
     {
-        // string errorMessage;
         var action = isEdit ? (Action)EditAirport : (Action)AddAirport;
         action(); // this isn't super necessary, but it looks kinda neat (pretty self-explanatory here too)
     }
 
-    async void AddAirport()
+    private async void AddAirport()
     {
         try
         {
-            string errorMessage;
             id = IdEntry.Text;
             city = CityEntry.Text;
-            AirportAdditionError error = await MauiProgram.BusinessLogic.AddAirport(id, city, dateVisited, rating);
-            errorMessage = error.ToString() switch
+            // Date is set in response to calendar events; see OnCalendarSelectionChanged
+            if (dateVisited == null)
             {
-                "InvalidIdLength" => "Id length is not between 3 and 4",
-                "InvalidCityLength" => "City length is not between 1 and 25",
-                "InvalidRating" => "Rating is not selected",
-                "InvalidDate" => "Date is invalid",
-                "DuplicateAirportId" => "Airport id is already used",
-                "NoError" => $"Successfully Added Airport {id}",
+                IToast toast = Toast.Make("A date need to be selected");
+                await toast.Show();
+                return;
+            }
+
+            // Rating is set in response to clicking a star; see Star_Clicked.
+            AirportAdditionError error = await MauiProgram.BusinessLogic.AddAirport(
+                id,
+                city,
+                dateVisited.Value,
+                rating
+            );
+            var errorMessage = error switch
+            {
+                AirportAdditionError.InvalidIdLength => "Id length is not between 3 and 4",
+                AirportAdditionError.InvalidCityLength => "City length is not between 1 and 25",
+                AirportAdditionError.InvalidRating => "Rating is not selected",
+                AirportAdditionError.InvalidDate => "Date is invalid",
+                AirportAdditionError.DuplicateAirportId => "Airport id is already used",
+                AirportAdditionError.NoError => $"Successfully Added Airport {id}",
                 _ => error.ToString()
             };
             IToast errorMessageToast = Toast.Make(errorMessage);
             await errorMessageToast.Show();
-            if (error.ToString() == "NoError") // switch is prettier, but we pay for it here I suppose
+            if (error == AirportAdditionError.NoError) // switch is prettier, but we pay for it here I suppose
             {
                 Close();
             }
@@ -111,34 +130,53 @@ public partial class EnterAirportDetailsPopup : Popup
         }
     }
 
-    async void EditAirport()
+    private async void EditAirport()
     {
-        string errorMessage;
         city = CityEntry.Text;
-        AirportEditError error = await MauiProgram.BusinessLogic.EditAirport(airportToEditId, city, (DateTime)dateVisited, rating);
-        switch (error.ToString())
+        // Fields should never be null when editing
+        AirportEditError error = await MauiProgram.BusinessLogic.EditAirport(
+            airportToEditId!,
+            city,
+            (DateTime)dateVisited!,
+            rating
+        );
+
+        string errorMessage;
+        switch (error)
         {
-            case "AirportNotFound":
+            case AirportEditError.AirportNotFound:
                 errorMessage = "Airport not found";
                 break;
-            case "NoError":
+            case AirportEditError.InvalidCityLength:
+                errorMessage = "City length is not between 3 and 25, exclusive";
+                break;
+            case AirportEditError.InvalidRating:
+                errorMessage = "Rating is not selected";
+                break;
+            case AirportEditError.InvalidDate:
+                errorMessage = "Date is invalid";
+                break;
+            case AirportEditError.DBEditError:
+                errorMessage = "Error when trying to update airport";
+                break;
+            case AirportEditError.NoError:
                 errorMessage = $"Successfully Edited Airport {id}";
                 Close();
                 break;
-            default: errorMessage = error.ToString();
+            default:
+                errorMessage = error.ToString();
                 break;
         }
+
         IToast errorMessageToast = Toast.Make(errorMessage, ToastDuration.Long);
         await errorMessageToast.Show();
 
         //mainCV.SelectedItem = MauiProgram.BusinessLogic.FindAirport(id);
     }
-    
-    
-    void Cancel_Clicked(object sender, EventArgs e)
+
+
+    private void Cancel_Clicked(object sender, EventArgs e)
     {
         Close();
     }
-
-
 }

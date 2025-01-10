@@ -8,7 +8,6 @@ public enum AirportAdditionError
     InvalidDate,
     DuplicateAirportId,
     DBAdditionError,
-    NoDateSelectedError,
     NoError
 }
 
@@ -22,7 +21,9 @@ public enum AirportDeletionError
 public enum AirportEditError
 {
     AirportNotFound,
-    InvalidFieldError,
+    InvalidCityLength,
+    InvalidRating,
+    InvalidDate,
     DBEditError,
     NoError
 }

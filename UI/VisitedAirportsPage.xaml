@@ -22,8 +22,7 @@
 
                 <!-- This line says that the ItemsSource of the CollectionView is the Airports property of the Domain object (an ObservableCollection) -->
                 <CollectionView x:Name="CV"
-                                ItemsSource="{Binding VisitedAirports}"
-                                SelectionMode="Single">
+                                ItemsSource="{Binding VisitedAirports}">
                     <CollectionView.ItemTemplate>
                         <DataTemplate x:DataType="model:VisitedAirport">
                             <Grid RowDefinitions="*"

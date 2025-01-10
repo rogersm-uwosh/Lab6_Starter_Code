@@ -12,36 +12,36 @@ public partial class VisitedAirportsPage : ContentPage
         // We've set the BindingContext for the entire page to be the BusinessLogic layer
         // So any control on the page can bind to the BusinessLogic layer
         // There's really only one control that needs to talk to the BusinessLogic layer, and that's the CollectionView
-
         BindingContext = MauiProgram.BusinessLogic;
     }
 
-
-
     // Various event handlers for the buttons on the main page
-
-    void AddAirport_Clicked(System.Object sender, System.EventArgs e)
+    private void AddAirport_Clicked(object sender, EventArgs e)
     {
-        //Changed to a popup insert [Popup Team]
+        // Changed to a popup insert [Popup Team]
         var popup = new EnterAirportDetailsPopup(null);
-
         this.ShowPopup(popup);
     }
 
-    async void DeleteAirport_Clicked(System.Object sender, System.EventArgs e)
+    private async void DeleteAirport_Clicked(object sender, EventArgs e)
     {
-        VisitedAirport currentAirport = CV.SelectedItem as VisitedAirport;
-
-        // Check if an airport is selected
-        if (currentAirport == null)
+        if (sender is not Button { BindingContext: VisitedAirport currentAirport })
         {
-            // Show an alert if no airport is selected
-            await DisplayAlert("Selection Error", "Please select an airport to delete.", "OK");
-            return; // Exit the method
+            return;
         }
 
+        bool isConfirmed = await DisplayAlert(
+            "Confirm Deletion",
+            $"Are you sure you want to delete '{currentAirport.Name}'?",
+            "Yes",
+            "No"
+        );
+        if (!isConfirmed)
+        {
+            return;
+        }
+        
         // Proceed to delete the selected airport
-
         AirportDeletionError result = await MauiProgram.BusinessLogic.DeleteAirport(currentAirport.Id);
         if (result != AirportDeletionError.NoError)
         {
@@ -49,26 +49,26 @@ public partial class VisitedAirportsPage : ContentPage
         }
     }
 
-
-    void EditAirport_Clicked(System.Object sender, System.EventArgs e)
+    void EditAirport_Clicked(object sender, EventArgs e)
     {
         //Changed to a popup insert [Popup Team]
-        VisitedAirport? currentAirport = CV.SelectedItem as VisitedAirport;
+        if (sender is not Button { BindingContext: VisitedAirport currentAirport })
+        {
+            return;
+        }
         var popup = new EnterAirportDetailsPopup(currentAirport);
         this.ShowPopup(popup);
     }
 
-    void CalculateStatistics_Clicked(System.Object sender, System.EventArgs e)
+    void CalculateStatistics_Clicked(object sender, EventArgs e)
     {
         String result = MauiProgram.BusinessLogic.CalculateStatistics();
-        DisplayAlert("Your Progress", result.ToString(), "Good to know");
+        DisplayAlert("Your Progress", result, "Good to know");
     }
 
-    void Logout_Clicked(System.Object sender, System.EventArgs e)
+    void Logout_Clicked(object sender, EventArgs e)
     {
         MauiProgram.BusinessLogic.VisitedAirports.Clear(); // otherwise, when logging in again, 
         Application.Current!.MainPage = new LoginPage();
     }
 }
-
-
