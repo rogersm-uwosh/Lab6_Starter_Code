@@ -7,19 +7,20 @@ namespace FWAPPA.Model;
 
 public partial class BusinessLogic : IBusinessLogic
 {
- public async Task<bool> AuthenticateUser(string username, string password)
+ public async Task<bool> AuthenticateUser(string email, string password)
     {
         // Implement your authentication logic here
 
-       User? user = await db.AuthenticateUser(username, password);
+       User? user = await db.AuthenticateUser(email, password);
         
      return user != null;
     }
 
-    public async Task<bool> RegisterUser(string username, string password)
+    public async Task<bool> RegisterUser(string email, string password)
     {
         // Implement your registration logic here
-        return await Task.FromResult(true);
+        User? user = await db.RegisterUser(email, password);
+        return user != null;
     }
 }
 

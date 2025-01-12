@@ -1,103 +1,109 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:model="clr-namespace:FWAPPA.Model"
-             x:DataType="model:BusinessLogic"
-             x:Class="FWAPPA.UI.VisitedAirportsPage"
-             Title="Airports">
+       xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+       xmlns:model="clr-namespace:FWAPPA.Model"
+       x:DataType="model:BusinessLogic"
+       x:Class="FWAPPA.UI.VisitedAirportsPage"
+       Title="Airports">
 
-    <ContentPage.ToolbarItems>
-        <ToolbarItem x:Name="AddAirportBtn" 
-                     IconImageSource="plus.png" 
+       <ContentPage.ToolbarItems>
+              <ToolbarItem x:Name="AddAirportBtn"
+                     IconImageSource="plus.png"
                      Text="Add"
                      Clicked="AddAirport_Clicked" />
-        <ToolbarItem x:Name="LogoutBtn"
+              <ToolbarItem x:Name="LogoutBtn"
                      IconImageSource="logout.png"
                      Text="Logout"
                      Clicked="Logout_Clicked" />
-    </ContentPage.ToolbarItems>
-    <ScrollView>
-        <ScrollView>
-            <VerticalStackLayout Spacing="25"
-                                 Padding="30,0"
-                                 VerticalOptions="Start">
+       </ContentPage.ToolbarItems>
+       <ScrollView>
+              <ScrollView>
+                     <VerticalStackLayout Spacing="25"
+                            Padding="30,0"
+                            VerticalOptions="Start">
 
-                <!-- This line says that the ItemsSource of the CollectionView is the Airports property of the Domain object (an ObservableCollection) -->
-                <CollectionView x:Name="CV" 
-                                ItemsSource="{Binding VisitedAirports}">
-                    <CollectionView.HeaderTemplate>
-                        <DataTemplate>
-                            <Grid RowDefinitions="*"
-                                  ColumnDefinitions="2*, 4*, 4*, 2*, 2*, 2*"
-                                  Padding="0, 15, 0, 0">
-                                <Label Text="Id"
-                                       Grid.Column="0"
-                                       HorizontalTextAlignment="Center"
-                                       FontAttributes="Bold" />
-                                <Label Text="Name"
-                                       Grid.Column="1"
-                                       HorizontalTextAlignment="Center"
-                                       FontAttributes="Bold" />
-                                <Label Text="Date"
-                                       Grid.Column="2"
-                                       HorizontalTextAlignment="Center"
-                                       FontAttributes="Bold" />
-                                <Label Text="Rating"
-                                       Grid.Column="3"
-                                       HorizontalTextAlignment="Center"
-                                       FontAttributes="Bold" />
-                                <Label Text="Edit"
-                                       Grid.Column="4"
-                                       HorizontalTextAlignment="Center"
-                                       FontAttributes="Bold" />
-                                <Label Text="Delete"
-                                       Grid.Column="5"
-                                       HorizontalTextAlignment="Center"
-                                       FontAttributes="Bold" />
-                            </Grid>
-                        </DataTemplate>
-                    </CollectionView.HeaderTemplate>
-                    <CollectionView.ItemTemplate>
-                        <DataTemplate x:DataType="model:VisitedAirport">
-                            <Grid RowDefinitions="*"
-                                  ColumnDefinitions="2*, 4*, 4*, 2*, 2*, 2*">
-                                <Label Grid.Column="0"
-                                       Text="{Binding Id}"
-                                       VerticalTextAlignment="Center"
-                                       HorizontalTextAlignment="Center" />
-                                <Label Grid.Column="1"
-                                       Text="{Binding Name}"
-                                       VerticalTextAlignment="Center"
-                                       HorizontalTextAlignment="Center" />
-                                <Label Grid.Column="2"
-                                       Text="{Binding DateVisited, 
+                            <!-- This line says that the ItemsSource of the CollectionView is the
+                            Airports property of the Domain object (an ObservableCollection) -->
+                            <CollectionView x:Name="CV"
+                                   ItemsSource="{Binding VisitedAirports}">
+                                   <CollectionView.HeaderTemplate>
+                                          <DataTemplate>
+                                          <Grid RowDefinitions="*"
+                                                        ColumnDefinitions="2*, 4*, 4*, 2*, 2*, 2*"
+                                                        Margin="0, 150, 0, 0">
+                                                        <Label Text="Id"
+                                                               Grid.Column="0"
+                                                               HorizontalTextAlignment="Center"
+                                                               FontAttributes="Bold" />
+                                                        <Label Text="Name"
+                                                               Grid.Column="1"
+                                                               HorizontalTextAlignment="Center"
+                                                               FontAttributes="Bold" />
+                                                        <Label Text="Date"
+                                                               Grid.Column="2"
+                                                               HorizontalTextAlignment="Center"
+                                                               FontAttributes="Bold" />
+                                                        <Label Text="Rating"
+                                                               Grid.Column="3"
+                                                               HorizontalTextAlignment="Center"
+                                                               FontAttributes="Bold" />
+                                                        <Label Text="Edit"
+                                                               Grid.Column="4"
+                                                               HorizontalTextAlignment="Center"
+                                                               FontAttributes="Bold" />
+                                                        <Label Text="Delete"
+                                                               Grid.Column="5"
+                                                               HorizontalTextAlignment="Center"
+                                                               FontAttributes="Bold" />
+                                                 </Grid>
+                                          </DataTemplate>
+                                   </CollectionView.HeaderTemplate>
+
+                                   <CollectionView.ItemTemplate>
+                                          <DataTemplate x:DataType="model:VisitedAirport">
+                                                 <Grid RowDefinitions="*"
+                                                        ColumnDefinitions="2*, 4*, 4*, 2*, 2*, 2*">
+                                                        <Label Grid.Column="0"
+                                                               Text="{Binding Id}"
+                                                               VerticalTextAlignment="Center"
+                                                               HorizontalTextAlignment="Center" />
+                                                        <Label Grid.Column="1"
+                                                               Text="{Binding Name}"
+                                                               VerticalTextAlignment="Center"
+                                                               HorizontalTextAlignment="Center" />
+                                                        <Label Grid.Column="2"
+                                                               Text="{Binding DateVisited, 
                                        StringFormat='{0:MM/dd/yyyy}'}"
-                                       VerticalTextAlignment="Center"
-                                       HorizontalTextAlignment="Center" />
-                                <Label Grid.Column="3"
-                                       Text="{Binding Rating}"
-                                       VerticalTextAlignment="Center"
-                                       HorizontalTextAlignment="Center" />
-                                <Button Grid.Column="4"
-                                        MaximumWidthRequest="75"
-                                        BackgroundColor="Transparent"
-                                        Clicked="EditAirport_Clicked"
-                                        ImageSource="pencil.png"
-                                        HorizontalOptions="Fill" />
-                                <Button Grid.Column="5"
-                                        MaximumWidthRequest="75"
-                                        BackgroundColor="Transparent"
-                                        Clicked="DeleteAirport_Clicked"
-                                        ImageSource="trash.png"
-                                        HorizontalOptions="Fill" />
-                            </Grid>
-                        </DataTemplate>
-                    </CollectionView.ItemTemplate>
+                                                               VerticalTextAlignment="Center"
+                                                               HorizontalTextAlignment="Center" />
+                                                        <Label Grid.Column="3"
+                                                               Text="{Binding Rating}"
+                                                               VerticalTextAlignment="Center"
+                                                               HorizontalTextAlignment="Center" />
+                                                        <ImageButton Grid.Column="4"
+                                                               MaximumWidthRequest="75"
+                                                               BackgroundColor="Transparent"
+                                                               Aspect="Center"
+                                                               Clicked="EditAirport_Clicked"
+                                                               Source="pencil.png"
+                                                               IsEnabled="true"
+                                                               HorizontalOptions="Fill" />
+                                                        <ImageButton Grid.Column="5"
+                                                               MaximumWidthRequest="75"
+                                                               BackgroundColor="Transparent"
+                                                               Aspect="Center"
+                                                               Clicked="DeleteAirport_Clicked"
+                                                               Source="trash.png"
+                                                               IsEnabled="true"
+                                                               HorizontalOptions="Fill" />
+                                                 </Grid>
+                                          </DataTemplate>
+                                   </CollectionView.ItemTemplate>
 
-                </CollectionView>
-            </VerticalStackLayout>
-        </ScrollView>
-    </ScrollView>
+                            </CollectionView>
+                     </VerticalStackLayout>
+              </ScrollView>
+       </ScrollView>
 
 </ContentPage>

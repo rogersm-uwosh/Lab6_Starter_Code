@@ -1,5 +1,6 @@
 namespace FWAPPA.UI;
 
+using CommunityToolkit.Maui.Views;
 /// <summary>
 /// This is the code-behind for the LoginPage.xaml
 /// </summary>
@@ -32,11 +33,24 @@ public partial class LoginPage : ContentPage
 		}
 
 	}
-	async void Register_Clicked(System.Object sender, System.EventArgs e)
+/// <summary>
+/// Handles registration, dispensing with obvious input errors bdefore 
+/// </summary>
+/// <param name="sender"></param>
+/// <param name="e"></param>
+	public void Register_Clicked(System.Object sender, System.EventArgs e)
 	{
-
-
-
+	this.ShowPopup(new RegistrationPopup());
 	}
+
+	// /// <summary>
+	// /// Closes the "Add New Airport" popup.
+	// /// </summary>
+	// /// <param name="sender">Sender</param>
+	// /// <param name="args">Arguments</param>
+	// public async void OnCancelClicked(System.Object sender, System.EventArgs args)
+	// {
+	// 	// await CloseAsync();
+	// }
 
 }

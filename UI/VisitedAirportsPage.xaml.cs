@@ -28,7 +28,7 @@ public partial class VisitedAirportsPage : ContentPage
 
     private async void DeleteAirport_Clicked(object sender, EventArgs e)
     {
-        if (sender is not Button { BindingContext: VisitedAirport currentAirport })
+        if (sender is not ImageButton { BindingContext: VisitedAirport currentAirport })
         {
             return;
         }
@@ -55,7 +55,7 @@ public partial class VisitedAirportsPage : ContentPage
     void EditAirport_Clicked(object sender, EventArgs e)
     {
         //Changed to a popup insert [Popup Team]
-        if (sender is not Button { BindingContext: VisitedAirport currentAirport })
+        if (sender is not ImageButton { BindingContext: VisitedAirport currentAirport })
         {
             return;
         }

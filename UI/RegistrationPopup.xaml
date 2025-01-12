@@ -2,11 +2,11 @@
 <toolkit:Popup xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
-             x:Class="FWAPPA.RegistrationPopup">
+             x:Class="FWAPPA.UI.RegistrationPopup">
              <StackLayout Padding="20" Spacing="15"  HeightRequest="450" WidthRequest="325">
-                <Entry x:Name="UserIdENT" Placeholder="User ID" PlaceholderColor="Gray" TextTransform="Lowercase"/>
-                <Entry x:Name="PasswordENT" Placeholder="Password" PlaceholderColor="Gray" TextTransform="Default" IsPassword="True" />
-                <Entry x:Name="ConfirmPasswordENT" Placeholder="Confirm Password" PlaceholderColor="Gray" TextTransform="None" IsPassword="True" />
+                <Entry x:Name="EmailAddressENT" Text="mprogers@me.com" Placeholder="Email Address" PlaceholderColor="Gray" TextTransform="Lowercase"/>
+                <Entry x:Name="PasswordENT" Text="password1234" Placeholder="Password" PlaceholderColor="Gray" TextTransform="Default" IsPassword="True" />
+                <Entry x:Name="ConfirmPasswordENT" Text="password1234" Placeholder="Confirm Password" PlaceholderColor="Gray" TextTransform="None" IsPassword="True" />
                 <Button Text="Register" Clicked="OnRegisterClicked"/>
                 <Button Text="Cancel" Clicked="OnCancelClicked"/>
             </StackLayout>
