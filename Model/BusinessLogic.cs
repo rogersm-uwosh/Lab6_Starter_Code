@@ -4,13 +4,12 @@ namespace FWAPPA.Model;
 
 public partial class BusinessLogic(IDatabaseSupa db) : IBusinessLogic
 {
-   
     const int BRONZE_LEVEL = 42;
     const int SILVER_LEVEL = 84;
     const int GOLD_LEVEL = 128;
 
     private readonly int MAX_RATING = 5;
-    
+
     private readonly SortableObservableCollection<VisitedAirport> visitedAirports = [];
     public ObservableCollection<VisitedAirport> VisitedAirports => visitedAirports; // this is all the Visited Airports
 
@@ -28,40 +27,43 @@ public partial class BusinessLogic(IDatabaseSupa db) : IBusinessLogic
         }
     }
 
-    private ObservableCollection<WisconsinAirport> WisconsinAirports => GetAllWisconsinAirports(); // this is all 142 or so Wisconsin Airports
+    private ObservableCollection<WisconsinAirport> WisconsinAirports =>
+        GetAllWisconsinAirports(); // this is all 142 or so Wisconsin Airports
 
     public ObservableCollection<WisconsinAirport> GetAllWisconsinAirports()
     {
         return db.GetAllWisconsinAirports();
     }
 
-    public ObservableCollection<WisconsinAirport> GetWisconsinAirportsWithinDistance(double userLatitude, double userLongitude, double maxDistanceKm)
+    public ObservableCollection<WisconsinAirport> GetWisconsinAirportsWithinDistance(double userLatitude,
+        double userLongitude, double maxDistanceKm)
     {
         return db.GetWisconsinAirportsWithinDistance(userLatitude, userLongitude, maxDistanceKm);
     }
 
     public WisconsinAirport SelectAirportByCode(string airportCode)
     {
-        return db.SelectAirportByCode(airportCode);
+        return db.SelectAirportByCode(airportCode.ToUpper());
     }
 
 
-    public async Task<VisitedAirport?> FindAirport(String id)
+    public async Task<VisitedAirport?> FindAirport(string id)
     {
         return await db.SelectAirport(id);
     }
 
-    private AirportAdditionError CheckAirportFields(String? id, String? name, DateTime? dateVisited, int rating)
+    private AirportAdditionError CheckAirportFields(string? id, string? name, DateTime? dateVisited, int rating)
     {
-
         if (id == null || id.Length < 3 || id.Length > 4)
         {
             return AirportAdditionError.InvalidIdLength;
         }
-        if (name == null || name.Length < 3)
+
+        if (name == null || name.Length < 3 || name.Length > 25)
         {
             return AirportAdditionError.InvalidCityLength;
         }
+
         if (rating < 1 || rating > MAX_RATING)
         {
             return AirportAdditionError.InvalidRating;
@@ -76,32 +78,36 @@ public partial class BusinessLogic(IDatabaseSupa db) : IBusinessLogic
     }
 
 
-    public async Task<AirportAdditionError> AddAirport(String id, String name, DateTime? dateVisited, int rating)
+    public async Task<AirportAdditionError> AddAirport(string id, string name, DateTime dateVisited, int rating)
     {
-
         var result = CheckAirportFields(id, name, dateVisited, rating);
         if (result != AirportAdditionError.NoError)
         {
             return result;
         }
+
         var potentialDuplicateAirport = await db.SelectAirport(id);
         if (potentialDuplicateAirport != null) // this now is true, because db.selectAirport(id) returns a Task ... oops
         {
             return AirportAdditionError.DuplicateAirportId;
         }
 
-        VisitedAirport airport = new VisitedAirport(id, name, (DateTime)dateVisited, rating); // this will never be null, we check in checkAirportFields
+        VisitedAirport airport = new VisitedAirport(
+            id,
+            name,
+            dateVisited,
+            rating
+        ); // this will never be null, we check in checkAirportFields
+        
         await db.InsertAirport(airport);
         visitedAirports.Add(airport);
-        visitedAirports.Sort(airport => airport.Id!);
+        visitedAirports.Sort(visitedAirport => visitedAirport.Id);
         return AirportAdditionError.NoError;
     }
 
 
-
-    public async Task<AirportDeletionError> DeleteAirport(String id)
+    public async Task<AirportDeletionError> DeleteAirport(string id)
     {
-
         var entry = await db.SelectAirport(id);
 
         if (entry != null)
@@ -114,8 +120,8 @@ public partial class BusinessLogic(IDatabaseSupa db) : IBusinessLogic
                 {
                     visitedAirports.Remove(airportToRemove);
                 }
-                return AirportDeletionError.NoError;
 
+                return AirportDeletionError.NoError;
             }
             else
             {
@@ -127,7 +133,7 @@ public partial class BusinessLogic(IDatabaseSupa db) : IBusinessLogic
             return AirportDeletionError.AirportNotFound;
         }
     }
-    
+
     /// <summary>
     /// 
     /// </summary>
@@ -136,41 +142,52 @@ public partial class BusinessLogic(IDatabaseSupa db) : IBusinessLogic
     /// <param name="dateVisited"></param>
     /// <param name="rating"></param>
     /// <returns></returns>
-    public async Task<AirportEditError> EditAirport(String id, String name, DateTime dateVisited, int rating)
+    public async Task<AirportEditError> EditAirport(string id, string name, DateTime dateVisited, int rating)
     {
-
         var fieldCheck = CheckAirportFields(id, name, dateVisited, rating);
+        // Id should never be invalid since it is from a previously created instance
         if (fieldCheck != AirportAdditionError.NoError)
         {
-            return AirportEditError.InvalidFieldError;
+            var error = fieldCheck switch
+            {
+                AirportAdditionError.InvalidCityLength => AirportEditError.InvalidCityLength,
+                AirportAdditionError.InvalidRating => AirportEditError.InvalidRating,
+                AirportAdditionError.InvalidDate => AirportEditError.InvalidDate,
+                _ => AirportEditError.DBEditError
+            };
+            return error;
         }
 
         VisitedAirport? editedAirport = await db.SelectAirport(id); // get the airport to edit from the database
-        editedAirport!.Id = id;                                      // change the airport's fields
+        if (editedAirport == null)
+        {
+            // This should never happen either
+            return AirportEditError.AirportNotFound;
+        }
+
+        editedAirport.Id = id; // change the airport's fields; id shouldn't change?
         editedAirport.Name = name;
         editedAirport.DateVisited = dateVisited;
         editedAirport.Rating = rating;
 
-        AirportEditError success = await db.UpdateAirport(editedAirport);   // update it in Supabase
-        if (success == AirportEditError.NoError)                            // updated in Supabase? If so ...
+        AirportEditError updateAirportStatus = await db.UpdateAirport(editedAirport); // update it in Supabase
+        if (updateAirportStatus != AirportEditError.NoError) // updated in Supabase?
         {
-            var originalAirport = visitedAirports.FirstOrDefault(va => va.Id == id);    // find it locally
-            if (originalAirport != null)        
-            {
-                visitedAirports.Remove(originalAirport);
-                visitedAirports.Add(editedAirport);
-                return AirportEditError.NoError;
-            }
+            return updateAirportStatus;
+        }
 
-            return AirportEditError.DBEditError;    // couldn't find it in visitedAirports? But we selected it
-        }                                           // from the CollectionView, which was bound to [V]istedAirports
-                                                    // so if this happens something is messed up 
+        var originalAirport = visitedAirports.FirstOrDefault(va => va.Id == id); // find it locally
+        if (originalAirport == null)
+        {
+            return AirportEditError.AirportNotFound;
+        }
 
-        return success;                             // if we get down to this return stmt., there's been an error and we are returning it
+        visitedAirports.Remove(originalAirport); // and update the observable collection
+        visitedAirports.Add(editedAirport);
+        return AirportEditError.NoError;
     }
 
-
-    public String CalculateStatistics()
+    public string CalculateStatistics()
     {
         FlyWisconsinLevel nextLevel;
         int numAirportsUntilNextLevel;
@@ -197,23 +214,25 @@ public partial class BusinessLogic(IDatabaseSupa db) : IBusinessLogic
             numAirportsUntilNextLevel = 0;
         }
 
-        return String.Format("{0} airport{1} visited; {2} airports remaining until achieving {3}",
-              numAirportsVisited, numAirportsVisited != 1 ? "s" : "", numAirportsUntilNextLevel, nextLevel);
+        return string.Format("{0} airport{1} visited; {2} airports remaining until achieving {3}",
+            numAirportsVisited, numAirportsVisited != 1 ? "s" : "", numAirportsUntilNextLevel, nextLevel);
     }
 
     public async Task<ObservableCollection<VisitedAirport>> GetVisitedAirports()
     {
         try
         {
-            ObservableCollection<VisitedAirport> airports = await db.SelectAllVisitedAirports(); // grab all the airports
+            ObservableCollection<VisitedAirport>
+                airports = await db.SelectAllVisitedAirports(); // grab all the airports
 
             airports = new ObservableCollection<VisitedAirport>(airports.OrderBy(a => a.Id));
-            visitedAirports.Clear();                            // empty out visitedAirports
+            visitedAirports.Clear(); // empty out visitedAirports
 
-            foreach (var airport in airports)                  // add each of the fetched airports in turn to visitedAirports
+            foreach (var airport in airports) // add each of the fetched airports in turn to visitedAirports
             {
-                visitedAirports.Add(airport);                  
+                visitedAirports.Add(airport);
             }
+
             return visitedAirports;
         }
 
@@ -229,6 +248,4 @@ public partial class BusinessLogic(IDatabaseSupa db) : IBusinessLogic
     {
         return db.GetAllWisconsinAirports();
     }
-
 }
-

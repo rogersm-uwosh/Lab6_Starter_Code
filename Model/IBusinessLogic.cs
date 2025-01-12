@@ -5,11 +5,11 @@ public interface IBusinessLogic
 {
     ObservableCollection<VisitedAirport> VisitedAirports {get;}
     Route CurrentRoute { get; set; }
-    Task<AirportAdditionError> AddAirport(String id, String name, DateTime? dateVisited, int rating);
-    Task<AirportDeletionError> DeleteAirport(String id);
-    Task<AirportEditError> EditAirport(String id, String name, DateTime dateVisited, int rating);
-    Task<VisitedAirport?> FindAirport(String id);
-    String CalculateStatistics();
+    Task<AirportAdditionError> AddAirport(string id, string name, DateTime dateVisited, int rating);
+    Task<AirportDeletionError> DeleteAirport(string id);
+    Task<AirportEditError> EditAirport(string id, string name, DateTime dateVisited, int rating);
+    Task<VisitedAirport?> FindAirport(string id);
+    string CalculateStatistics();
     Task<ObservableCollection<VisitedAirport>> GetVisitedAirports();
     ObservableCollection<WisconsinAirport> GetWisconsinAirports();
     Weather GetClosestAirportWeather();

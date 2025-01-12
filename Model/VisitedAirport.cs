@@ -9,20 +9,20 @@ That's now exclusiveluy in the WisconsinAirport class
 */
 namespace FWAPPA.Model;
 
-    [Serializable()]
+    [Serializable]
     [Table("visited_airports")]
     public class VisitedAirport : BaseModel, INotifyPropertyChanged
     {
-        private string? id;
-        private string? name;
-        private DateTime? dateVisited;
-        private int? rating;
+        private string id;
+        private string name;
+        private DateTime dateVisited;
+        private int rating;
  
-        private string? userId;
+        private string userId;
 
         [Column("id")]
         [PrimaryKey("id")]
-        public string? Id
+        public string Id
         {
             get => id;
             set
@@ -33,7 +33,7 @@ namespace FWAPPA.Model;
         }
 
         [Column("name")]
-        public string? Name
+        public string Name
         {
             get => name;
             set
@@ -44,7 +44,7 @@ namespace FWAPPA.Model;
         }
 
         [Column("date_visited")]
-        public DateTime? DateVisited
+        public DateTime DateVisited
         {
             get => dateVisited;
             set
@@ -55,7 +55,7 @@ namespace FWAPPA.Model;
         }
 
         [Column("rating")]
-        public int? Rating
+        public int Rating
         {
             get => rating;
             set
@@ -67,7 +67,7 @@ namespace FWAPPA.Model;
 
         [PrimaryKey("user_id")]
         [Column("user_id")]
-        public String? UserId {
+        public string UserId {
             get => userId;
             set {
                 userId = value;
@@ -88,7 +88,6 @@ namespace FWAPPA.Model;
             Name = name;
             DateVisited = dateVisited;
             Rating = rating;
-
         }
 
         public VisitedAirport(String id, String name)
@@ -137,7 +136,7 @@ namespace FWAPPA.Model;
 
         public int GetHashCode(VisitedAirport obj)
         {
-            return obj.Id!.GetHashCode();
+            return obj.Id.GetHashCode();
         }
     }
 
