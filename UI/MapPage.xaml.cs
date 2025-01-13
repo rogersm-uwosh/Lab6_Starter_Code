@@ -96,7 +96,8 @@ public partial class MapPage : ContentPage
         MPoint npoint = SphericalMercator.FromLonLat(mpoint.X, mpoint.Y).ToMPoint();
         // Instantly zooms to a given point on the map, with a given resolution for how far to zoom
         // Can optionally give it a duration and easing style for a smoother transition
-        map.Home = (n) => n.CenterOnAndZoomTo(npoint, map.Navigator.Resolutions[9]);
+        //map.Home = (n) => n.CenterOnAndZoomTo(npoint, map.Navigator.Resolutions[9]);
+        map.Navigator.CenterOnAndZoomTo(npoint, map.Navigator.Resolutions[9]);
         // To zoom to a point after the map is loaded, use map.CenterOnAndZoomTo(); without lambda
         
         // Place the map control into MapPage under a grid prepared to contain it
