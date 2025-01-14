@@ -45,7 +45,13 @@ public partial class RoutingStrategies : ContentPage
         // Initialize the map with OpenStreetMap's API and add it to MapPage's content
         Mapsui.Map map = new();
         map.Layers.Add(OpenStreetMap.CreateTileLayer());
-        map.Home = ZoomToWisconsin;
+        MRect wisconsinBox = new MRect(
+            SphericalMercator.FromLonLat(-93.1, 41.7).x, 
+            SphericalMercator.FromLonLat(-93.1, 41.7).y, 
+            SphericalMercator.FromLonLat(-86, 47.3).x, 
+            SphericalMercator.FromLonLat(-86, 47.3).y
+        );
+        map.Navigator.ZoomToBox(wisconsinBox);
         RouteMap.Map = map;
 
         // Update current route (shouldn't do anything on startup)

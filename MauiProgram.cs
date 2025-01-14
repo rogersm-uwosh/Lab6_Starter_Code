@@ -20,7 +20,7 @@ public static class MauiProgram
 			.UseMauiApp<App>()
 			.UseMauiCommunityToolkit()
 			//[[ Alex Robinson - Dependency of MapsUI
-			.UseSkiaSharp(true)
+			.UseSkiaSharp()
 			//]]
 			.ConfigureFonts(fonts =>
 			{
