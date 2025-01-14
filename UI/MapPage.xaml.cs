@@ -83,11 +83,9 @@ public partial class MapPage : ContentPage
 
         try
         {
-            // A .net MAUI control that contains a MapsUI map
-            MapControl mapControl = new();
-            mapControl.BackgroundColor = Colors.AliceBlue;
+            RouteMap.BackgroundColor = Colors.AliceBlue;
             // The MapsUI map from the new control
-            map = mapControl.Map;
+            map = RouteMap.Map;
 
             // Add a layer to show the map from OpenStreetMap's API
             map.Layers.Add(OpenStreetMap.CreateTileLayer());
@@ -104,16 +102,7 @@ public partial class MapPage : ContentPage
             //map.Home = (n) => n.CenterOnAndZoomTo(npoint, map.Navigator.Resolutions[9]);
             map.Navigator.CenterOnAndZoomTo(npoint, map.Navigator.Resolutions[9]);
             // To zoom to a point after the map is loaded, use map.CenterOnAndZoomTo(); without lambda
-
-            // Place the map control into MapPage under a grid prepared to contain it
-
-            MapGrid.Add(mapControl);
-
-            // Run OnAppearing() to prepare visitedAirports before setting VisitedRadioButton.IsChecked
-          //  OnAppearing();
-            // Manually setting IsChecked since putting this in the xaml sometimes causes it
-            // to be stuck as checked
-            //VisitedRadioButton.IsChecked = true;
+            
         }
         catch (Exception ex)
         {
@@ -132,11 +121,15 @@ public partial class MapPage : ContentPage
     protected override async void OnAppearing()
     {
         // Updates visitedAirports to contain the latest visited airports
-         visitedAirports = await MauiProgram.BusinessLogic.GetVisitedAirports();
+        visitedAirports = await MauiProgram.BusinessLogic.GetVisitedAirports();
 
         if (VisitedRadioButton.IsChecked)
         {
-
+            RedrawVisitedAirports();
+        } else if(UnvisitedRadioButton.IsChecked){
+            RedrawUnvisitedAirports();
+        } else if(BothRadioButton.IsChecked){
+            RedrawBothAirports();
         }
     }
 

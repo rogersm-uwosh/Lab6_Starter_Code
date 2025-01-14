@@ -16,35 +16,40 @@
     </ContentPage.ToolbarItems>
     <Grid RowDefinitions="*,9*"
         ColumnDefinitions="*">
-        <!-- Radio Buttons -->
+
         <Frame Grid.Row="0" Grid.Column="0"
             CornerRadius="0"
             Margin="1">
             <Grid RowDefinitions="*"
                 ColumnDefinitions="*,*,*">
-                <!-- Show Visited radio button -->
+                
                 <RadioButton Grid.Row="0" Grid.Column="0"
                     CheckedChanged="OnVisitedRadio_Clicked"
                     Content="Visited"
-                    x:Name="VisitedRadioButton" />
-                <!-- Show Unvisited radio button -->
+                    x:Name="VisitedRadioButton"
+
+                    />
+
                 <RadioButton Grid.Row="0" Grid.Column="1"
                     CheckedChanged="OnUnvisitedRadio_Clicked"
-                    Content="Unvisited" />
-                <!-- Show Both radio button -->
+                    Content="Unvisited"
+                    x:Name="UnvisitedRadioButton"
+                />
+
                 <RadioButton Grid.Row="0" Grid.Column="2"
                     CheckedChanged="OnBothRadio_Clicked"
-                    Content="Both" />
+                    Content="Both"
+                    x:Name="BothRadioButton"
+                />
+                
             </Grid>
         </Frame>
-        <!-- Map -->
-        <Grid Grid.Row="1" Grid.Column="0"
-            RowDefinitions="*"
-            ColumnDefinitions="*"
-            BackgroundColor="Blue"
-            x:Name="MapGrid">
-
-        </Grid>
+        
+    
+         <mapsui:MapControl x:Name="RouteMap"
+            Grid.Row="1" Grid.Column="0"
+            HorizontalOptions="FillAndExpand"/>
+        
 
     </Grid>
 </ContentPage>
