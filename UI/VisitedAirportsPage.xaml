@@ -17,21 +17,23 @@
                      Text="Logout"
                      Clicked="Logout_Clicked" />
        </ContentPage.ToolbarItems>
-       <ScrollView>
-              <ScrollView>
+              <!-- <ScrollView>
                      <VerticalStackLayout Spacing="25"
-                            Padding="30,0"
-                            VerticalOptions="Start">
+                            Padding="5,0"
+                            VerticalOptions="FillAndExpand"> -->
+
+                     <Grid>
 
                             <!-- This line says that the ItemsSource of the CollectionView is the
                             Airports property of the Domain object (an ObservableCollection) -->
                             <CollectionView x:Name="CV"
+                                   VerticalOptions="FillAndExpand"
                                    ItemsSource="{Binding VisitedAirports}">
                                    <CollectionView.HeaderTemplate>
                                           <DataTemplate>
                                           <Grid RowDefinitions="*"
                                                         ColumnDefinitions="2*, 4*, 4*, 2*, 2*, 2*"
-                                                        Margin="0, 150, 0, 0">
+                                                        Margin="0, 15, 0, 0">
                                                         <Label Text="Id"
                                                                Grid.Column="0"
                                                                HorizontalTextAlignment="Center"
@@ -102,8 +104,8 @@
                                    </CollectionView.ItemTemplate>
 
                             </CollectionView>
-                     </VerticalStackLayout>
-              </ScrollView>
-       </ScrollView>
+                     <!-- </VerticalStackLayout> -->
+              <!-- </ScrollView> -->
+              </Grid>
 
 </ContentPage>

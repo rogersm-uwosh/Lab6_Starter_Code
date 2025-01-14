@@ -98,7 +98,7 @@ public partial class BusinessLogic(IDatabaseSupa db) : IBusinessLogic
             dateVisited,
             rating
         ); // this will never be null, we check in checkAirportFields
-        
+
         await db.InsertAirport(airport);
         visitedAirports.Add(airport);
         visitedAirports.Sort(visitedAirport => visitedAirport.Id);
@@ -220,19 +220,22 @@ public partial class BusinessLogic(IDatabaseSupa db) : IBusinessLogic
 
     public async Task<ObservableCollection<VisitedAirport>> GetVisitedAirports()
     {
+        Console.WriteLine($"I am being called at {DateTime.Now}");
         try
         {
-            ObservableCollection<VisitedAirport>
-                airports = await db.SelectAllVisitedAirports(); // grab all the airports
+            ObservableCollection<VisitedAirport> airports = await db.SelectAllVisitedAirports(); // grab all the airports
 
             airports = new ObservableCollection<VisitedAirport>(airports.OrderBy(a => a.Id));
+
+
             visitedAirports.Clear(); // empty out visitedAirports
-
-            foreach (var airport in airports) // add each of the fetched airports in turn to visitedAirports
-            {
-                visitedAirports.Add(airport);
-            }
-
+            await MainThread.InvokeOnMainThreadAsync(() =>
+{
+    foreach (var airport in airports) // add each of the fetched airports in turn to visitedAirports
+    {
+        visitedAirports.Add(airport);
+    }
+});
             return visitedAirports;
         }
 

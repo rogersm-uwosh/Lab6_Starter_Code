@@ -12,7 +12,9 @@ public partial class BusinessLogic : IBusinessLogic
         // Implement your authentication logic here
 
        User? user = await db.AuthenticateUser(email, password);
-        
+       if(user != null){
+        await GetVisitedAirports();
+       }
      return user != null;
     }
 

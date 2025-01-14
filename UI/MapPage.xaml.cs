@@ -9,6 +9,7 @@ using Mapsui.Tiling;
 using Mapsui.UI.Maui;
 using Map = Mapsui.Map;
 using Color = Mapsui.Styles.Color;
+using System.Runtime.CompilerServices;
 
 namespace FWAPPA.UI;
 
@@ -75,40 +76,47 @@ public partial class MapPage : ContentPage
     private WritableLayer pointLayer = new() { Style = null };
 
     public MapPage()
-	{
-		InitializeComponent();
+    {
+        MapControl.UseGPU = false;
 
-        try {
-        // A .net MAUI control that contains a MapsUI map
-        MapControl mapControl = new();
-        // The MapsUI map from the new control
-        map = mapControl.Map;
-        
-        // Add a layer to show the map from OpenStreetMap's API
-        map.Layers.Add(OpenStreetMap.CreateTileLayer());
-        // Place the layer for the points on top of the previous map layer
-        map.Layers.Add(pointLayer);
-        
-        // A point to zoom to on the map, with a given longitude and latitude as parameters
-        MPoint mpoint = new(-88.4154, 44.2619);
-        // The map doesn't use longitude/latitude for placement, so project it onto a new point
-        // that can be placed onto the map in the correct location
-        MPoint npoint = SphericalMercator.FromLonLat(mpoint.X, mpoint.Y).ToMPoint();
-        // Instantly zooms to a given point on the map, with a given resolution for how far to zoom
-        // Can optionally give it a duration and easing style for a smoother transition
-        //map.Home = (n) => n.CenterOnAndZoomTo(npoint, map.Navigator.Resolutions[9]);
-        map.Navigator.CenterOnAndZoomTo(npoint, map.Navigator.Resolutions[9]);
-        // To zoom to a point after the map is loaded, use map.CenterOnAndZoomTo(); without lambda
-        
-        // Place the map control into MapPage under a grid prepared to contain it
-        MapGrid.Add(mapControl);
+        InitializeComponent();
 
-        // Run OnAppearing() to prepare visitedAirports before setting VisitedRadioButton.IsChecked
-        OnAppearing();
-        // Manually setting IsChecked since putting this in the xaml sometimes causes it
-        // to be stuck as checked
-        //VisitedRadioButton.IsChecked = true;
-        }catch(Exception ex){
+        try
+        {
+            // A .net MAUI control that contains a MapsUI map
+            MapControl mapControl = new();
+            mapControl.BackgroundColor = Colors.AliceBlue;
+            // The MapsUI map from the new control
+            map = mapControl.Map;
+
+            // Add a layer to show the map from OpenStreetMap's API
+            map.Layers.Add(OpenStreetMap.CreateTileLayer());
+            // Place the layer for the points on top of the previous map layer
+            map.Layers.Add(pointLayer);
+
+            // A point to zoom to on the map, with a given longitude and latitude as parameters
+            MPoint mpoint = new(-88.4154, 44.2619);
+            // The map doesn't use longitude/latitude for placement, so project it onto a new point
+            // that can be placed onto the map in the correct location
+            MPoint npoint = SphericalMercator.FromLonLat(mpoint.X, mpoint.Y).ToMPoint();
+            // Instantly zooms to a given point on the map, with a given resolution for how far to zoom
+            // Can optionally give it a duration and easing style for a smoother transition
+            //map.Home = (n) => n.CenterOnAndZoomTo(npoint, map.Navigator.Resolutions[9]);
+            map.Navigator.CenterOnAndZoomTo(npoint, map.Navigator.Resolutions[9]);
+            // To zoom to a point after the map is loaded, use map.CenterOnAndZoomTo(); without lambda
+
+            // Place the map control into MapPage under a grid prepared to contain it
+
+            MapGrid.Add(mapControl);
+
+            // Run OnAppearing() to prepare visitedAirports before setting VisitedRadioButton.IsChecked
+          //  OnAppearing();
+            // Manually setting IsChecked since putting this in the xaml sometimes causes it
+            // to be stuck as checked
+            //VisitedRadioButton.IsChecked = true;
+        }
+        catch (Exception ex)
+        {
             Console.WriteLine($"Error in MapPage constructor -- {ex.Message.ToString()}");
         }
     }
@@ -124,7 +132,12 @@ public partial class MapPage : ContentPage
     protected override async void OnAppearing()
     {
         // Updates visitedAirports to contain the latest visited airports
-        visitedAirports = await MauiProgram.BusinessLogic.GetVisitedAirports();
+         visitedAirports = await MauiProgram.BusinessLogic.GetVisitedAirports();
+
+        if (VisitedRadioButton.IsChecked)
+        {
+
+        }
     }
 
     private void OnVisitedRadio_Clicked(object sender, CheckedChangedEventArgs e)
@@ -132,6 +145,29 @@ public partial class MapPage : ContentPage
         if (!e.Value)
             return;
 
+        RedrawVisitedAirports();
+    }
+
+
+    private void OnUnvisitedRadio_Clicked(object sender, CheckedChangedEventArgs e)
+    {
+        if (!e.Value)
+            return;
+
+        RedrawUnvisitedAirports();
+    }
+
+    private void OnBothRadio_Clicked(object sender, CheckedChangedEventArgs e)
+    {
+        if (!e.Value)
+            return;
+
+        RedrawBothAirports();
+    }
+
+
+    private void RedrawVisitedAirports()
+    {
         // clear all current points on the map
         pointLayer.Clear();
 
@@ -140,7 +176,7 @@ public partial class MapPage : ContentPage
         {
             foreach (WisconsinAirport airportWithCoords in allAirports!)
             {
-                if(airportVisited.Id == airportWithCoords.Id)
+                if (airportVisited.Id == airportWithCoords.Id)
                 {
                     // add a new point with these coords to the map
                     pointLayer.Add(GetPointFromLonLat(airportWithCoords.Longitude, airportWithCoords.Latitude, true));
@@ -151,10 +187,9 @@ public partial class MapPage : ContentPage
         map!.Refresh();
     }
 
-    private void OnUnvisitedRadio_Clicked(object sender, CheckedChangedEventArgs e)
+
+    private void RedrawUnvisitedAirports()
     {
-        if (!e.Value)
-            return;
 
         // clear all the points from the point layer
         pointLayer.Clear();
@@ -178,13 +213,11 @@ public partial class MapPage : ContentPage
         }
 
         map!.Refresh();
+
     }
 
-    private void OnBothRadio_Clicked(object sender, CheckedChangedEventArgs e)
+    private void RedrawBothAirports()
     {
-        if (!e.Value)
-            return;
-
         // clear the current points on the map
         pointLayer.Clear();
 
@@ -220,7 +253,7 @@ public partial class MapPage : ContentPage
         return feature;
     }
 
-        void Logout_Clicked(System.Object sender, System.EventArgs e)
+    void Logout_Clicked(System.Object sender, System.EventArgs e)
     {
         MauiProgram.BusinessLogic.VisitedAirports.Clear(); // otherwise, when logging in again, 
         Application.Current!.MainPage = new LoginPage();
