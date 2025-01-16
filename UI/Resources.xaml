@@ -4,7 +4,10 @@
     x:Class="FWAPPA.UI.Resources"
     Title="Resources">
     <ContentPage.ToolbarItems>
-        <ToolbarItem x:Name="LogoutBtn" IconImageSource="logout.png" Text="Logout"
+        <ToolbarItem 
+            x:Name="LogoutBtn" 
+            IconImageSource="{AppThemeBinding Light='logout_gray300.png', Dark='logout_white.png'}"
+            Text="Logout"
             Clicked="Logout_Clicked" />
     </ContentPage.ToolbarItems>
 
