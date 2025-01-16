@@ -8,7 +8,7 @@
     <ContentPage.ToolbarItems>
         <ToolbarItem
             x:Name="LogoutBtn"
-            IconImageSource="{AppThemeBinding Light='logout_black.png', Dark='logout_white.png'}"
+            IconImageSource="{AppThemeBinding Light='logout_gray300.png', Dark='logout_white.png'}"
             Text="Logout"
             Clicked="Logout_Clicked" />
     </ContentPage.ToolbarItems>

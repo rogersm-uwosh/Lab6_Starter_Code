@@ -9,11 +9,11 @@
 
     <ContentPage.ToolbarItems>
         <ToolbarItem x:Name="AddAirportBtn"
-                     IconImageSource="{AppThemeBinding Light='add_black.png', Dark='add_white.png'}"
+                     IconImageSource="{AppThemeBinding Light='add_gray300.png', Dark='add_white.png'}"
                      Text="Add"
                      Clicked="AddAirport_Clicked" />
         <ToolbarItem x:Name="LogoutBtn"
-                     IconImageSource="{AppThemeBinding Light='logout_black.png', Dark='logout_white.png'}"
+                     IconImageSource="{AppThemeBinding Light='logout_gray300.png', Dark='logout_white.png'}"
                      Text="Logout"
                      Clicked="Logout_Clicked" />
     </ContentPage.ToolbarItems>
