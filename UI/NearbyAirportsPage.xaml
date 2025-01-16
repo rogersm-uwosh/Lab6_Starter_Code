@@ -9,16 +9,15 @@
              x:Class="FWAPPA.UI.NearbyAirportsPage"
              Title="Nearby Airports"
              xmlns:model="clr-namespace:FWAPPA.Model"
-             xmlns:nearbyAirports1="clr-namespace:FWAPPA.Model.NearbyAirports"
-             xmlns:ui="clr-namespace:FWAPPA.UI"
-             x:DataType="ui:NearbyAirportsPage">
+             xmlns:nearbyAirports="clr-namespace:FWAPPA.Model.NearbyAirports"
+             x:DataType="model:BusinessLogic">
     <ContentPage.Resources>
-        <nearbyAirports1:AirportToMilesConverter x:Key="AirportToMilesConverter" />
+        <nearbyAirports:AirportToMilesConverter x:Key="AirportToMilesConverter" />
     </ContentPage.Resources>
     <ContentPage.Content>
         <Grid
             ColumnDefinitions="*, *, *"
-            RowDefinitions="auto, auto, *"
+            RowDefinitions="auto, auto, auto, *"
             Margin="16">
 
             <Label Text="Airport: "
@@ -38,26 +37,45 @@
                    Keyboard="Numeric"
                    Grid.Column="1"
                    Grid.Row="1" />
-            <Button Text="Submit" 
-                    Clicked="OnSearchNearbyAirportBtn" 
-                    Grid.Column="2" 
-                    Grid.Row="0" 
-                    Grid.RowSpan="2" 
+            <Button Text="Submit"
+                    Clicked="OnSearchNearbyAirportBtn"
+                    Grid.Column="2"
+                    Grid.Row="0"
+                    Grid.RowSpan="2"
                     VerticalOptions="Center"
-                    Margin="16,0,0,0"/>
+                    Margin="16,0,0,0" />
+            
+            <Grid RowDefinitions="*"
+                  ColumnDefinitions="*, *, *"
+                  Margin="0, 15, 0, 0"
+                  IsVisible="{Binding IsNearbyAirportsHeaderVisible}"
+                  Padding="8"
+                  Grid.Row="2"
+                  Grid.ColumnSpan="3">
+                <Label Text="Id"
+                       Grid.Column="0"
+                       FontAttributes="Bold" />
+                <Label Text="Name"
+                       Grid.Column="1"
+                       FontAttributes="Bold" />
+                <Label Text="Distance"
+                       Grid.Column="2"
+                       HorizontalTextAlignment="Center"
+                       FontAttributes="Bold" />
+            </Grid>
+            
             <ScrollView
-                Grid.Row="2"
+                Grid.Row="3"
                 Grid.ColumnSpan="3">
-
+                
                 <CollectionView
                     x:Name="AirportList"
                     ItemsSource="{Binding NearbyAirports}">
-
                     <CollectionView.ItemTemplate>
                         <DataTemplate x:DataType="model:WisconsinAirport">
                             <Grid
                                 RowDefinitions="*"
-                                ColumnDefinitions="*,*,*,*"
+                                ColumnDefinitions="*,*,*"
                                 Padding="8">
                                 <Label
                                     VerticalOptions="Center"
@@ -71,8 +89,12 @@
                                     VerticalOptions="Center"
                                     HorizontalOptions="Center"
                                     Grid.Column="2"
-                                    Text="{Binding ., Converter={StaticResource AirportToMilesConverter}}" />
-                             <!--  <Image
+                                    Text="{
+                                        Binding ., 
+                                        Converter={StaticResource AirportToMilesConverter},
+                                        StringFormat='1{0:F1} NM'
+                                    }" />
+                                <!--  <Image
                                     VerticalOptions="Center"
                                     Grid.Column="3"
                                     MaximumHeightRequest="50"

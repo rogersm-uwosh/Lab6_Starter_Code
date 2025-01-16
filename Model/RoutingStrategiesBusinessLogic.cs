@@ -3,6 +3,20 @@
 public partial class BusinessLogic
 {
     
+    private bool isRoutingStrategiesHeaderVisible;
+    public bool IsRoutingStrategiesHeaderVisible
+    {
+        get => isRoutingStrategiesHeaderVisible;
+        set
+        {
+            if (isRoutingStrategiesHeaderVisible != value)
+            {
+                isRoutingStrategiesHeaderVisible = value;
+                OnPropertyChanged(nameof(IsRoutingStrategiesHeaderVisible));
+            }
+        }
+    }
+    
     /// <summary>
     /// Finds a route to visit all airports within a specific range from a starting airport.
     /// The route will end at the starting airport.
@@ -26,7 +40,8 @@ public partial class BusinessLogic
         }
 
         // Convert the airports to RoutePoints
-        List<RoutePoint> routePoints = CalculateNearbyAirports(source, maxMiles)
+        CalculateNearbyAirports(source, maxMiles);
+        List<RoutePoint> routePoints = NearbyAirports
             .Except(excluded, new WisconsinAirportEqualityComparer())
             .Prepend(source)
             .Select(x => new RoutePoint(x))
@@ -35,10 +50,11 @@ public partial class BusinessLogic
         // Can't have a route with 0 or 1 airports
         if (routePoints.Count < 2)
         {
+            IsRoutingStrategiesHeaderVisible = false;
             return null;
         }
-
+        IsRoutingStrategiesHeaderVisible = true;
+        
         return Route.GenerateTravelingSalesmanRoute(routePoints);
     }
-    
 }

@@ -1,9 +1,12 @@
 ﻿using System.Collections.ObjectModel;
+using System.ComponentModel;
 
 namespace FWAPPA.Model;
-public interface IBusinessLogic
+
+public interface IBusinessLogic : INotifyPropertyChanged
 {
-    ObservableCollection<VisitedAirport> VisitedAirports {get;}
+    public event PropertyChangedEventHandler PropertyChanged;
+    ObservableCollection<VisitedAirport> VisitedAirports { get; }
     Route CurrentRoute { get; set; }
     Task<AirportAdditionError> AddAirport(string id, string name, DateTime dateVisited, int rating);
     Task<AirportDeletionError> DeleteAirport(string id);
@@ -13,9 +16,12 @@ public interface IBusinessLogic
     Task<ObservableCollection<VisitedAirport>> GetVisitedAirports();
     ObservableCollection<WisconsinAirport> GetWisconsinAirports();
     Weather GetClosestAirportWeather();
-    ObservableCollection<WisconsinAirport> CalculateNearbyAirports(WisconsinAirport sourceAirport, int maxMiles);
+    void CalculateNearbyAirports(WisconsinAirport sourceAirport, int maxMiles);
     ObservableCollection<WisconsinAirport> GetAllWisconsinAirports();
-    ObservableCollection<WisconsinAirport> GetWisconsinAirportsWithinDistance(double userLatitude, double userLongitude, double maxDistanceKm);
+
+    ObservableCollection<WisconsinAirport> GetWisconsinAirportsWithinDistance(double userLatitude, double userLongitude,
+        double maxDistanceKm);
+
     WisconsinAirport SelectAirportByCode(string airportCode);
     Route? GetRoute(WisconsinAirport source, int maxMiles, bool unvisitedOnly = false);
 
