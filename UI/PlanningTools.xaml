@@ -1,78 +1,81 @@
 <?xml version="1.0" encoding="utf-8"?>
+
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
-        xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-        x:Class="FWAPPA.UI.PlanningTools"
-        Title="Planning Tools">
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="FWAPPA.UI.PlanningTools"
+             Title="Planning Tools">
 
-        <ContentPage.ToolbarItems>
-
-                <ToolbarItem x:Name="LogoutBtn" IconImageSource="logout.png" Text="Logout"
-                        Clicked="Logout_Clicked" />
-        </ContentPage.ToolbarItems>
-        <Grid RowDefinitions="*,*,40,*,*"
-                ColumnDefinitions="*,5*,40,5*,*">
-                <Button Grid.Row="1"
-                        Grid.Column="1"
-                        Text="Nearby Airports"
-                        LineBreakMode="WordWrap"
-                        FontSize="{OnPlatform iOS=15, Android=17}"
-                        HorizontalOptions="FillAndExpand"
-                        VerticalOptions="FillAndExpand"
-                        Clicked="OnNearbyAirportsClicked"
-                        CornerRadius="20">
-                        <Button.Shadow>
-                                <Shadow Brush="Black"
-                                        Opacity="0.7"
-                                        Radius="20"
-                                        Offset="5,5" />
-                        </Button.Shadow>
-                </Button>
-                <Button Grid.Row="1"
-                        Grid.Column="3"
-                        Text="Routing Strategies"
-                        LineBreakMode="WordWrap"
-                        FontSize="{OnPlatform iOS=15, Android=17}"
-                        HorizontalOptions="FillAndExpand"
-                        VerticalOptions="FillAndExpand"
-                        Clicked="OnRoutingStrategiesClicked"
-                        CornerRadius="20">
-                        <Button.Shadow>
-                                <Shadow Brush="Black"
-                                        Opacity="0.7"
-                                        Radius="20"
-                                        Offset="5,5" />
-                        </Button.Shadow>
-                </Button>
-                <Button Grid.Row="3"
-                        Grid.Column="1"
-                        Text="Weather"
-                        FontSize="{OnPlatform iOS=15, Android=17}"
-                        HorizontalOptions="FillAndExpand"
-                        VerticalOptions="FillAndExpand"
-                        Clicked="OnWeatherClicked"
-                        CornerRadius="20">
-                        <Button.Shadow>
-                                <Shadow Brush="Black"
-                                        Opacity="0.7"
-                                        Radius="20"
-                                        Offset="5,5" />
-                        </Button.Shadow>
-                </Button>
-                <Button Grid.Row="3"
-                        Grid.Column="3"
-                        Text="T-Shirt Redemption"
-                        FontSize="{OnPlatform iOS=15, Android=17}"
-                        LineBreakMode="WordWrap"
-                        HorizontalOptions="FillAndExpand"
-                        VerticalOptions="FillAndExpand"
-                        Clicked="OnTShirtClicked"
-                        CornerRadius="20">
-                        <Button.Shadow>
-                                <Shadow Brush="Black"
-                                        Opacity="0.7"
-                                        Radius="20"
-                                        Offset="5,5" />
-                        </Button.Shadow>
-                </Button>
-        </Grid>
+    <ContentPage.ToolbarItems>
+        <ToolbarItem
+            x:Name="LogoutBtn"
+            IconImageSource="{AppThemeBinding Light='logout_black.png', Dark='logout_white.png'}"
+            Text="Logout"
+            Clicked="Logout_Clicked" />
+    </ContentPage.ToolbarItems>
+    <Grid RowDefinitions="*,*,40,*,*"
+          ColumnDefinitions="*,5*,40,5*,*">
+        <Button Grid.Row="1"
+                Grid.Column="1"
+                Text="Nearby Airports"
+                LineBreakMode="WordWrap"
+                FontSize="{OnPlatform iOS=15, Android=17}"
+                HorizontalOptions="FillAndExpand"
+                VerticalOptions="FillAndExpand"
+                Clicked="OnNearbyAirportsClicked"
+                CornerRadius="20">
+            <Button.Shadow>
+                <Shadow Brush="Black"
+                        Opacity="0.7"
+                        Radius="20"
+                        Offset="5,5" />
+            </Button.Shadow>
+        </Button>
+        <Button Grid.Row="1"
+                Grid.Column="3"
+                Text="Routing Strategies"
+                LineBreakMode="WordWrap"
+                FontSize="{OnPlatform iOS=15, Android=17}"
+                HorizontalOptions="FillAndExpand"
+                VerticalOptions="FillAndExpand"
+                Clicked="OnRoutingStrategiesClicked"
+                CornerRadius="20">
+            <Button.Shadow>
+                <Shadow Brush="Black"
+                        Opacity="0.7"
+                        Radius="20"
+                        Offset="5,5" />
+            </Button.Shadow>
+        </Button>
+        <Button Grid.Row="3"
+                Grid.Column="1"
+                Text="Weather"
+                FontSize="{OnPlatform iOS=15, Android=17}"
+                HorizontalOptions="FillAndExpand"
+                VerticalOptions="FillAndExpand"
+                Clicked="OnWeatherClicked"
+                CornerRadius="20">
+            <Button.Shadow>
+                <Shadow Brush="Black"
+                        Opacity="0.7"
+                        Radius="20"
+                        Offset="5,5" />
+            </Button.Shadow>
+        </Button>
+        <Button Grid.Row="3"
+                Grid.Column="3"
+                Text="T-Shirt Redemption"
+                FontSize="{OnPlatform iOS=15, Android=17}"
+                LineBreakMode="WordWrap"
+                HorizontalOptions="FillAndExpand"
+                VerticalOptions="FillAndExpand"
+                Clicked="OnTShirtClicked"
+                CornerRadius="20">
+            <Button.Shadow>
+                <Shadow Brush="Black"
+                        Opacity="0.7"
+                        Radius="20"
+                        Offset="5,5" />
+            </Button.Shadow>
+        </Button>
+    </Grid>
 </ContentPage>

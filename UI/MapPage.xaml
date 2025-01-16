@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
+
 <!--
     Brady Blocksom & Alex Robinson 
     This file went through a lot of iterations, starting out as a prototype
@@ -6,50 +7,48 @@
     was added by Alex since these were no longer necessary
 -->
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
-    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-    xmlns:mapsui="clr-namespace:Mapsui.UI.Maui;assembly=Mapsui.UI.Maui"
-    x:Class="FWAPPA.UI.MapPage"
-    Title="Map">
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:mapsui="clr-namespace:Mapsui.UI.Maui;assembly=Mapsui.UI.Maui"
+             x:Class="FWAPPA.UI.MapPage"
+             Title="Map">
     <ContentPage.ToolbarItems>
-        <ToolbarItem x:Name="LogoutBtn" IconImageSource="logout.png" Text="Logout"
-            Clicked="Logout_Clicked" />
+        <ToolbarItem x:Name="LogoutBtn"
+                     IconImageSource="{AppThemeBinding Light='logout_black.png', Dark='logout_white.png'}"
+                     Text="Logout"
+                     Clicked="Logout_Clicked" />
     </ContentPage.ToolbarItems>
     <Grid RowDefinitions="*,9*"
-        ColumnDefinitions="*">
+          ColumnDefinitions="*">
 
         <Frame Grid.Row="0" Grid.Column="0"
-            CornerRadius="0"
-            Margin="1">
+               CornerRadius="0"
+               Margin="1">
             <Grid RowDefinitions="*"
-                ColumnDefinitions="*,*,*">
-                
-                <RadioButton Grid.Row="0" Grid.Column="0"
-                    CheckedChanged="OnVisitedRadio_Clicked"
-                    Content="Visited"
-                    x:Name="VisitedRadioButton"
+                  ColumnDefinitions="*,*,*">
 
-                    />
+                <RadioButton Grid.Row="0" Grid.Column="0"
+                             CheckedChanged="OnVisitedRadio_Clicked"
+                             Content="Visited"
+                             x:Name="VisitedRadioButton" />
 
                 <RadioButton Grid.Row="0" Grid.Column="1"
-                    CheckedChanged="OnUnvisitedRadio_Clicked"
-                    Content="Unvisited"
-                    x:Name="UnvisitedRadioButton"
-                />
+                             CheckedChanged="OnUnvisitedRadio_Clicked"
+                             Content="Unvisited"
+                             x:Name="UnvisitedRadioButton" />
 
                 <RadioButton Grid.Row="0" Grid.Column="2"
-                    CheckedChanged="OnBothRadio_Clicked"
-                    Content="Both"
-                    x:Name="BothRadioButton"
-                />
-                
+                             CheckedChanged="OnBothRadio_Clicked"
+                             Content="Both"
+                             x:Name="BothRadioButton" />
+
             </Grid>
         </Frame>
-        
-    
-         <mapsui:MapControl x:Name="RouteMap"
-            Grid.Row="1" Grid.Column="0"
-            HorizontalOptions="FillAndExpand"/>
-        
+
+
+        <mapsui:MapControl x:Name="RouteMap"
+                           Grid.Row="1" Grid.Column="0"
+                           HorizontalOptions="FillAndExpand" />
+
 
     </Grid>
 </ContentPage>
