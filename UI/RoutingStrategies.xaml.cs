@@ -1,4 +1,4 @@
-using System.Collections.ObjectModel;
+using CommunityToolkit.Maui.Core.Platform;
 using FWAPPA.Model;
 using Mapsui;
 using Mapsui.Layers;
@@ -58,12 +58,20 @@ public partial class RoutingStrategies : ContentPage
         UpdateRoute(null);
     }
 
-    private void GenerateRoute(object sender, EventArgs e)
+    private async void GenerateRoute(object sender, EventArgs e)
     {
+        StartingAirportEntry.HideKeyboardAsync(CancellationToken.None);
+        MaxDistanceEntry.HideKeyboardAsync(CancellationToken.None);
+        
         // Get the airport (not necessarily visited)
-        string airportId = StartingAirportEntry.Text.ToUpper();
-        Collection<WisconsinAirport> wisconsinAirports = businessLogic.GetWisconsinAirports();
-        WisconsinAirport? start = wisconsinAirports.FirstOrDefault(x => x.Id.Equals(airportId));
+        string airportId = StartingAirportEntry.Text;
+        if (airportId == null)
+        {
+            await DisplayAlert("", "Please enter a valid airport id", "OK");
+            return;
+        }
+        
+        WisconsinAirport start = businessLogic.SelectAirportByCode(airportId);
         if (start == null)
         {
             // Clears the map

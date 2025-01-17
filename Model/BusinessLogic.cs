@@ -1,9 +1,17 @@
 ﻿using System.Collections.ObjectModel;
+using System.ComponentModel;
 
 namespace FWAPPA.Model;
 
 public partial class BusinessLogic(IDatabaseSupa db) : IBusinessLogic
 {
+    public event PropertyChangedEventHandler PropertyChanged;
+
+    protected void OnPropertyChanged(string propertyName)
+    {
+        PropertyChanged.Invoke(this, new PropertyChangedEventArgs(propertyName));
+    }
+    
     const int BRONZE_LEVEL = 42;
     const int SILVER_LEVEL = 84;
     const int GOLD_LEVEL = 128;
