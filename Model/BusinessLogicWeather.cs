@@ -1,28 +1,27 @@
 using System.Collections.ObjectModel;
 
-//using CommunityToolkit.Maui.Core.Extensions;
-
 namespace FWAPPA.Model;
 
 public partial class BusinessLogic : IBusinessLogic
 {
-    // private ObservableCollection<AirportCoordinates> airportCoordinates;
-
-    // partial void LoadAirportCoordinates()
-    // {
-    //     airportCoordinates = db.SelectAllAirportCoordinates();
-    // }
-
-
-    public Weather ClosestAirportWeather
+    private Weather? airportWeather;
+    public Weather? AirportWeather
     {
-        get { return GetClosestAirportWeather(); }
+        get => airportWeather;
+        set
+        {
+            if (airportWeather != value)
+            {
+                airportWeather = value;
+                OnPropertyChanged(nameof(AirportWeather));
+            }
+        }
     }
-
-    public Weather GetClosestAirportWeather()
+    
+    public Weather GetClosestAirportWeather(string? airport = null)
     {
-        string airport = "";
-        airport = FindClosestAirport();
+        airport ??= FindClosestAirport();
+
         HttpClient aviationWeatherCenter = new HttpClient();
         try
         {
@@ -30,12 +29,20 @@ public partial class BusinessLogic : IBusinessLogic
             var metar = aviationWeatherCenter.GetStringAsync(metarUrl).Result;
             var tafUrl = "https://aviationweather.gov/api/data/taf?ids=" + airport + "&format=raw";
             var taf = aviationWeatherCenter.GetStringAsync(tafUrl).Result;
-            return new Weather(airport, metar, taf);
+
+            if (metar == "" && taf == "")
+            {
+                metar = "Invalid airport id";
+                taf = "Invalid airport id";
+            }
+            AirportWeather = new Weather(airport, metar, taf);
         }
         catch (Exception ex)
         {
-            return new Weather("Catch", ex.Message, "Catch");
+            AirportWeather = new Weather("Catch", ex.Message, "Catch");
         }
+
+        return AirportWeather;
     }
 
     /// <summary>
@@ -49,7 +56,7 @@ public partial class BusinessLogic : IBusinessLogic
 
         ObservableCollection<WisconsinAirport> allAirports = GetWisconsinAirports();
         Coordinates currentCoordinates = GetCurrentCoordinates();
-        
+
         foreach (WisconsinAirport destinationAirport in allAirports)
         {
             double distanceInMiles = GetDistanceBetweenCoordinates(
