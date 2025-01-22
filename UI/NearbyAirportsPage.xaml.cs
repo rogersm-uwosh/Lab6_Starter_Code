@@ -1,4 +1,4 @@
-﻿using System.Collections.ObjectModel;
+﻿using CommunityToolkit.Maui.Core.Platform;
 using FWAPPA.Model;
 
 namespace FWAPPA.UI;
@@ -11,12 +11,11 @@ namespace FWAPPA.UI;
 public partial class NearbyAirportsPage : ContentPage
 {
     private readonly IBusinessLogic businessLogic = MauiProgram.BusinessLogic;
-    public ObservableCollection<WisconsinAirport> NearbyAirports { get; } = new ObservableCollection<WisconsinAirport>();
 
     public NearbyAirportsPage()
     {
         InitializeComponent();
-        BindingContext = this;
+        BindingContext = businessLogic;
     }
 
     /// <summary>
@@ -26,16 +25,18 @@ public partial class NearbyAirportsPage : ContentPage
     /// <param name="e"></param>
     private async void OnSearchNearbyAirportBtn(object sender, EventArgs e)
     {
-        string airportName = AirportEntry.Text;
+        AirportEntry.HideKeyboardAsync(CancellationToken.None);
+        DistanceEntry.HideKeyboardAsync(CancellationToken.None);
+        string airportId = AirportEntry.Text;
         string distanceMileText = DistanceEntry.Text;
 
-        if (airportName == null)
+        if (airportId == null)
         {
             await DisplayAlert("", "Please enter a valid airport name", "OK");
             return;
         }
 
-        WisconsinAirport airport = businessLogic.SelectAirportByCode(airportName);
+        WisconsinAirport airport = businessLogic.SelectAirportByCode(airportId);
         bool isValidDistance = int.TryParse(distanceMileText, out int distanceMile);
         if (airport == null)
         {
@@ -55,12 +56,10 @@ public partial class NearbyAirportsPage : ContentPage
             return;
         }
 
-        NearbyAirports.Clear();
-        foreach (WisconsinAirport nearbyAirport in businessLogic.CalculateNearbyAirports(airport, distanceMile))
-        {
-            NearbyAirports.Add(nearbyAirport);
-            
-        }
+        businessLogic.CalculateNearbyAirports(airport, distanceMile);
         
+        // May be needed to get the correct distances
+        AirportList.ItemsSource = null;
+        AirportList.ItemsSource = businessLogic.NearbyAirports;
     }
 }
