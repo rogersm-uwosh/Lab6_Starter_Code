@@ -34,38 +34,43 @@ public partial class BusinessLogic
     /// <param name="sourceAirport">The airport whose location to use as reference.</param>
     /// <param name="maxMiles">How far the desired airports are to be from the sourceAirport.</param>
     /// <returns></returns>
-    public void CalculateNearbyAirports(WisconsinAirport sourceAirport, int maxMiles)
+public void CalculateNearbyAirports(WisconsinAirport sourceAirport, int maxMiles)
+{
+    Dictionary<string, int> idToMiles = new();
+    List<WisconsinAirport> tempNearbyAirports = new();
+
+    ObservableCollection<WisconsinAirport> allAirports = GetWisconsinAirports();
+
+    foreach (WisconsinAirport destinationAirport in allAirports)    // why aren't we using a dictionary here??
     {
-        NearbyAirports.Clear();
-        Dictionary<string, int> idToMiles = new();
+        WisconsinAirport? destinationAirportCoordinates = WisconsinAirports.FirstOrDefault(
+            airport => airport?.Id == destinationAirport.Id && airport.Id != sourceAirport.Id, null
+        );
 
-        ObservableCollection<WisconsinAirport> allAirports = GetWisconsinAirports();
-
-        foreach (WisconsinAirport destinationAirport in allAirports)
+        if (destinationAirportCoordinates != null)
         {
-            WisconsinAirport? destinationAirportCoordinates = WisconsinAirports.FirstOrDefault(
-                airport => airport?.Id == destinationAirport.Id && airport.Id != sourceAirport.Id, null
+            double distanceInMiles = GetDistanceFromAirportCoordinates(
+                sourceAirport,
+                destinationAirportCoordinates
             );
-
-            if (destinationAirportCoordinates != null)
+            if (distanceInMiles < maxMiles)
             {
-                double distanceInMiles = GetDistanceFromAirportCoordinates(
-                    sourceAirport,
-                    destinationAirportCoordinates
-                );
-                if (distanceInMiles < maxMiles)
-                {
-                    NearbyAirports.Add(destinationAirport);
-                    idToMiles[destinationAirport.Id] = (int)Math.Round(distanceInMiles);
-                }
+                tempNearbyAirports.Add(destinationAirport);
+                idToMiles[destinationAirport.Id] = (int)Math.Round(distanceInMiles);
             }
         }
-
-        IsNearbyAirportsHeaderVisible = NearbyAirports.Count > 0;
-
-        AirportToMilesConverter
-            .ConvertAll(idToMiles); // calling convert all to populate _idToMiles with the (id, distance) entries
     }
+
+    AirportToMilesConverter.ConvertAll(idToMiles); // converter now has distances to display
+
+    NearbyAirports.Clear();
+    foreach (var airport in tempNearbyAirports)
+    {
+        NearbyAirports.Add(airport);
+    }
+
+    IsNearbyAirportsHeaderVisible = NearbyAirports.Count > 0; // no airports? no headers necessary
+}
 
     public static double GetDistanceFromAirportCoordinates(
         WisconsinAirport sourceAirport,
